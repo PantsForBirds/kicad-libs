@@ -1,0 +1,223 @@
+(footprint "MagneticBuzzer_9.6mm_5mm_right-angle"
+	(version 20260206)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(descr "Passive electromagnetic buzzer, right angle, 9.6mm diameter, 5mm height, https://www.sameskydevices.com/product/resource/cmt-9605-85t.pdf")
+	(tags "MagneticBuzzer_9650")
+	(property "Reference" "REF**"
+		(at 0 7.5 0)
+		(layer "F.SilkS")
+		(uuid "69fc435d-929b-447b-84f3-0ba79879e50d")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "MagneticBuzzer_9650"
+		(at 0 9 0)
+		(layer "F.Fab")
+		(uuid "f72b128a-189d-4c7f-b161-96e895e25937")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "d2a072a9-3efb-4f47-a4fc-f5c297937fdb")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "5cab0eab-ad7e-4369-b14b-6895293d1e87")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(duplicate_pad_numbers_are_jumpers no)
+	(fp_circle
+		(center 0 2)
+		(end 0 6.8)
+		(stroke
+			(width 0.127)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+		(uuid "7908e939-dc83-4cfc-9397-d222fbe5f1a4")
+	)
+	(fp_line
+		(start -2.75 -4.45)
+		(end 2.75 -4.45)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "2149d648-9de7-4db7-8009-47504d5d672e")
+	)
+	(fp_line
+		(start -2.75 -2.22)
+		(end -2.75 -4.45)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "e3c5e1c4-9360-4521-967d-4b91217f238a")
+	)
+	(fp_line
+		(start 2.75 -4.45)
+		(end 2.75 -2.22)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "0447f993-5a18-440d-baa8-1d95f6bb21e5")
+	)
+	(fp_arc
+		(start 2.75 -2.22)
+		(mid 0 7.019414)
+		(end -2.75 -2.22)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "3b3cac5c-2499-4872-9793-e2f4fc9d9fad")
+	)
+	(fp_line
+		(start -2.5 -4.2)
+		(end 2.5 -4.2)
+		(stroke
+			(width 0.127)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "273af2dc-b0e2-452f-b70f-2ab2366d58e8")
+	)
+	(fp_line
+		(start -2.5 -2.1)
+		(end -2.5 -4.2)
+		(stroke
+			(width 0.127)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "0d51fa95-a0d1-4260-8d5f-b841198af6d6")
+	)
+	(fp_line
+		(start 2.5 -4.2)
+		(end 2.5 -2.1)
+		(stroke
+			(width 0.127)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "e22e37dc-15e1-4d5b-a4d2-604e332f9e4c")
+	)
+	(fp_circle
+		(center 0 2)
+		(end 0 6.8)
+		(stroke
+			(width 0.127)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "f75ad3e2-3c10-4267-95f7-1804fb564d3e")
+	)
+	(fp_text user "+"
+		(at -1.5 -0.1 0)
+		(layer "F.SilkS")
+		(uuid "b04fa5ec-1312-4a35-bdc9-a0d54271ca29")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_text user "+"
+		(at -1.5 -0.1 0)
+		(layer "F.Fab")
+		(uuid "db368375-c417-4ddb-beac-872e167c5dc4")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_text user "-"
+		(at -0.4 7.4 270)
+		(layer "F.Fab")
+		(uuid "ce14bfc8-7844-47a7-b76c-dfae2fc6c812")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 2 0)
+		(layer "F.Fab")
+		(uuid "f8c32b0c-be0c-4832-9c92-c52c0262001a")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" thru_hole rect
+		(at 0 0)
+		(size 1.6 1.6)
+		(drill 0.9)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "0432579c-3013-475e-849f-035b058be1e5")
+	)
+	(pad "2" thru_hole circle
+		(at 0 4)
+		(size 1.6 1.6)
+		(drill 0.9)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "be85448b-9ebf-43bd-8b64-bcfbba21e3fa")
+	)
+	(embedded_fonts no)
+	(model "${KICAD_LIBS_DIR}/lib_3d/Custom_Buzzer_Beeper/CMT-9605-85T.step"
+		(offset
+			(xyz 0 -2 5)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 90 180 -0)
+		)
+	)
+)
