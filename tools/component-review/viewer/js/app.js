@@ -16,7 +16,7 @@ async function boot() {
     state.manifest = await fetchJson('manifest.json');
   } catch (e) {
     const fileHint = location.protocol === 'file:'
-      ? 'Browsers block loading data from file:// pages. Serve this directory, e.g. `python3 -m http.server`, and open http://localhost:8000/.'
+      ? 'Browsers block loading data from file:// pages and this copy has no `data.js`. Run `python3 serve.py` in this folder (or `python3 -m http.server`) and open the address it prints.'
       : `Could not load manifest.json (${e.message}).`;
     clear($('#main')).append(el('div', { class: 'fatal' }, el('h2', {}, 'No component review data'), markdown(fileHint)));
     return;

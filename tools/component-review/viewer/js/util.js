@@ -79,7 +79,75 @@ export function githubUrl(repo, ...parts) {
 
 export const shortSha = (s) => (typeof s === 'string' ? s.slice(0, 8) : '?');
 
+// --- offline (file://) mode ----------------------------------------------------------------------------
+// Opened from a downloaded artifact, browsers refuse fetch() of file:// URLs. build_site.py then provides
+// data.js (window.CR_DATA = {manifest, review, texts}) and one offline/<slug>.js per item with the files the
+// 3D view needs (window.CR_PACKS[slug] = {files: {<asset url>: {text} | {b64}}}), loaded on demand with <script>.
+
+export const OFFLINE = typeof location !== 'undefined' && location.protocol === 'file:';
+const SLUG_RE = /^[A-Za-z0-9._-]{1,200}$/;
+const packs = new Map();
+
+/** The per-item pack that holds `url` ("items/<slug>/..."), or null. Loaded once with a <script> tag. */
+function packFor(url) {
+  const m = /^items\/([^/]+)\//.exec(url || '');
+  const slug = m && decodeURIComponent(m[1]);
+  if (!slug || !SLUG_RE.test(slug) || slug === '.' || slug === '..') return Promise.resolve(null);
+  if (!packs.has(slug)) {
+    packs.set(slug, new Promise((resolve) => {
+      const s = document.createElement('script');
+      s.src = `offline/${encodeURIComponent(slug)}.js`;
+      s.onload = () => resolve(window.CR_PACKS?.[slug] || null);
+      s.onerror = () => resolve(null);
+      document.head.append(s);
+    }));
+  }
+  return packs.get(slug);
+}
+
+async function offlineFile(url) {
+  const pack = await packFor(url);
+  const f = pack?.files && Object.prototype.hasOwnProperty.call(pack.files, url) ? pack.files[url] : null;
+  if (!f) throw new Error(`${url} is not available offline`);
+  return f;
+}
+
+/** Bytes of an asset (e.g. a STEP model). */
+export async function fetchBytes(path) {
+  const url = assetUrl(path);
+  if (!url) throw new Error(`refusing to load ${path}`);
+  if (OFFLINE) {
+    const f = await offlineFile(url);
+    if (typeof f.b64 !== 'string') throw new Error(`${url}: no binary data offline`);
+    const bin = atob(f.b64);
+    const out = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+    return out;
+  }
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`${path}: HTTP ${r.status}`);
+  return new Uint8Array(await r.arrayBuffer());
+}
+
+/**
+ * URL to load an image asset into a canvas/WebGL texture. file:// images taint canvases, so offline the
+ * pack's SVG text is turned into a same-origin blob: URL.
+ */
+export async function imageSrc(path) {
+  const url = assetUrl(path);
+  if (!url || !OFFLINE) return url;
+  const f = await offlineFile(url);
+  if (typeof f.text !== 'string') throw new Error(`${url}: not an image offline`);
+  return URL.createObjectURL(new Blob([f.text], { type: 'image/svg+xml' }));
+}
+
 export async function fetchJson(path) {
+  const data = typeof window !== 'undefined' ? window.CR_DATA : null;
+  if (data && (path === 'manifest.json' || path === 'review.json')) {
+    const v = path === 'manifest.json' ? data.manifest : data.review;
+    if (v === null || v === undefined) throw new Error(`${path}: not in data.js`);
+    return v;
+  }
   const r = await fetch(path, { cache: 'no-cache' });
   if (!r.ok) throw new Error(`${path}: HTTP ${r.status}`);
   return r.json();
@@ -90,7 +158,14 @@ export function fetchText(path) {
   const url = assetUrl(path);
   if (!url) return Promise.reject(new Error(`refusing to load ${path}`));
   if (!textCache.has(url)) {
-    textCache.set(url, fetch(url).then((r) => {
+    const texts = typeof window !== 'undefined' ? window.CR_DATA?.texts : null;
+    if (texts && Object.prototype.hasOwnProperty.call(texts, url)) textCache.set(url, Promise.resolve(String(texts[url])));
+    else if (OFFLINE) {
+      textCache.set(url, offlineFile(url).then((f) => {
+        if (typeof f.text !== 'string') throw new Error(`${url}: not text`);
+        return f.text;
+      }));
+    } else textCache.set(url, fetch(url).then((r) => {
       if (!r.ok) throw new Error(`${path}: HTTP ${r.status}`);
       return r.text();
     }));

@@ -3,7 +3,9 @@
 //   geom[side]               -> footprint geometry json (bbox, pads, courtyard, edge_cuts)
 //   renders[side].layers     -> per-layer SVGs painted onto the board faces
 //   model3d_by_side[side][]  -> STEP copies ("file") + KiCad offset/rotate/scale/hide
-import { el, clear, assetUrl, fetchText } from './util.js';
+import { el, clear, assetUrl, fetchText, markdown, OFFLINE } from './util.js';
+
+const SERVE_HINT = 'Run `python3 serve.py` in this folder for the 3D view (see README.txt). Either way it needs access to cdn.jsdelivr.net.';
 
 let preferredMode = null;
 const groupPref = new Map();
@@ -83,10 +85,15 @@ export function createPanel3D(item, container) {
     }
     return lines[side];
   };
-  const onStatus = ({ side, text, errors }) => {
+  let hinted = false;
+  const onStatus = ({ side, text, errors, done }) => {
     const l = line(side);
     l.text.textContent = text;
     for (const e of errors || []) l.errs.append(el('li', {}, e));
+    if (OFFLINE && done && errors?.length && !hinted) {
+      hinted = true;
+      status.append(el('div', { class: 'notice' }, markdown(SERVE_HINT)));
+    }
   };
 
   function setMode(m) {
@@ -132,7 +139,8 @@ export function createPanel3D(item, container) {
     .catch((err) => {
       clear(stage).append(el('div', { class: 'empty' },
         '3D view unavailable: ', String(err?.message || err),
-        el('br'), 'The viewer loads three.js and occt-import-js from cdn.jsdelivr.net; check network access.'));
+        el('br'), 'The viewer loads three.js and occt-import-js from cdn.jsdelivr.net; check network access.',
+        OFFLINE ? markdown(SERVE_HINT) : null));
       stage.dataset.ready = 'error';
     });
 

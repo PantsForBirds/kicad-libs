@@ -7,7 +7,7 @@
 import {
   BOARD_THICKNESS, COPPER_THICKNESS, toBoard, padOutline, padToPcb, padDrill, padCopperSides,
 } from './kicad3d.js';
-import { assetUrl } from './util.js';
+import { imageSrc } from './util.js';
 
 export const PALETTE = {
   mask: '#1d5b34', copperUnderMask: '#2f7d45', exposedCopper: '#d6b25a', fr4Edge: '#bfb07a',
@@ -17,16 +17,19 @@ const DECAL_Z = 0.045; // above pads (0.035) so decals are not hidden by copper
 const MAX_TEXTURE_PX = 4096;
 const PX_PER_MM = 48;
 
-function loadImage(url) {
-  return new Promise((resolve) => {
-    const safe = assetUrl(url);
-    if (!safe) { resolve(null); return; }
-    const img = new Image();
-    img.decoding = 'async';
-    img.onload = () => resolve(img);
-    img.onerror = () => resolve(null);
-    img.src = safe;
+async function loadImage(url) {
+  let safe = null;
+  try { safe = await imageSrc(url); } catch { safe = null; } // offline: blob: URL from the item's pack
+  if (!safe) return null;
+  const img = await new Promise((resolve) => {
+    const im = new Image();
+    im.decoding = 'async';
+    im.onload = () => resolve(im);
+    im.onerror = () => resolve(null);
+    im.src = safe;
   });
+  if (safe.startsWith('blob:')) URL.revokeObjectURL(safe);
+  return img;
 }
 
 /** Draw an image recoloured to a single colour (alpha kept) — renders may use any palette. */
