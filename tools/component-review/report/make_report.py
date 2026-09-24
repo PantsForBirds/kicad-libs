@@ -30,7 +30,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / "ci"))
-from common import (SEVERITY_RANK, VERDICT_RANK, check_repo, check_sha, load_json,  # noqa: E402
+from common import (SEVERITY_RANK, VERDICT_RANK, check_repo, check_sha, finding_line_no, load_json,  # noqa: E402
                     safe_http_url, safe_repo_path, safe_site_file, safe_slug)
 from sanitize_site import svg_is_safe  # noqa: E402
 
@@ -253,13 +253,14 @@ def verdict_of(entry: dict):
 
 # --------------------------------------------------------------------------- sections
 
-def finding_html(ctx: Ctx, f: dict, sha) -> str:
+def finding_html(ctx: Ctx, f: dict, sha, item: dict | None = None) -> str:
     sev = f.get("severity") if f.get("severity") in SEV_ICON else "info"
     where = ""
     path = safe_repo_path(f.get("path"))
-    line = f.get("line") if isinstance(f.get("line"), int) and not isinstance(f.get("line"), bool) else None
+    # No usable line (e.g. KLC checker findings): link the item's first line, never #L0.
+    line, exact = finding_line_no(f, item)
     url = ctx.blob(path, line, sha)
-    label = (f"{path}:{line}" if line else path) if path else ""
+    label = (f"{path}:{line}" if exact else path) if path else ""
     if url:
         where = f' <a class="loc" href="{esc(url)}">{esc(label)}</a>'
     elif label:
@@ -516,7 +517,7 @@ def component_section(ctx: Ctx, imgs: Images, item: dict, lv) -> str:
     fs = findings_of(entry)
     if fs:
         out.append(f'<h4>Findings ({len(fs)})</h4><ul class="findings">'
-                   + "".join(finding_html(ctx, f, sha) for f in fs[:200]) + "</ul>")
+                   + "".join(finding_html(ctx, f, sha, item) for f in fs[:200]) + "</ul>")
     warnings = [w for w in item.get("warnings") or [] if isinstance(w, str)]
     if warnings:
         out.append('<h4>Render warnings</h4><ul class="warns">' + "".join(f"<li>{esc(w[:500])}</li>" for w in warnings[:50]) + "</ul>")

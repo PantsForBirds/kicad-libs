@@ -18,8 +18,8 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import (SEVERITY_RANK, findings_of, item_review, load_site, md_inline,  # noqa: E402
-                    overall_verdict, safe_http_url, safe_repo_path, verdict_of)
+from common import (SEVERITY_RANK, finding_line_no, findings_of, item_review, load_site,  # noqa: E402
+                    md_inline, overall_verdict, safe_http_url, safe_repo_path, verdict_of)
 
 MAX_ANNOTATIONS = 50        # GitHub's per-job cap
 MAX_SUMMARY = 900_000       # the step summary limit is 1 MiB
@@ -51,9 +51,11 @@ def annotations(manifest, review) -> list[str]:
         if not path:
             continue
         props = [f"file={_prop(path)}"]
-        line = f.get("line")
-        if isinstance(line, int) and not isinstance(line, bool) and line > 0 and item.get("status") != "deleted":
-            props.append(f"line={line}")
+        # Always a line: GitHub records a file-level annotation as line 0 (a dead "#L0" link).
+        # Unlocated findings go on the item's first line; deleted items' lines don't exist
+        # at head, so those go on line 1.
+        line, _exact = finding_line_no(f, item if item.get("status") != "deleted" else None)
+        props.append(f"line={line}")
         name = f"{item.get('library')}:{item.get('name')}" if item else "PR"
         props.append("title=" + _prop(f"{str(f.get('category') or 'check')[:30]}: {name}"[:120]))
         msg = re.sub(r"\s+", " ", str(f.get("message") or "")).strip()[:900]

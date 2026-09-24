@@ -88,6 +88,17 @@ class TestContent(Base):
         self.assertIn("Diff over before", page)       # modified item has the overlay
         self.assertIn("data:image/png;base64,", page)
 
+    def test_unlocated_findings_link_item_start(self):
+        rid = "symbol:Custom_Audio:NS4168"             # line_range head [5, 180]
+        self.r["items"][rid]["findings"] = [
+            {"severity": "warning", "category": "klc", "message": "no line", "path": "lib_sch/Custom_Audio.kicad_sym"},
+            {"severity": "warning", "category": "klc", "message": "line 0", "line": 0, "path": "lib_sch/Custom_Audio.kicad_sym"}]
+        self.save()
+        page = self.page()
+        self.assertNotIn("#L0", page)
+        self.assertNotIn(".kicad_sym:0", page)
+        self.assertEqual(page.count("lib_sch/Custom_Audio.kicad_sym#L5\">lib_sch/Custom_Audio.kicad_sym</a>"), 2)
+
     def test_statuses(self):
         # make the modified item's twin deleted, with a text diff
         it = dict(self.m["items"][0])

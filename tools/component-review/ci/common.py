@@ -199,6 +199,20 @@ def verdict_of(ir: dict) -> str | None:
     return v if v in VERDICT_RANK else None
 
 
+def finding_line_no(f: dict, item: dict | None = None) -> tuple[int, bool]:
+    """(line, exact) for linking/annotating a finding. Findings without a usable line (e.g.
+    from the KLC checker) point at the item's first line in the file, or line 1, never 0."""
+    line = f.get("line")
+    if isinstance(line, int) and not isinstance(line, bool) and line > 0:
+        return line, True
+    lr = (item or {}).get("line_range")
+    if isinstance(lr, dict):
+        rng = lr.get("base" if (item or {}).get("status") == "deleted" else "head")
+        if isinstance(rng, list) and rng and isinstance(rng[0], int) and not isinstance(rng[0], bool) and rng[0] > 0:
+            return rng[0], False
+    return 1, False
+
+
 def overall_verdict(manifest, review) -> str | None:
     if not review:
         return None
