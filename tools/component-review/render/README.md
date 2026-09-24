@@ -57,6 +57,7 @@ Exits 0 unless the tool itself fails. Per-item problems go into `items[].warning
       KiCad frame (z up, board top z=0) under a `kicad_zup` root that rotates it into glTF Y-up.
       The model transform is `T(offset)·Rz(-rz)·Ry(-ry)·Rx(-rx)·S`, as in KiCad's 3D viewer.
     * `<side>_3d.png`: a 2×2 sheet (iso/top/front/right) from a numpy z-buffer rasteriser (no OpenGL needed), handy for the AI reviewer.
+* **Related symbols.** For footprints, `related_symbols` lists every head symbol whose Footprint property points at the item, with a standalone source copy in `items/<slug>/related/` and its pin list.
 * **Metadata.**
   * `properties`; `datasheet` (Datasheet property or a URL in descr/Description, plus a fuzzy match in `datasheets/`,
     copied to `items/<slug>/datasheet.pdf`).

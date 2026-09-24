@@ -524,8 +524,44 @@ class Renderer:
                                  a_exists=it.base_text is not None, b_exists=it.head_text is not None)
             write(os.path.join(d, "diff.patch"), patch)
             entry["text_diff"] = f"items/{it.slug}/diff.patch"
+        # symbols (anywhere in the head libraries) that use this footprint -> pinout cross-check
+        if it.head_node is not None:
+            self._related_symbols(it, entry, d, rel)
         # 3D models
         self._models(it, entry, fps, d, rel)
+
+    def _sym_index(self):
+        """{footprint 'Lib:Name': [(lib, symbol name, root, libdict, node, text)]} over head lib_sch."""
+        if getattr(self, "_symidx", None) is None:
+            self._symidx = {}
+            for path in self.git.ls(self.head_sha, "lib_sch"):
+                m = SYM_RE.match(path)
+                if not m:
+                    continue
+                text = self.git.text(self.head_sha, path) or ""
+                try:
+                    root = parse(text)
+                except Exception:
+                    continue
+                lib = symmod.parse_library(root)
+                for name, node in lib.items():
+                    for p in node.children("property"):
+                        if str(p.arg(0, "")) == "Footprint" and p.arg(1):
+                            self._symidx.setdefault(str(p.arg(1)), []).append(
+                                (m.group("lib"), name, root, lib, node, text, path))
+        return self._symidx
+
+    def _related_symbols(self, it: Item, entry, d, rel):
+        key = f"{it.library}:{it.name}"
+        out = []
+        for lib, name, root, libd, node, text, path in self._sym_index().get(key, []):
+            p = os.path.join(d, "related", f"{re.sub(r'[^A-Za-z0-9._-]', '_', lib + '__' + name)}.kicad_sym")
+            write(p, symbol_source(root, libd, node, text))
+            st = symmod.Symbol(node, libd).stats()
+            out.append({"id": f"symbol:{lib}:{name}", "path": path, "source": rel(p),
+                        "pin_count": st["pin_count"],
+                        "pins": [{"number": q["number"], "name": q["name"], "type": q["type"]} for q in st["pins"]]})
+        entry["related_symbols"] = out
 
     def _model_file(self, sha: str, rel_path: str) -> tuple[str | None, str | None]:
         """Materialise a model blob from a git revision; returns (tmp file, repo path used)."""
