@@ -348,6 +348,7 @@ class Footprint:
             table.append({
                 "number": p["number"], "type": p["type"], "shape": p["shape"],
                 "size": [round(p["w"], 4), round(p["h"], 4)],
+                "at": [round(p["x"], 4), round(p["y"], 4), round(p["angle"], 3)],
                 "pos": [round(p["x"], 4), round(p["y"], 4)],
                 "angle": round(p["angle"], 3),
                 "drill": ([round(p["drill"]["w"], 4), round(p["drill"]["h"], 4)] if p["drill"] else None),
@@ -645,10 +646,8 @@ def layer_elements(fp: Footprint) -> tuple[dict[str, list[str]], BBox]:
     for t in fp.texts:
         el, tb = _text_svg(fp, t, layer_color(t["layer"]))
         add(t["layer"], el)
-        # Only silkscreen text grows the frame (contract: courtyard ∪ pads ∪ graphics); long Fab
-        # value strings would otherwise shrink the part to a speck. They may clip at the edge.
-        if t["layer"].endswith(".SilkS"):
-            bb.add_box(tb)
+        # every visible text grows the frame, so nothing is ever clipped
+        bb.add_box(tb)
     return out, bb
 
 
@@ -748,7 +747,9 @@ def geom_json(fp: Footprint, vb) -> dict:
         d = p["drill"]
         pads.append({
             "number": p["number"], "type": p["type"], "shape": p["shape"],
-            "at": [p["x"], p["y"], p["angle"]], "size": [p["w"], p["h"]],
+            "at": [round(p["x"], 4), round(p["y"], 4), round(p["angle"], 3)],
+            "pos": [round(p["x"], 4), round(p["y"], 4)], "angle": round(p["angle"], 3),
+            "size": [round(p["w"], 4), round(p["h"], 4)],
             "drill": ({"shape": "oval" if d["oval"] else "circle", "size": [d["w"], d["h"]],
                        "offset": list(d["offset"])} if d else None),
             "layers": p["layers"],
@@ -756,7 +757,7 @@ def geom_json(fp: Footprint, vb) -> dict:
             "chamfer_ratio": p["chamfer_ratio"] or None, "chamfer": p["chamfer"] or None,
             "rect_delta": p["delta"] if p["shape"] == "trapezoid" else None,
             "anchor": p["anchor"] if p["shape"] == "custom" else None,
-            "primitives": [_prim_json(g) for g in p["primitives"]],
+            "primitives": [q for g in p["primitives"] for q in _prim_json(g)],
             "solder_mask_margin": p["mask_margin"] or None,
         })
     court = {"F": [], "B": []}
@@ -770,12 +771,44 @@ def geom_json(fp: Footprint, vb) -> dict:
             "pads": pads, "courtyard": court, "edge_cuts": edge}
 
 
-def _prim_json(g) -> dict:
-    out = {"kind": g.get("kind"), "width": g.get("width", 0), "filled": bool(g.get("filled"))}
+def _prim_polys(g) -> list[list[list[float]]]:
+    """Custom-pad primitive -> filled polygons in pad-local mm (strokes become quads per segment)."""
+    w = g.get("width", 0) or 0
+    r5 = lambda p: [round(p[0], 5), round(p[1], 5)]  # noqa: E731
     if "center" in g:
-        out.update(kind="circle", center=list(g["center"]), radius=g["r"])
+        cx, cy = g["center"]
+        rr = g["r"] + (w / 2 if g.get("filled") else 0)
+        circ = [r5((cx + rr * math.cos(2 * math.pi * i / 32), cy + rr * math.sin(2 * math.pi * i / 32)))
+                for i in range(32)]
+        if g.get("filled") or w <= 0:
+            return [circ]
+        pts, closed = circ + [circ[0]], True
     elif "arc" in g:
-        out.update(kind="arc", start=list(g["arc"][0]), mid=list(g["arc"][1]), end=list(g["arc"][2]))
+        pts, closed = [list(p) for p in arc_points(*g["arc"], n=16)], False
     else:
-        out["pts"] = [list(p) for p in g.get("pts", [])]
+        pts = [list(p) for p in g.get("pts", [])]
+        closed = g.get("kind") == "poly"
+        if closed and (g.get("filled") or g.get("kind") == "poly") and len(pts) >= 3:
+            return [[r5(p) for p in pts]]
+    out = []
+    hw = max(w, 0.001) / 2
+    for (x0, y0), (x1, y1) in zip(pts, pts[1:]):
+        L = math.hypot(x1 - x0, y1 - y0)
+        if L < 1e-9:
+            continue
+        nx, ny = -(y1 - y0) / L * hw, (x1 - x0) / L * hw
+        out.append([r5((x0 + nx, y0 + ny)), r5((x1 + nx, y1 + ny)), r5((x1 - nx, y1 - ny)), r5((x0 - nx, y0 - ny))])
     return out
+
+
+def _prim_json(g) -> list[dict]:
+    """Contract: {"type": "poly", "pts": [[x, y], ...]} in pad-local mm (unrotated, relative to pad 'at').
+
+    Also keeps the original description ("kind", "width", "filled" and circle/arc params) for reference.
+    """
+    src = {"kind": g.get("kind"), "width": g.get("width", 0), "filled": bool(g.get("filled"))}
+    if "center" in g:
+        src.update(kind="circle", center=list(g["center"]), radius=g["r"])
+    elif "arc" in g:
+        src.update(kind="arc", start=list(g["arc"][0]), mid=list(g["arc"][1]), end=list(g["arc"][2]))
+    return [dict(type="poly", pts=poly, source=src) for poly in _prim_polys(g)]
