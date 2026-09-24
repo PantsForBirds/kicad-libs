@@ -19,7 +19,7 @@ import urllib.parse
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import (MARKER, SEVERITY_RANK, check_repo, check_sha, findings_of, item_review, load_site,  # noqa: E402
+from common import (MARKER, SEVERITY_RANK, check_repo, check_sha, finding_line_no, findings_of, item_review, load_site,  # noqa: E402
                     md_block, md_code, md_inline, overall_verdict, parse_pr_number, safe_http_url,
                     safe_repo_path, safe_site_file, safe_slug, verdict_of)
 
@@ -141,7 +141,7 @@ def details_block(ctx: Ctx, item: dict, review, inlined: set[str]) -> str:
         lines += [f"**Review ({VERDICT_TEXT[v]}):** {md_block(ir.get('summary'), 800)}", ""]
     fs = findings_of(ir)
     for f in fs[:25]:
-        lines += finding_line(ctx, f, " 💬" if finding_key(f) in inlined else "")
+        lines += finding_line(ctx, f, " 💬" if finding_key(f) in inlined else "", item)
     if len(fs) > 25:
         lines.append(f"- … {len(fs) - 25} more in the viewer")
     checks = ir.get("checks") if isinstance(ir.get("checks"), list) else []
@@ -163,13 +163,15 @@ def pr_findings_of(review) -> list[dict]:
     return sorted(out, key=lambda f: -SEVERITY_RANK.get(f.get("severity"), -1))
 
 
-def finding_line(ctx: "Ctx", f: dict, tag: str = "") -> list[str]:
+def finding_line(ctx: "Ctx", f: dict, tag: str = "", item: dict | None = None) -> list[str]:
     sev = f.get("severity") if f.get("severity") in SEVERITY_ICON else "info"
     where = ""
     fpath = safe_repo_path(f.get("path"))
-    fline = f.get("line") if isinstance(f.get("line"), int) and not isinstance(f.get("line"), bool) else None
-    if fpath and fline:
+    fline, exact = finding_line_no(f, item)
+    if fpath and exact:
         where = f" ([L{fline}]({ctx.blob(fpath, fline)}))"
+    elif fpath and item and item.get("status") != "deleted":   # no line: link the item's start
+        where = f" ([{md_code(fpath.rsplit('/', 1)[-1], 100)}]({ctx.blob(fpath, fline)}))"
     elif fpath:
         where = f" ({md_code(fpath, 100)})"
     msg = md_block(f.get("message"), 600).replace("\n", " ")

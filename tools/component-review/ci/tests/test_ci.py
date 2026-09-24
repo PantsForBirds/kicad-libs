@@ -1,5 +1,6 @@
 """Tests for the component-review CI scripts: python3 -m unittest discover -s tools/component-review/ci/tests"""
 import json
+import re
 import os
 import subprocess
 import sys
@@ -428,6 +429,29 @@ class TestJobSummary(Tmp):
         self.assertTrue(inj.endswith("::50%25 bad ::error::x"))   # one line; the message part is inert
         self.assertFalse(any(l.startswith("::info") or l.startswith("::notice") for l in lines))
         self.assertTrue(any("file=lib_3d/Custom_Module/SH1421-C.step" in l for l in lines))  # PR-level
+
+    def test_no_line_zero(self):
+        """KLC-checker findings have no line: annotate/link the item's first line, never 0."""
+        review = json.loads((self.site / "review.json").read_text())
+        rid = "symbol:Custom_Audio:NS4168"             # line_range head [5, 180]
+        review["items"][rid]["findings"] += [
+            {"severity": "warning", "category": "klc", "message": "KLC S3.1 no line", "path": "lib_sch/Custom_Audio.kicad_sym"},
+            {"severity": "warning", "category": "klc", "message": "KLC S3.2 line 0", "line": 0,
+             "path": "lib_sch/Custom_Audio.kicad_sym"}]
+        (self.site / "review.json").write_text(json.dumps(review))
+        manifest, review = common.load_site(self.site)
+        lines = job_summary.annotations(manifest, review)
+        self.assertTrue(all(re.search(r"(^|,)line=[1-9][0-9]*(,|::)", l) for l in lines), lines)
+        for msg in ("KLC S3.1 no line", "KLC S3.2 line 0"):
+            self.assertIn("file=lib_sch/Custom_Audio.kicad_sym,line=5,", next(l for l in lines if msg in l))
+        self.assertIn("line=1,", next(l for l in lines if "SH1421-C.step" in l))   # PR-level: line 1
+        ctx = Ctx(self.site, REPO, 8, HEAD, "https://pantsforbirds.github.io/kicad-libs/", PAGES)
+        body = build_comment(ctx, manifest, review)
+        self.assertNotIn("#L0", body)
+        self.assertNotIn("[L0]", body)
+        self.assertIn("Custom_Audio.kicad_sym#L5)", body)
+        self.assertEqual(common.finding_line_no({"line": True}, None), (1, False))
+        self.assertEqual(common.finding_line_no({"line": 7}, None), (7, True))
 
     def test_summary(self):
         (self.site / "review.md").write_text("## Component review\n\n| a | b |\n")
