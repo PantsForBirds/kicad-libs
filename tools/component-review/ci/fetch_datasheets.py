@@ -6,6 +6,7 @@ blindly. This script builds a private work copy of the site for the AI step and 
 each item's datasheet into it:
 
   * https only (redirects too), default port only, hosts must resolve to public IPs only;
+    an http:// URL is retried as https:// and refused only if that fails;
   * at most --max-bytes per file (default 20 MB), --timeout seconds wall-clock per download
     (default 20 s), --max-downloads per run (default 20), --budget seconds overall (120 s);
   * the body must be a PDF (%PDF magic), otherwise it is discarded;
@@ -150,6 +151,16 @@ def fetch_pdf(url: str, max_bytes: int, timeout: float, _follow_html: bool = Tru
     raise Refused("too many redirects")
 
 
+def https_variant(url: str) -> str | None:
+    """The URL to actually fetch: https as-is, http:// upgraded to https://, else None."""
+    u = urllib.parse.urlsplit(url)
+    if u.scheme == "https":
+        return url
+    if u.scheme == "http" and u.port in (None, 80):
+        return urllib.parse.urlunsplit(("https", u.hostname or "", u.path, u.query, u.fragment))
+    return None
+
+
 def link_tree(src: Path, dst: Path) -> None:
     if dst.exists():
         shutil.rmtree(dst)
@@ -170,7 +181,7 @@ def prepare(site: Path, work: Path, *, fetch: bool = True, max_bytes: int = 20 *
     manifest = load_json(work / "manifest.json")
     if not isinstance(manifest, dict) or not isinstance(manifest.get("items"), list):
         raise SystemExit("fetch_datasheets: no usable manifest.json")
-    stats = {"fetched": 0, "skipped": []}
+    stats = {"fetched": 0, "skipped": [], "upgraded": []}
     by_url: dict[str, str | None] = {}
     started = time.monotonic()
     for item in manifest["items"]:
@@ -195,12 +206,18 @@ def prepare(site: Path, work: Path, *, fetch: bool = True, max_bytes: int = 20 *
             stats["skipped"].append(f"{url}: download budget exhausted")
             rel = by_url[url] = None
         else:
+            target = https_variant(url)
             try:
-                data = fetcher(url, max_bytes, timeout)
+                if target is None:
+                    raise Refused("not https")
+                data = fetcher(target, max_bytes, timeout)
             except Refused as e:
-                stats["skipped"].append(f"{url}: {e}")
+                why = f"http:// not allowed and {target} failed: {e}" if target and target != url else str(e)
+                stats["skipped"].append(f"{url}: {why}")
                 rel = by_url[url] = None
             else:
+                if target != url:
+                    stats["upgraded"].append(f"{url} -> {target}")
                 rel = f"items/{slug}/datasheet_dl.pdf"
                 (work / rel).write_bytes(data)
                 stats["fetched"] += 1
@@ -225,7 +242,10 @@ def main(argv=None) -> int:
     a = ap.parse_args(argv)
     stats = prepare(a.site, a.work, fetch=not a.no_fetch, max_bytes=a.max_bytes, timeout=a.timeout,
                     max_downloads=a.max_downloads, budget=a.budget)
-    log(f"fetch_datasheets: fetched {stats['fetched']}, skipped {len(stats['skipped'])}")
+    log(f"fetch_datasheets: fetched {stats['fetched']} (upgraded to https: {len(stats['upgraded'])}), "
+        f"skipped {len(stats['skipped'])}")
+    for u in stats["upgraded"]:
+        log(f"  upgraded {u}")
     for s in stats["skipped"]:
         log(f"  skipped {s}")
     return 0

@@ -194,11 +194,25 @@ class TestFetchDatasheets(Tmp):
         m = json.loads((self.tmp / "work" / "manifest.json").read_text())
         files = [i["datasheet"].get("file") for i in m["items"]]
         self.assertTrue(files[0].endswith("datasheet_dl.pdf"))
-        self.assertIsNone(files[1])                    # http refused
+        self.assertTrue(files[1].endswith("datasheet_dl.pdf"))   # http upgraded to https
+        self.assertIn("https://b.com/2.pdf", calls)
+        self.assertNotIn("http://b.com/2.pdf", calls)
         self.assertEqual(files[2], files[0])           # same URL fetched once, reused
         self.assertIsNone(files[3])
         self.assertEqual(calls.count("https://a.com/1.pdf"), 1)
-        self.assertEqual(stats["fetched"], 1)
+        self.assertEqual(stats["fetched"], 2)
+        self.assertEqual(stats["upgraded"], ["http://b.com/2.pdf -> https://b.com/2.pdf"])
+
+    def test_http_upgrade_failure_refused(self):
+        self.urls(["http://b.com/2.pdf", "ftp://c.com/3.pdf", "http://d.com:8080/4.pdf"])
+
+        def fake(url, max_bytes, timeout):
+            raise fetch_datasheets.Refused("HTTP 404")
+
+        stats = fetch_datasheets.prepare(self.site, self.tmp / "work", fetcher=fake)
+        self.assertEqual(stats["fetched"], 0)
+        self.assertIn("http:// not allowed and https://b.com/2.pdf failed: HTTP 404", stats["skipped"][0])
+        self.assertTrue(all("not https" in s for s in stats["skipped"][1:]))
 
     def test_download_budget(self):
         self.urls([f"https://a{i}.com/x.pdf" for i in range(5)])

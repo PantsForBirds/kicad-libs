@@ -92,7 +92,8 @@ cleanup, because the old commit still has them.
   them), so a PR could try prompt injection. That can only change the wording of the advisory
   review. The model has no tools, and its output is escaped like everything else.
 - Datasheet URLs named in the PR are fetched by `ci/fetch_datasheets.py`, not by the ai
-  tool, which runs with `--no-download`. Limits: https only (redirects too, default port),
+  tool, which runs with `--no-download`. Limits: https only (an `http://` URL is tried as
+  `https://` first and refused only if that fails; redirects must stay https; default port),
   hosts must resolve to public IPs (connections are pinned to the checked IP), 20 MB and
   20 s wall-clock per file, 20 files and 120 s per run. The body must be a PDF; for
   distributor landing pages, one same-site PDF link is followed. These can be tuned with
@@ -128,6 +129,7 @@ Optional repository **variables** (*Settings → Secrets and variables → Actio
 | Variable             | Default             | Meaning |
 |----------------------|---------------------|---------|
 | `CR_KICAD_IMAGE`     | `kicad/kicad:10.0`  | Container for the render job. Set to `none` to run on the plain runner (no `kicad-cli`) |
+| `CR_FETCH_STOCK_MODELS` | on             | Set to `false` to stop the render job downloading KiCad stock 3D models (`${KICAD10_3DMODEL_DIR}/…`) from the official kicad-packages3D repo at the tag pinned in `render/stock_models_tag.txt`. Downloads are cached with actions/cache, keyed on that file |
 | `CR_FAIL_CONCLUSION` | `neutral`           | Check-run conclusion when the AI verdict is `fail`: `neutral` (default, never blocks), `failure` (lets you require the check in branch protection), or `success` |
 | `CR_MODEL`           | ai tool's default   | Claude model for the AI review |
 | `CR_PAGES_URL`       | `https://<owner>.github.io/<repo>/` | Viewer base URL, e.g. with a custom Pages domain |
@@ -176,6 +178,9 @@ if you have it): `actionlint .github/workflows/component-review*.yml`.
 
 ## Cost and limits
 
+- **Stock 3D model cache**: each run saves a new cache entry and restores the newest one
+  for the same `stock_models_tag.txt`. Caches from PR runs are only visible to that PR, so
+  each PR starts its own. Old entries are evicted by GitHub's 10 GB per-repo cache limit.
 - **Actions minutes**: free for public repos. A render run takes a few minutes (most of it is
   pulling the KiCad image). The publish and cleanup jobs take about a minute.
 - **LLM**: the only paid part. The AI review runs once per push to a PR that touches library
