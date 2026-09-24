@@ -76,9 +76,9 @@ jobs:
         run: |
           python3 -m venv --system-site-packages "$RUNNER_TEMP/venv"
           echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
-          for req in tools/component-review/render/requirements.txt tools/component-review/ai/requirements.txt; do
-            if [ -f "$req" ]; then "$RUNNER_TEMP/venv/bin/pip" install -q -r "$req"; fi
-          done
+          # (ai/requirements.txt is only needed for the LLM, which runs in the publish workflow)
+          req=tools/component-review/render/requirements.txt
+          if [ -f "$req" ]; then "$RUNNER_TEMP/venv/bin/pip" install -q -r "$req"; fi
 
       # KiCad stock 3D models (${KICAD10_3DMODEL_DIR}/...) are downloaded by the renderer from
       # the official kicad-packages3D repo at a pinned tag. Repo var CR_FETCH_STOCK_MODELS=false
@@ -128,9 +128,30 @@ jobs:
           fi
           python3 "$r" --repo . --base "$MERGE_BASE" --head "$HEAD_SHA" --out "$OUT" --pr "$PR_NUMBER" "${extra[@]}"
 
+      # Optional KLC checker: kicad-library-utils at the commit pinned in ci/klc_utils.ref.
+      # Repo var CR_KLC=false disables it.
+      - name: Restore KLC checker cache
+        if: vars.CR_KLC != 'false' && hashFiles('tools/component-review/ci/klc_utils.ref') != ''
+        uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/klc-utils
+          key: klc-utils-${{ hashFiles('tools/component-review/ci/klc_utils.ref') }}
+
       - name: Deterministic checks (no LLM)
         continue-on-error: true
-        run: python3 tools/component-review/ai/cr_ai_review.py --out "$OUT" --no-llm
+        env:
+          CR_KLC: ${{ vars.CR_KLC }}
+        run: |
+          extra=()
+          fetch=tools/component-review/ci/fetch_klc_utils.sh
+          if [ "$CR_KLC" != "false" ] && [ -f "$fetch" ]; then
+            if klc=$(bash "$fetch" "$RUNNER_TEMP/klc-utils"); then
+              extra+=(--klc-utils "$klc")
+            else
+              echo "::warning::could not fetch kicad-library-utils; KLC checker skipped"
+            fi
+          fi
+          python3 tools/component-review/ai/cr_ai_review.py --out "$OUT" --no-llm "${extra[@]}"
 
       - name: Bundle viewer
         continue-on-error: true

@@ -58,6 +58,7 @@ privileged stage never runs PR code.
 │                       size caps; untrusted review.json discarded       │
 │  ci/fetch_datasheets.py  private AI work copy + strict https datasheet │
 │                       fetch (never published)                          │
+│  ci/fetch_klc_utils.sh  kicad-library-utils at the pinned commit       │
 │  ai/cr_ai_review.py   LLM review on the work copy, --no-download       │
 │                       (or --no-llm if no key / on error)               │
 │  viewer/build_site.py trusted viewer copied over the data              │
@@ -132,6 +133,8 @@ Optional repository **variables** (*Settings → Secrets and variables → Actio
 | `CR_FETCH_STOCK_MODELS` | on             | Set to `false` to stop the render job downloading KiCad stock 3D models (`${KICAD10_3DMODEL_DIR}/…`) from the official kicad-packages3D repo at the tag pinned in `render/stock_models_tag.txt`. Downloads are cached with actions/cache, keyed on that file |
 | `CR_FAIL_CONCLUSION` | `neutral`           | Check-run conclusion when the AI verdict is `fail`: `neutral` (default, never blocks), `failure` (lets you require the check in branch protection), or `success` |
 | `CR_MODEL`           | ai tool's default   | Claude model for the AI review |
+| `CR_EFFORT`          | ai tool's default   | Effort level for the AI review |
+| `CR_KLC`             | on                  | Set to `false` to skip the official KLC checker (kicad-library-utils, pinned in `ci/klc_utils.ref`). It runs in both the unprivileged `--no-llm` job (cached) and the trusted LLM job (fetched fresh, ~1 s) |
 | `CR_PAGES_URL`       | `https://<owner>.github.io/<repo>/` | Viewer base URL, e.g. with a custom Pages domain |
 
 Verdict → check conclusion: `pass` → success, `warn` → neutral, `fail` → `CR_FAIL_CONCLUSION`,

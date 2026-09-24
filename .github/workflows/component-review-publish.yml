@@ -91,18 +91,32 @@ jobs:
         timeout-minutes: 20
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          CR_MODEL: ${{ vars.CR_MODEL }}
+          CR_MODEL: ${{ vars.CR_MODEL }}      # read by cr_ai_review.py when set
+          CR_EFFORT: ${{ vars.CR_EFFORT }}    # read by cr_ai_review.py when set
+          CR_KLC: ${{ vars.CR_KLC }}
           CR_PAGES_URL: ${{ vars.CR_PAGES_URL }}
           PR_NUMBER: ${{ steps.pr.outputs.pr }}
         run: |
+          [ -n "$CR_MODEL" ] || unset CR_MODEL
+          [ -n "$CR_EFFORT" ] || unset CR_EFFORT
           pages="${CR_PAGES_URL:-https://${GITHUB_REPOSITORY_OWNER,,}.github.io/${GITHUB_REPOSITORY#*/}/}"
-          export CR_SITE_URL="${pages%/}/pr/$PR_NUMBER/"   # linked from review.md
+          site_url="${pages%/}/pr/$PR_NUMBER/"   # linked from review.md
           ai=tools/component-review/ai/cr_ai_review.py
           work="$RUNNER_TEMP/ai-work"
           note=""
           if [ ! -f "$ai" ]; then
             echo "note=AI review not available on the default branch yet." >> "$GITHUB_OUTPUT"
             exit 0
+          fi
+          common=(--no-download --site-url "$site_url")
+          # KLC checker: a trusted external repo at a pinned commit, fetched fresh (about 1 s)
+          # rather than from a cache, so nothing restored here needs to be trusted.
+          if [ "$CR_KLC" != "false" ] && [ -f "$CI/fetch_klc_utils.sh" ]; then
+            if klc=$(bash "$CI/fetch_klc_utils.sh" "$RUNNER_TEMP/klc-utils"); then
+              common+=(--klc-utils "$klc")
+            else
+              echo "::warning::could not fetch kicad-library-utils; KLC checker skipped"
+            fi
           fi
           # Private work copy for the AI. PR-named datasheets are fetched by our strict fetcher
           # (https only, 20 MB / 20 s per file, 20 files, public IPs, must be a PDF) and never
@@ -115,10 +129,10 @@ jobs:
           fi
           if [ -z "$ANTHROPIC_API_KEY" ]; then
             note="LLM review skipped: the ANTHROPIC_API_KEY secret is not configured. Showing deterministic checks only."
-            python3 "$ai" --out "$work" --no-llm --no-download || note="Deterministic checks failed; see the workflow log."
-          elif ! python3 "$ai" --out "$work" --no-download ${CR_MODEL:+--model "$CR_MODEL"}; then
+            python3 "$ai" --out "$work" --no-llm "${common[@]}" || note="Deterministic checks failed; see the workflow log."
+          elif ! python3 "$ai" --out "$work" "${common[@]}"; then
             note="LLM review failed (see the workflow log). Showing deterministic checks only."
-            python3 "$ai" --out "$work" --no-llm --no-download || true
+            python3 "$ai" --out "$work" --no-llm "${common[@]}" || true
           fi
           for f in review.json review.md; do
             if [ -f "$work/$f" ]; then cp "$work/$f" "$SITE/$f"; fi

@@ -31,7 +31,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import (FINDING_MARKER_RE, MARKER, GitHub, check_repo, check_sha, findings_of,  # noqa: E402
                     item_review, load_site, log, md_block, md_inline, overall_verdict,
                     parse_pr_number, safe_repo_path)
-from make_comment import Ctx, build_comment, default_pages_url, finding_key  # noqa: E402
+from make_comment import Ctx, build_comment, default_pages_url, finding_key, pr_findings_of  # noqa: E402
 
 BOT_LOGIN = os.environ.get("CR_BOT_LOGIN", "github-actions[bot]")
 INLINE_EXT = (".kicad_mod", ".kicad_sym")
@@ -126,10 +126,11 @@ def check_payload(head_sha: str, manifest, review, viewer_url: str, fail_conclus
     ov = overall_verdict(manifest, review)
     conclusion = {"pass": "success", "warn": "neutral", "fail": fail_conclusion, None: "neutral"}[ov]
     counts = {"error": 0, "warning": 0, "info": 0}
-    for item in manifest["items"]:
-        for f in findings_of(item_review(review, item.get("id"))):
-            if f.get("severity") in counts:
-                counts[f["severity"]] += 1
+    all_findings = [f for item in manifest["items"] for f in findings_of(item_review(review, item.get("id")))]
+    all_findings += pr_findings_of(review)
+    for f in all_findings:
+        if f.get("severity") in counts:
+            counts[f["severity"]] += 1
     title = (f"{len(manifest['items'])} component(s): verdict {ov or 'not reviewed'}; "
              f"{counts['error']} error(s), {counts['warning']} warning(s)")
     return {"name": CHECK_NAME, "head_sha": head_sha, "status": "completed", "conclusion": conclusion,
