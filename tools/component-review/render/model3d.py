@@ -366,8 +366,67 @@ def _mesh_rgba(mesh):
         return np.array([0.7, 0.7, 0.7, 1.0])
 
 
-def render_preview(glb_path: str, png_path: str, size: int = 900, view=(1.0, 1.3, 1.6), hide=()) -> None:
-    """Shaded orthographic snapshot of a GLB (glTF Y-up world). ``view`` = direction towards the camera."""
+def _zbuffer(T, C, d, up, size, ss=2, bg=(238, 240, 244)):
+    """Orthographic z-buffer raster of triangles T (n,3,3) with colours C (n,3) seen from direction d."""
+    d = np.asarray(d, float)
+    d /= np.linalg.norm(d)
+    up = np.asarray(up, float)
+    r = np.cross(up, d)
+    if np.linalg.norm(r) < 1e-9:
+        r = np.cross(np.array([0.0, 0.0, -1.0]), d)
+    r /= np.linalg.norm(r)
+    u = np.cross(d, r)
+    X = T @ r
+    Y = -(T @ u)
+    Z = T @ d                      # larger = closer to the camera
+    n = np.cross(T[:, 1] - T[:, 0], T[:, 2] - T[:, 0])
+    ln = np.linalg.norm(n, axis=1)
+    ok = ln > 1e-12
+    n[ok] /= ln[ok, None]
+    light = d + 0.6 * u + 0.3 * r
+    light /= np.linalg.norm(light)
+    shade = 0.30 + 0.70 * np.abs(n @ light)
+    W = size * ss
+    x0, x1, y0, y1 = X.min(), X.max(), Y.min(), Y.max()
+    scale = (W * 0.92) / max(x1 - x0, y1 - y0, 1e-6)
+    X = (X - (x0 + x1) / 2) * scale + W / 2
+    Y = (Y - (y0 + y1) / 2) * scale + W / 2
+    zbuf = np.full((W, W), -np.inf)
+    img = np.empty((W, W, 3), dtype=np.float32)
+    img[:] = np.asarray(bg, np.float32) / 255.0
+    cols = np.clip(C[:, :3] * shade[:, None], 0, 1).astype(np.float32)
+    for i in range(len(T)):
+        xs, ys, zs = X[i], Y[i], Z[i]
+        bx0, bx1 = max(int(np.floor(xs.min())), 0), min(int(np.ceil(xs.max())), W - 1)
+        by0, by1 = max(int(np.floor(ys.min())), 0), min(int(np.ceil(ys.max())), W - 1)
+        if bx1 < bx0 or by1 < by0:
+            continue
+        den = (ys[1] - ys[2]) * (xs[0] - xs[2]) + (xs[2] - xs[1]) * (ys[0] - ys[2])
+        if abs(den) < 1e-12:
+            continue
+        px, py = np.meshgrid(np.arange(bx0, bx1 + 1) + 0.5, np.arange(by0, by1 + 1) + 0.5)
+        w0 = ((ys[1] - ys[2]) * (px - xs[2]) + (xs[2] - xs[1]) * (py - ys[2])) / den
+        w1 = ((ys[2] - ys[0]) * (px - xs[2]) + (xs[0] - xs[2]) * (py - ys[2])) / den
+        w2 = 1 - w0 - w1
+        inside = (w0 >= -1e-6) & (w1 >= -1e-6) & (w2 >= -1e-6)
+        if not inside.any():
+            continue
+        z = w0 * zs[0] + w1 * zs[1] + w2 * zs[2]
+        sub = zbuf[by0:by1 + 1, bx0:bx1 + 1]
+        upd = inside & (z > sub)
+        sub[upd] = z[upd]
+        img[by0:by1 + 1, bx0:bx1 + 1][upd] = cols[i]
+    img = (img * 255).astype(np.uint8)
+    from PIL import Image
+    im = Image.fromarray(img)
+    return im.resize((size, size), Image.LANCZOS) if ss > 1 else im
+
+
+def render_preview(glb_path: str, png_path: str, size: int = 900, hide=()) -> None:
+    """2x2 sheet of shaded orthographic views (iso / top / front / right) using a numpy z-buffer.
+
+    The GLB is glTF Y-up (board top = +Y, KiCad front edge = +Z). No OpenGL required.
+    """
     from PIL import Image, ImageDraw
 
     scene = trimesh.load(glb_path, force="scene")
@@ -385,30 +444,15 @@ def render_preview(glb_path: str, png_path: str, size: int = 900, view=(1.0, 1.3
         return
     T = np.concatenate(tris)
     C = np.concatenate(cols)
-    d = np.asarray(view, float)
-    d /= np.linalg.norm(d)
-    up = np.array([0.0, 1.0, 0.0])
-    r = np.cross(up, d)
-    r /= np.linalg.norm(r)
-    u = np.cross(d, r)
-    sx = T @ r
-    sy = -(T @ u)
-    depth = (T @ d).mean(axis=1)
-    n = np.cross(T[:, 1] - T[:, 0], T[:, 2] - T[:, 0])
-    ln = np.linalg.norm(n, axis=1)
-    ok = ln > 1e-12
-    n[ok] /= ln[ok, None]
-    light = d + np.array([0.3, 0.8, 0.0])
-    light /= np.linalg.norm(light)
-    shade = 0.35 + 0.65 * np.abs(n @ light)
-    x0, x1, y0, y1 = sx.min(), sx.max(), sy.min(), sy.max()
-    scale = (size * 0.9) / max(x1 - x0, y1 - y0, 1e-6)
-    ox = size / 2 - (x0 + x1) / 2 * scale
-    oy = size / 2 - (y0 + y1) / 2 * scale
-    img = Image.new("RGB", (size, size), (238, 240, 244))
-    dr = ImageDraw.Draw(img)
-    for i in np.argsort(depth):
-        c = tuple(int(max(0, min(255, v * shade[i] * 255))) for v in C[i])
-        pts = [(sx[i, k] * scale + ox, sy[i, k] * scale + oy) for k in range(3)]
-        dr.polygon(pts, fill=c, outline=c)
-    img.save(png_path, optimize=True)
+    half = size // 2
+    views = [("iso", (1.0, 1.1, 1.4), (0, 1, 0)), ("top", (0, 1, 0), (0, 0, -1)),
+             ("front", (0, 0, 1), (0, 1, 0)), ("right", (1, 0, 0), (0, 1, 0))]
+    sheet = Image.new("RGB", (half * 2, half * 2), (238, 240, 244))
+    for k, (label, d, up) in enumerate(views):
+        im = _zbuffer(T, C, d, up, half)
+        ImageDraw.Draw(im).text((8, 6), label, fill=(60, 60, 60))
+        sheet.paste(im, ((k % 2) * half, (k // 2) * half))
+    dr = ImageDraw.Draw(sheet)
+    dr.line([(half, 0), (half, 2 * half)], fill=(200, 200, 205))
+    dr.line([(0, half), (2 * half, half)], fill=(200, 200, 205))
+    sheet.save(png_path, optimize=True)

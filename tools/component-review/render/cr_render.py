@@ -344,6 +344,12 @@ class Renderer:
         self.datasheets = git.ls(head_sha, "datasheets")
         self.png_ok = True
         self._model_files: dict[str, dict] = {}
+        self.stock = None
+        if args.fetch_stock_models:
+            import stock
+            self.stock = stock.StockFetcher(tag=args.stock_models_tag, max_file_mb=args.stock_max_file_mb,
+                                            max_total_mb=args.stock_max_total_mb,
+                                            cache_dir=args.stock_models_dir)
         self._model_n = 0
         self.tmpdir = tempfile.mkdtemp(prefix="cr_render_")
         try:
@@ -369,7 +375,8 @@ class Renderer:
             warnings.append(f"render: PNG conversion failed: {e}")
             return None
 
-    def diff_png(self, base_png: str, head_png: str, out_path: str, background: str, warnings) -> dict | None:
+    def diff_png(self, base_png: str, head_png: str, out_path: str, background: str, warnings,
+                 paper=()) -> dict | None:
         try:
             import numpy as np
             from PIL import Image
@@ -383,8 +390,13 @@ class Renderer:
             a, b = a[:h, :w], b[:h, :w]
             warnings.append("render: base/head PNG size mismatch; diff cropped")
         bg = np.array([int(background[i:i + 2], 16) for i in (1, 3, 5)], dtype=np.int16)
-        ink_a = np.abs(a - bg).max(axis=2) > 24
-        ink_b = np.abs(b - bg).max(axis=2) > 24
+        def ink(img):
+            m = np.abs(img - bg).max(axis=2) > 24
+            for pc in paper:  # e.g. symbol body fill: treat as background, not ink
+                col = np.array([int(pc[i:i + 2], 16) for i in (1, 3, 5)], dtype=np.int16)
+                m &= np.abs(img - col).max(axis=2) > 24
+            return m
+        ink_a, ink_b = ink(a), ink(b)
         changed = np.abs(a - b).max(axis=2) > 40
         dark = bg.sum() < 384
         out = np.empty_like(a)
@@ -577,10 +589,26 @@ class Renderer:
                     rec["changed"] = (other.embedded.get(ename, {}).get("data") != src.embedded.get(ename, {}).get("data"))
                 else:
                     rec["changed"] = it.status in ("added", "deleted")
+            elif resolved is None and self.stock is not None and self.stock.parse(mdl["path"]):
+                rec["not_local"] = True
+                local, info = self.stock.fetch(mdl["path"])
+                rec["stock"] = info
+                rec["exists"] = local is not None
+                if local is None:
+                    it.warnings.append(f"3d: stock model download failed: {info.get('error')}")
+                else:
+                    rec["resolved"] = f"kicad-packages3D@{info['tag']}/{info['path']}"
+                    rec["file"] = self._copy_model(local, os.path.splitext(info["path"])[1].lower(), d, rel)
+                if other is not None:
+                    om = other.models[i] if i < len(other.models) else None
+                    rec["changed"] = om is None or any(om[k] != mdl[k] for k in ("path", "offset", "rotate", "scale"))
+                else:
+                    rec["changed"] = it.status in ("added", "deleted")
             elif resolved is None:
                 rec["not_local"] = True
                 if warn:
-                    it.warnings.append(f"3d: model '{mdl['path']}' is {reason}; not rendered")
+                    hint = " (use --fetch-stock-models)" if "stock" in (reason or "") else ""
+                    it.warnings.append(f"3d: model '{mdl['path']}' is {reason}; not rendered{hint}")
             else:
                 local, used = self._model_file(sha_of[side], resolved)
                 rec["resolved"] = used or resolved
@@ -631,8 +659,11 @@ class Renderer:
                 else:
                     resolved, _ = resolve_model(mdl["path"])
                     if resolved is None:
-                        continue
-                    local, _used = self._model_file(sha_of[side], resolved)
+                        if self.stock is None or not self.stock.parse(mdl["path"]):
+                            continue
+                        local, _info = self.stock.fetch(mdl["path"])
+                    else:
+                        local, _used = self._model_file(sha_of[side], resolved)
                 if local:
                     files.append((local, mdl))
             p = os.path.join(d, f"{side}.glb")
@@ -675,7 +706,8 @@ class Renderer:
             entry["renders"][side] = {"svg": rel(svg_p), "png": rel(pngs[side]), "layers": {}}
         if it.status == "modified" and pngs.get("head") and pngs.get("base"):
             p = os.path.join(d, "diff.png")
-            st = self.diff_png(pngs["base"], pngs["head"], p, symmod.BACKGROUND, it.warnings)
+            st = self.diff_png(pngs["base"], pngs["head"], p, symmod.BACKGROUND, it.warnings,
+                               paper=(symmod.C_BODY_BG,))
             if st is not None:
                 entry["diff_png"] = rel(p)
                 entry["diff_stats"] = st
@@ -726,6 +758,15 @@ def main(argv=None):
     ap.add_argument("--pr", type=int, default=None, help="PR number for the manifest")
     ap.add_argument("--repo-name", default=os.environ.get("GITHUB_REPOSITORY", REPO_NAME_DEFAULT))
     ap.add_argument("--no-3d", action="store_true", help="skip GLB generation")
+    ap.add_argument("--fetch-stock-models", action="store_true",
+                    help="download ${KICAD*_3DMODEL_DIR} models from gitlab.com/kicad/libraries/kicad-packages3D "
+                         "at a pinned tag (https only, cached in ~/.cache/cr-render)")
+    ap.add_argument("--stock-models-tag", default=None, help="override the pinned kicad-packages3D tag "
+                    "(default: per KiCad major from render/stock_models_tag.txt)")
+    ap.add_argument("--stock-models-dir", default=os.environ.get("CR_STOCK_MODELS_DIR"),
+                    help="download/cache dir (env CR_STOCK_MODELS_DIR; default ~/.cache/cr-render/kicad-packages3D)")
+    ap.add_argument("--stock-max-file-mb", type=float, default=25.0)
+    ap.add_argument("--stock-max-total-mb", type=float, default=300.0)
     ap.add_argument("--no-preview", action="store_true", help="skip the software-rendered 3D preview PNGs")
     ap.add_argument("--png-size", type=int, default=1600, help="longest PNG side in px (default 1600)")
     ap.add_argument("--glb-max-mb", type=float, default=5.0, help="re-tessellate coarser above this size")

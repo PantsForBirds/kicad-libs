@@ -10,6 +10,9 @@ python3 tools/component-review/render/cr_render.py --repo . --base origin/main -
 ```
 
 Options: `--no-3d` (skip GLB/3D previews), `--no-preview`, `--png-size 1600`, `--glb-max-mb 5`,
+`--fetch-stock-models` (download `${KICAD*_3DMODEL_DIR}` models from gitlab.com/kicad/libraries/kicad-packages3D at the
+tag pinned in `stock_models_tag.txt`; https only; size-capped; cached in `--stock-models-dir` / `$CR_STOCK_MODELS_DIR`,
+default `~/.cache/cr-render/kicad-packages3D`),
 `--clean` (wipe `OUT/items` first), `--use-kicad-cli` (additionally export reference SVGs if `kicad-cli` is on PATH).
 Exits 0 unless the tool itself fails. Per-item problems go into `items[].warnings`.
 
@@ -23,6 +26,7 @@ Exits 0 unless the tool itself fails. Per-item problems go into `items[].warning
 * **Parser.** `sexpr.py` is a small s-expression parser with source spans (line and char offsets). It handles KiCad 5 through 10
   formats, including KiCad 10 `|base64|` embedded data. kiutils was not used because it does not know the KiCad 10
   formats (`version 20260206` / `20251024`).
+* **Framing.** A footprint's viewBox is courtyard ∪ pads ∪ graphics ∪ silkscreen text, plus 1 mm. Long Fab value strings may be clipped at the edge.
 * **2D.** Pure-Python SVG renderers: `fp.py` for footprints and `sym.py` for symbols.
   * **Footprints.**
     * Pads: rect, roundrect, circle, oval, chamfered, trapezoid, custom primitives.
@@ -38,6 +42,7 @@ Exits 0 unless the tool itself fails. Per-item problems go into `items[].warning
   * **Shared frame.** Base and head always share one viewBox and pixel scale, so their SVG/PNG renders overlay exactly.
     For footprints the viewBox is the item bbox plus a 1 mm margin, and it is also the `bbox` in `<side>_geom.json`.
 * **PNG / diff.** PNGs come from cairosvg. `diff.png` (modified items only) is a pixel diff:
+  * a symbol's body fill counts as background
   * green = only in head
   * red = only in base
   * amber = changed colour
@@ -51,7 +56,7 @@ Exits 0 unless the tool itself fails. Per-item problems go into `items[].warning
     * `<side>.glb`: PCB slab, copper, barrels, silk/fab/courtyard and the STEP model(s), each a separate named node.
       KiCad frame (z up, board top z=0) under a `kicad_zup` root that rotates it into glTF Y-up.
       The model transform is `T(offset)·Rz(-rz)·Ry(-ry)·Rx(-rx)·S`, as in KiCad's 3D viewer.
-    * `<side>_3d.png`: a software-rendered isometric preview (no OpenGL needed), handy for the AI reviewer.
+    * `<side>_3d.png`: a 2×2 sheet (iso/top/front/right) from a numpy z-buffer rasteriser (no OpenGL needed), handy for the AI reviewer.
 * **Metadata.**
   * `properties`; `datasheet` (Datasheet property or a URL in descr/Description, plus a fuzzy match in `datasheets/`,
     copied to `items/<slug>/datasheet.pdf`).
@@ -73,4 +78,4 @@ Exits 0 unless the tool itself fails. Per-item problems go into `items[].warning
 * Python 3.11+ and `pip install -r requirements.txt`.
 * The system libcairo2 for cairosvg (present in most images, including kicad/kicad:10.0).
 * DejaVu fonts for good PNG text (`fonts-dejavu-core`).
-* Runtime: about 2–3 s for the 5-item demo PR, including 3D.
+* Runtime for the 5-item demo PR: about 10 s with 3D, about 2 s with `--no-3d`. Each 3D preview sheet costs about 2 s.

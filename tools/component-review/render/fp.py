@@ -645,7 +645,10 @@ def layer_elements(fp: Footprint) -> tuple[dict[str, list[str]], BBox]:
     for t in fp.texts:
         el, tb = _text_svg(fp, t, layer_color(t["layer"]))
         add(t["layer"], el)
-        bb.add_box(tb)
+        # Only silkscreen text grows the frame (contract: courtyard ∪ pads ∪ graphics); long Fab
+        # value strings would otherwise shrink the part to a speck. They may clip at the edge.
+        if t["layer"].endswith(".SilkS"):
+            bb.add_box(tb)
     return out, bb
 
 
