@@ -1,5 +1,6 @@
 # Removes a PR's preview (pr/<N>/ on gh-pages) when the PR is closed or merged.
 # pull_request_target runs this file from the base branch; no PR code is checked out.
+# Off when the repository variable CR_PUBLISH is 'false' (same switch as the publish workflow).
 name: Component review (cleanup)
 
 on:
@@ -15,6 +16,7 @@ permissions: {}
 
 jobs:
   cleanup:
+    if: vars.CR_PUBLISH != 'false'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:

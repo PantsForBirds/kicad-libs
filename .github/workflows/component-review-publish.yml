@@ -1,4 +1,8 @@
-# Component review, stage 2 of 2 (privileged).
+# Component review: Pages preview + sticky PR comment (privileged, optional).
+#
+# On by default; set the repository variable CR_PUBLISH=false to turn it (and the cleanup
+# workflow) off, leaving just the artifacts of component-review.yml. No LLM and no secrets:
+# the review is the same deterministic checks, re-run here with trusted code.
 #
 # Triggered when "Component review" finishes. This workflow file and all code it runs come
 # from the DEFAULT BRANCH; the PR's code is never checked out or executed here. The artifact
@@ -17,6 +21,7 @@ permissions: {}
 jobs:
   publish:
     if: >-
+      vars.CR_PUBLISH != 'false' &&
       github.event.workflow_run.event == 'pull_request' &&
       github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
@@ -67,7 +72,7 @@ jobs:
         if: steps.pr.outputs.skip == 'false'
         uses: actions/download-artifact@v4
         with:
-          name: component-review
+          name: component-review-site
           path: ${{ runner.temp }}/untrusted/site
           run-id: ${{ github.event.workflow_run.id }}
           github-token: ${{ github.token }}
@@ -76,68 +81,36 @@ jobs:
         if: steps.pr.outputs.skip == 'false'
         run: python3 "$CI/sanitize_site.py" --src "$UNTRUSTED/site" --dst "$SITE"
 
-      - name: Install Python dependencies (trusted)
-        if: steps.pr.outputs.skip == 'false'
-        run: |
-          python3 -m venv "$RUNNER_TEMP/venv"
-          echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
-          if [ -f tools/component-review/ai/requirements.txt ]; then
-            "$RUNNER_TEMP/venv/bin/pip" install -q -r tools/component-review/ai/requirements.txt
-          fi
-
-      - name: AI review
+      # review.json from the PR run is untrusted and was dropped by sanitize_site.py: the
+      # deterministic checks are re-run here with default-branch code on the sanitized data.
+      - name: Deterministic checks (trusted)
         id: ai
         if: steps.pr.outputs.skip == 'false'
-        timeout-minutes: 20
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          CR_MODEL: ${{ vars.CR_MODEL }}      # read by cr_ai_review.py when set
-          CR_EFFORT: ${{ vars.CR_EFFORT }}    # read by cr_ai_review.py when set
           CR_KLC: ${{ vars.CR_KLC }}
           CR_PAGES_URL: ${{ vars.CR_PAGES_URL }}
           PR_NUMBER: ${{ steps.pr.outputs.pr }}
         run: |
-          [ -n "$CR_MODEL" ] || unset CR_MODEL
-          [ -n "$CR_EFFORT" ] || unset CR_EFFORT
           pages="${CR_PAGES_URL:-https://${GITHUB_REPOSITORY_OWNER,,}.github.io/${GITHUB_REPOSITORY#*/}/}"
           site_url="${pages%/}/pr/$PR_NUMBER/"   # linked from review.md
           ai=tools/component-review/ai/cr_ai_review.py
-          work="$RUNNER_TEMP/ai-work"
-          note=""
           if [ ! -f "$ai" ]; then
-            echo "note=AI review not available on the default branch yet." >> "$GITHUB_OUTPUT"
+            echo "note=Checks not available on the default branch yet." >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          common=(--no-download --site-url "$site_url")
+          extra=()
           # KLC checker: a trusted external repo at a pinned commit, fetched fresh (about 1 s)
           # rather than from a cache, so nothing restored here needs to be trusted.
           if [ "$CR_KLC" != "false" ] && [ -f "$CI/fetch_klc_utils.sh" ]; then
             if klc=$(bash "$CI/fetch_klc_utils.sh" "$RUNNER_TEMP/klc-utils"); then
-              common+=(--klc-utils "$klc")
+              extra+=(--klc-utils "$klc")
             else
               echo "::warning::could not fetch kicad-library-utils; KLC checker skipped"
             fi
           fi
-          # Private work copy for the AI. PR-named datasheets are fetched by our strict fetcher
-          # (https only, 20 MB / 20 s per file, 20 files, public IPs, must be a PDF) and never
-          # published; the ai tool itself is told not to download anything.
-          if [ -n "$ANTHROPIC_API_KEY" ]; then
-            python3 "$CI/fetch_datasheets.py" --site "$SITE" --work "$work" \
-              || python3 "$CI/fetch_datasheets.py" --site "$SITE" --work "$work" --no-fetch
-          else
-            python3 "$CI/fetch_datasheets.py" --site "$SITE" --work "$work" --no-fetch
+          if ! python3 "$ai" --out "$SITE" --no-llm --no-download --site-url "$site_url" "${extra[@]}"; then
+            echo "note=Deterministic checks failed; see the workflow log." >> "$GITHUB_OUTPUT"
           fi
-          if [ -z "$ANTHROPIC_API_KEY" ]; then
-            note="LLM review skipped: the ANTHROPIC_API_KEY secret is not configured. Showing deterministic checks only."
-            python3 "$ai" --out "$work" --no-llm "${common[@]}" || note="Deterministic checks failed; see the workflow log."
-          elif ! python3 "$ai" --out "$work" "${common[@]}"; then
-            note="LLM review failed (see the workflow log). Showing deterministic checks only."
-            python3 "$ai" --out "$work" --no-llm "${common[@]}" || true
-          fi
-          for f in review.json review.md; do
-            if [ -f "$work/$f" ]; then cp "$work/$f" "$SITE/$f"; fi
-          done
-          echo "note=$note" >> "$GITHUB_OUTPUT"
 
       - name: Bundle viewer (trusted)
         if: steps.pr.outputs.skip == 'false'
@@ -165,14 +138,20 @@ jobs:
           CR_FAIL_CONCLUSION: ${{ vars.CR_FAIL_CONCLUSION }}
         run: |
           run_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$RUN_ID"
-          artifact_id=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RUN_ID/artifacts" \
-            --jq '[.artifacts[] | select(.name == "component-review") | .id][0] // empty' || true)
+          # Artifacts of the triggering run: the viewer zip and the non-zipped HTML report.
+          artifacts=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RUN_ID/artifacts" || echo '{}')
+          id_of() { jq -r --arg n "$1" '[.artifacts[]? | select(.name == $n) | .id][0] // empty' <<< "$artifacts"; }
+          site_id=$(id_of component-review-site)
+          report_id=$(id_of component-review.html)
           artifact_url="$run_url"
-          if [ -n "$artifact_id" ]; then artifact_url="$run_url/artifacts/$artifact_id"; fi
+          if [ -n "$site_id" ]; then artifact_url="$run_url/artifacts/$site_id"; fi
+          report_url=""
+          if [ -n "$report_id" ]; then report_url="$run_url/artifacts/$report_id"; fi
           python3 "$CI/post_review.py" --site "$SITE" --repo "$GITHUB_REPOSITORY" --pr "$PR_NUMBER" \
             --head-sha "$HEAD_SHA" ${PAGES_SHA:+--pages-sha "$PAGES_SHA"} \
             ${CR_PAGES_URL:+--pages-url "$CR_PAGES_URL"} \
-            --artifact-url "$artifact_url" --run-url "$run_url" ${NOTE:+--note "$NOTE"} \
+            --artifact-url "$artifact_url" ${report_url:+--report-url "$report_url"} \
+            --run-url "$run_url" ${NOTE:+--note "$NOTE"} \
             --comment-out "$RUNNER_TEMP/comment.md"
           cat "$RUNNER_TEMP/comment.md" >> "$GITHUB_STEP_SUMMARY"
 

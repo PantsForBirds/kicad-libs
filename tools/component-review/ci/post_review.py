@@ -138,7 +138,7 @@ def check_payload(head_sha: str, manifest, review, viewer_url: str, fail_conclus
             "output": {"title": title[:200],
                        "summary": f"[Open the viewer]({viewer_url})\n\n"
                                   + (md_block(review.get("summary_markdown"), 3000) if review else
-                                     "No AI review was produced for this run.")}}
+                                     "No review was produced for this run.")}}
 
 
 # --------------------------------------------------------------------------- GitHub side
@@ -187,7 +187,8 @@ def main(argv=None) -> int:
     ap.add_argument("--head-sha")
     ap.add_argument("--pages-url")
     ap.add_argument("--pages-sha")
-    ap.add_argument("--artifact-url")
+    ap.add_argument("--artifact-url", help="the component-review-site artifact (zipped viewer)")
+    ap.add_argument("--report-url", help="the component-review.html artifact (single HTML file)")
     ap.add_argument("--run-url")
     ap.add_argument("--note")
     ap.add_argument("--fail-conclusion", default=os.environ.get("CR_FAIL_CONCLUSION") or "neutral",
@@ -232,7 +233,7 @@ def main(argv=None) -> int:
     inline, _rest = inline_candidates(manifest, review, commentable(files))
     payload = None if a.no_inline else build_review_payload(head_sha, inline, already)
     inlined = set() if a.no_inline else {finding_key(f) for _i, f, _p in inline}
-    body = build_comment(ctx, manifest, review, artifact_url=a.artifact_url, run_url=a.run_url,
+    body = build_comment(ctx, manifest, review, artifact_url=a.artifact_url, report_url=a.report_url, run_url=a.run_url,
                          note=a.note, inlined=inlined, n_inline=len(inlined))
     check = None if a.no_check else check_payload(head_sha, manifest, review, ctx.viewer, a.fail_conclusion)
     if a.comment_out:
@@ -256,7 +257,7 @@ def main(argv=None) -> int:
             # e.g. 422 if a line fell outside the diff; never lose the sticky comment over it
             log(f"warning: inline review failed: {e}")
             inlined &= already
-            body = build_comment(ctx, manifest, review, artifact_url=a.artifact_url, run_url=a.run_url,
+            body = build_comment(ctx, manifest, review, artifact_url=a.artifact_url, report_url=a.report_url, run_url=a.run_url,
                                  note=a.note, inlined=inlined, n_inline=len(inlined))
     upsert_sticky(gh, repo, pr, body)
     if check:

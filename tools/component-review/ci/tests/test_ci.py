@@ -14,6 +14,7 @@ sys.path.insert(0, str(HERE))
 import common  # noqa: E402
 import deploy_pages  # noqa: E402
 import fetch_datasheets  # noqa: E402
+import job_summary  # noqa: E402
 import make_mock  # noqa: E402
 import post_review  # noqa: E402
 import resolve_pr  # noqa: E402
@@ -256,13 +257,15 @@ class TestReview(Tmp):
     def test_comment(self):
         manifest, review = self.load()
         ctx = Ctx(self.site, REPO, 8, HEAD, "https://pantsforbirds.github.io/kicad-libs/", PAGES)
-        body = build_comment(ctx, manifest, review, artifact_url="https://github.com/x/y/actions/runs/1/artifacts/2")
+        body = build_comment(ctx, manifest, review, artifact_url="https://github.com/x/y/actions/runs/1/artifacts/2",
+                             report_url="https://github.com/x/y/actions/runs/1/artifacts/3")
         self.assertTrue(body.startswith(common.MARKER))
         self.assertEqual(body.count(common.MARKER), 1)
         self.assertIn(f"https://raw.githubusercontent.com/{REPO}/{PAGES}/pr/8/items/", body)
         self.assertIn("https://pantsforbirds.github.io/kicad-libs/pr/8/#symbol__Custom_Audio__NS4168", body)
         self.assertIn("diff.png", body)
-        self.assertIn("/artifacts/2", body)
+        self.assertIn("[⬇️ offline viewer (zip)](https://github.com/x/y/actions/runs/1/artifacts/2)", body)
+        self.assertIn("[📄 HTML report (single file, no JS)](https://github.com/x/y/actions/runs/1/artifacts/3)", body)
         self.assertNotIn("<script", body)
         self.assertNotIn("@someone", body)
         self.assertEqual(body.count("<details>"), body.count("</details>"))
@@ -407,6 +410,37 @@ class TestDeploy(Tmp):
         finally:
             if env_backup is not None:
                 os.environ["GITHUB_TOKEN"] = env_backup
+
+
+class TestJobSummary(Tmp):
+    def test_annotations(self):
+        review = json.loads((self.site / "review.json").read_text())
+        rid = "footprint:Custom_Connector_Card:microSD_SHOU-HAN_TF-PUSH"
+        review["items"][rid]["findings"].append({"severity": "error", "category": "a,b:c", "line": 5,
+                                                 "path": "lib_fp/x.kicad_mod", "message": "50% bad\n::error::x"})
+        (self.site / "review.json").write_text(json.dumps(review))
+        manifest, review = common.load_site(self.site)
+        lines = job_summary.annotations(manifest, review)
+        self.assertTrue(lines[0].startswith("::error "))           # most severe first
+        self.assertTrue(all(len(l.splitlines()) == 1 for l in lines))
+        inj = next(l for l in lines if "50%25 bad" in l)
+        self.assertIn("file=lib_fp/x.kicad_mod,line=5,title=a%2Cb%3Ac%3A Custom_Connector_Card%3AmicroSD_SHOU-HAN_TF-PUSH::", inj)
+        self.assertTrue(inj.endswith("::50%25 bad ::error::x"))   # one line; the message part is inert
+        self.assertFalse(any(l.startswith("::info") or l.startswith("::notice") for l in lines))
+        self.assertTrue(any("file=lib_3d/Custom_Module/SH1421-C.step" in l for l in lines))  # PR-level
+
+    def test_summary(self):
+        (self.site / "review.md").write_text("## Component review\n\n| a | b |\n")
+        out = self.tmp / "summary.md"
+        job_summary.main(["--out", str(self.site), "--summary", str(out),
+                          "--link", "component-review.html (report)=https://github.com/o/r/actions/runs/1/artifacts/9",
+                          "--link", "empty=", "--link", "bad=javascript:alert(1)"])
+        text = out.read_text()
+        self.assertIn("[component-review.html (report)](https://github.com/o/r/actions/runs/1/artifacts/9)", text)
+        self.assertNotIn("javascript", text)
+        self.assertNotIn("empty", text)
+        self.assertIn("### Findings", text)
+        self.assertIn("6** changed component(s)", text)
 
 
 if __name__ == "__main__":

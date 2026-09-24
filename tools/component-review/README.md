@@ -5,72 +5,92 @@ Automated review of pull requests that add or change KiCad footprints (`lib_fp/`
 
 - renders before/after images (plus a red/green diff overlay for modified parts), per-layer SVGs
   and 3D previews;
-- runs deterministic checks (pad counts, KLC-style rules, properties, 3D-model paths) and, if an
-  Anthropic API key is configured, an AI review against the datasheet;
-- publishes an interactive viewer at `https://<owner>.github.io/<repo>/pr/<N>/`;
-- posts **one** PR comment (updated in place on every push) with a summary table, embedded
-  before/after images and findings, plus inline review comments on the `.kicad_mod` /
-  `.kicad_sym` lines with errors or warnings, and a **Component review** check.
+- runs deterministic checks (pad counts, KLC-style rules, properties, 3D-model paths, and the
+  official KLC checker from kicad-library-utils). There is no LLM and no secret is needed;
+- uploads the results as **artifacts** of the workflow run:
+  - **`component-review.html`**: one self-contained HTML report, uploaded *non-zipped*, so it
+    opens straight in the browser from the run page. No JavaScript, all images embedded;
+  - **`component-review-site`**: the interactive viewer (zip: unzip it and open `index.html`);
+  - **`component-review-data`**: `manifest.json`, `review.json`, `review.md`;
+- writes a job summary (counts, findings table, links to the three artifacts) and annotations
+  for errors/warnings, which GitHub shows next to the lines in the PR's *Files changed* tab;
+- by default also publishes the viewer at `https://<owner>.github.io/<repo>/pr/<N>/` and posts
+  **one** PR comment (updated in place on every push) with a summary table, images, findings and
+  links to the report and viewer artifacts, plus inline review comments and a
+  **Component review** check. Set the repo variable `CR_PUBLISH=false` to turn this part off.
 
-AI findings are advisory. By default the check never blocks a merge.
+Findings are advisory. By default the check never blocks a merge.
+
+### Opening the report
+
+On the PR, click *Details* next to **Component review** (or open the run from the *Actions*
+tab), then click **`component-review.html`** under *Artifacts*. GitHub serves it as a single
+file, so it opens in the browser directly; you can also save it and open it offline. The job
+summary and the PR comment link it too. It has a summary table with a link to every component,
+before/after/diff images, toggleable layers (pure CSS), 3D previews, property, pad/pin and 3D
+model diffs, findings with links to the lines at the PR head, and the text diff. Pages over
+20 MB leave out layers first, then shrink images; the report says when that happened.
 
 ## Layout
 
 | Dir        | What                                                                        |
 |------------|-----------------------------------------------------------------------------|
 | `render/`  | `cr_render.py`: diffs base..head and renders every changed item into `OUT/` (`manifest.json`, `items/<slug>/…`) |
-| `ai/`      | `cr_ai_review.py`: writes `OUT/review.json`. Use `--no-llm` for the deterministic checks only |
+| `ai/`      | `cr_ai_review.py --no-llm`: deterministic + KLC checks, writes `OUT/review.json` and `review.md`. (Its LLM mode is not used by CI) |
+| `report/`  | `make_report.py --out OUT`: the self-contained `component-review.html`      |
 | `viewer/`  | a static web app; `build_site.py --out OUT` copies it into `OUT/`          |
-| `ci/`      | GitHub glue: artifact sanitizing, gh-pages deploy, PR comment/review/check  |
+| `ci/`      | GitHub glue: job summary/annotations, artifact sanitizing, gh-pages deploy, PR comment/review/check |
 | `../../.github/workflows/component-review*.yml` | the three workflows below         |
 
 The data formats are specified in `CONTRACT.md` (kept next to the project, not in this repo).
 
 ## Architecture
 
-PRs usually come from forks, and a fork's workflow run gets no secrets and only a read-only
-token. So the work is split in two stages: an unprivileged stage runs the PR's code, and a
-privileged stage never runs PR code.
+PRs usually come from forks, and a fork's workflow run gets only a read-only token. The main
+workflow therefore produces **artifacts only**. The optional publish stage, which needs write
+access, never runs PR code.
 
 ```
- PR opened / pushed (fork or branch)
-        │  pull_request  (paths: lib_fp/**, lib_sch/**, lib_3d/**, tools/component-review/**)
-        ▼
+ PR opened / pushed (fork or branch)            push to claud/** (TEMPORARY test trigger;
+        │  pull_request (paths: lib_fp/**, lib_sch/**,     base = merge-base with origin/main)
+        │  lib_3d/**, tools/component-review/**)          │
+        ▼                                                 ▼
 ┌──────────────────────── component-review.yml ─────────────────────────┐
 │ UNPRIVILEGED: contents: read, no secrets, runs the PR's code           │
 │ container kicad/kicad:10.0 (optional)                                  │
 │  checkout PR head (full history) → merge-base with base branch         │
 │  render/cr_render.py  --base <merge-base> --head <head> --out cr-out   │
-│  ai/cr_ai_review.py   --out cr-out --no-llm      (deterministic checks)│
+│  ai/cr_ai_review.py   --out cr-out --no-llm   (deterministic + KLC)    │
 │  viewer/build_site.py --out cr-out                                     │
-│  upload artifacts: component-review (= cr-out, downloadable fallback)  │
-│                    pr-meta (pr.json: PR number, head/base sha)         │
+│  report/make_report.py --out cr-out --output component-review.html     │
+│  ci/job_summary.py    ::error/::warning annotations + job summary      │
+│  artifacts: component-review.html (NOT zipped: opens in the browser)   │
+│             component-review-site (viewer zip), component-review-data  │
+│             pr-meta (pr.json, for the publish stage)                   │
 └───────────────────────────────┬────────────────────────────────────────┘
                                 │ workflow_run: completed + success
-                                ▼
+                                ▼   (skipped when repo var CR_PUBLISH == 'false')
 ┌───────────────────── component-review-publish.yml ────────────────────┐
-│ PRIVILEGED: contents/pull-requests/checks: write, ANTHROPIC_API_KEY    │
+│ PRIVILEGED: contents/pull-requests/checks: write. No secrets, no LLM.  │
 │ Code comes from the DEFAULT BRANCH checkout only. Artifact = data.     │
 │  ci/resolve_pr.py     PR number from pr-meta, accepted only if the API │
 │                       says PR N is open and its head == run head_sha   │
 │  ci/sanitize_site.py  allow-listed data files only; no HTML/JS; SVGs   │
 │                       with scripts/handlers/external refs dropped;     │
 │                       size caps; untrusted review.json discarded       │
-│  ci/fetch_datasheets.py  private AI work copy + strict https datasheet │
-│                       fetch (never published)                          │
 │  ci/fetch_klc_utils.sh  kicad-library-utils at the pinned commit       │
-│  ai/cr_ai_review.py   LLM review on the work copy, --no-download       │
-│                       (or --no-llm if no key / on error)               │
+│  ai/cr_ai_review.py   --no-llm: checks re-run with trusted code        │
 │  viewer/build_site.py trusted viewer copied over the data              │
 │  ci/deploy_pages.py   commit to gh-pages under pr/<N>/ (other PRs kept,│
 │                       retries on push races)                           │
 │  ci/post_review.py    inline review (COMMENT, deduped) + sticky comment│
-│                       (<!-- component-review -->) + check run          │
+│                       (<!-- component-review -->, links the report and │
+│                       viewer artifacts of the run) + check run         │
 └───────────────────────────────┬────────────────────────────────────────┘
                                 ▼
          gh-pages ──(GitHub Pages)──► https://<owner>.github.io/<repo>/pr/<N>/#<slug>
 
- PR closed / merged ── pull_request_target ──► component-review-cleanup.yml
+ PR closed / merged ── pull_request_target ──► component-review-cleanup.yml (same CR_PUBLISH switch)
         deletes pr/<N>/ from gh-pages and notes it on the sticky comment (no PR code checkout)
 ```
 
@@ -89,17 +109,15 @@ cleanup, because the old commit still has them.
   File names and types are allow-listed. Every string that goes into a comment is escaped
   (no raw HTML, `@mentions` or remote images). Image URLs are only built for files that
   exist in the sanitized site. Nothing from the artifact is executed.
-- The LLM reads PR-controlled text (footprint/symbol sources and datasheet PDFs linked from
-  them), so a PR could try prompt injection. That can only change the wording of the advisory
-  review. The model has no tools, and its output is escaped like everything else.
-- Datasheet URLs named in the PR are fetched by `ci/fetch_datasheets.py`, not by the ai
-  tool, which runs with `--no-download`. Limits: https only (an `http://` URL is tried as
-  `https://` first and refused only if that fails; redirects must stay https; default port),
-  hosts must resolve to public IPs (connections are pinned to the checked IP), 20 MB and
-  20 s wall-clock per file, 20 files and 120 s per run. The body must be a PDF; for
-  distributor landing pages, one same-site PDF link is followed. These can be tuned with
-  `CR_DS_MAX_BYTES`, `CR_DS_TIMEOUT_S`, `CR_DS_MAX_DOWNLOADS` and `CR_DS_BUDGET_S`. The PDFs
-  only go into a private work copy for the AI and are never published on Pages.
+- The HTML report and the viewer zip are built by the PR's own code in the unprivileged job,
+  so treat them like any other file from the PR. `make_report.py` escapes all text, embeds
+  only re-encoded PNGs (layer SVGs are rasterized, and only if they pass the same
+  active-content check as `sanitize_site.py`), and sets a Content-Security-Policy that allows
+  no scripts and no network access. A malicious PR could still change `make_report.py`
+  itself, and then the report holds whatever that version writes. Open reports from PRs you
+  don't trust with the same care as a downloaded HTML file.
+- `ci/fetch_datasheets.py` (strict datasheet fetcher for the former LLM step) is kept in the
+  tree but no workflow uses it.
 - Size caps in `sanitize_site.py`: 25 MB per STEP/WRL/GLB file, 30 MB per PDF, 10 MB for
   anything else, and 300 MB per PR site (`CR_MAX_SITE_MB`). When the site cap is hit, the
   bulky files (PDF, GLB, STEP) are dropped first. Manifest references to dropped files are
@@ -117,9 +135,9 @@ cleanup, because the old commit still has them.
 3. **Actions permissions**: *Settings → Actions → General → Workflow permissions*: select
    **Read and write permissions**. Each workflow narrows its own token. Keep *"Allow GitHub
    Actions to create and approve pull requests"* off; we don't need it.
-4. **Secret** (optional): *Settings → Secrets and variables → Actions → New repository
-   secret* `ANTHROPIC_API_KEY`. Without it, only the deterministic checks run and the
-   comment says so.
+4. **No secrets** are needed. To turn the Pages preview and the PR comment off and keep
+   only the artifacts, set the repository variable `CR_PUBLISH` to `false` (then steps 2 and
+   6 don't apply either).
 5. **Fork PRs**: with the default *"Require approval for first-time contributors"*, a
    maintainer has to click *Approve and run* on a new contributor's first PR. After that,
    everything is automatic.
@@ -131,10 +149,9 @@ Optional repository **variables** (*Settings → Secrets and variables → Actio
 |----------------------|---------------------|---------|
 | `CR_KICAD_IMAGE`     | `kicad/kicad:10.0`  | Container for the render job. Set to `none` to run on the plain runner (no `kicad-cli`) |
 | `CR_FETCH_STOCK_MODELS` | on             | Set to `false` to stop the render job downloading KiCad stock 3D models (`${KICAD10_3DMODEL_DIR}/…`) from the official kicad-packages3D repo at the tag pinned in `render/stock_models_tag.txt`. Downloads are cached with actions/cache, keyed on that file |
-| `CR_FAIL_CONCLUSION` | `neutral`           | Check-run conclusion when the AI verdict is `fail`: `neutral` (default, never blocks), `failure` (lets you require the check in branch protection), or `success` |
-| `CR_MODEL`           | ai tool's default   | Claude model for the AI review |
-| `CR_EFFORT`          | ai tool's default   | Effort level for the AI review |
-| `CR_KLC`             | on                  | Set to `false` to skip the official KLC checker (kicad-library-utils, pinned in `ci/klc_utils.ref`). It runs in both the unprivileged `--no-llm` job (cached) and the trusted LLM job (fetched fresh, ~1 s) |
+| `CR_FAIL_CONCLUSION` | `neutral`           | Check-run conclusion when the verdict is `fail`: `neutral` (default, never blocks), `failure` (lets you require the check in branch protection), or `success` |
+| `CR_PUBLISH`         | on                  | Set to `false` to skip the Pages preview, the sticky PR comment, inline review, check run and the cleanup workflow. The artifacts, job summary and annotations are always produced |
+| `CR_KLC`             | on                  | Set to `false` to skip the official KLC checker (kicad-library-utils, pinned in `ci/klc_utils.ref`). It runs in both the unprivileged job (cached) and the trusted publish job (fetched fresh, ~1 s) |
 | `CR_PAGES_URL`       | `https://<owner>.github.io/<repo>/` | Viewer base URL, e.g. with a custom Pages domain |
 
 Verdict → check conclusion: `pass` → success, `warn` → neutral, `fail` → `CR_FAIL_CONCLUSION`,
@@ -148,8 +165,9 @@ Needs Python 3.11+. Run from the repo root:
 pip install -r tools/component-review/render/requirements.txt   # if present
 base=$(git merge-base origin/main HEAD)
 python3 tools/component-review/render/cr_render.py --repo . --base "$base" --head HEAD --out cr-out
-python3 tools/component-review/ai/cr_ai_review.py --out cr-out --no-llm   # or with ANTHROPIC_API_KEY set
+python3 tools/component-review/ai/cr_ai_review.py --out cr-out --no-llm
 python3 tools/component-review/viewer/build_site.py --out cr-out
+python3 tools/component-review/report/make_report.py --out cr-out           # -> cr-out/component-review.html
 python3 -m http.server -d cr-out 8000                                     # open http://localhost:8000/
 ```
 
@@ -173,6 +191,7 @@ Tests (stdlib only, they use generated mock data):
 
 ```sh
 python3 -m unittest discover -s tools/component-review/ci/tests -v
+python3 -m unittest discover -s tools/component-review/report/tests -v
 python3 tools/component-review/ci/tests/make_mock.py /tmp/mock    # mock site + PR file list
 ```
 
@@ -186,12 +205,9 @@ if you have it): `actionlint .github/workflows/component-review*.yml`.
   each PR starts its own. Old entries are evicted by GitHub's 10 GB per-repo cache limit.
 - **Actions minutes**: free for public repos. A render run takes a few minutes (most of it is
   pulling the KiCad image). The publish and cleanup jobs take about a minute.
-- **LLM**: the only paid part. The AI review runs once per push to a PR that touches library
-  files, with one request per changed component (datasheet PDF included), and re-reviews
-  every changed component on each push. The ai tool logs the token usage and estimated cost
-  of each run (see `ai/`). To limit spend, pick a cheaper `CR_MODEL`, or leave the
-  `ANTHROPIC_API_KEY` secret out and use only the free deterministic checks.
-- **Storage**: artifacts are kept for 30 days. Every publish adds a commit of images to
+- **No paid services**: everything runs on GitHub-hosted runners (free for public repos).
+- **Storage**: artifacts are kept for 30 days. The HTML report is usually a few MB (capped at
+  20 MB) and the viewer zip a few MB plus STEP models. Every publish adds a commit of images to
   `gh-pages`, and the cleanup removes the files but not the history. If the branch gets big,
   it can be reset to a single squashed commit: old comment images then stop loading, but
   live previews are unaffected.
