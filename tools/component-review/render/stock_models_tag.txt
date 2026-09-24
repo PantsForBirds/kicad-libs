@@ -1,0 +1,4 @@
+# Pinned kicad-packages3D tags used by --fetch-stock-models, per KiCad major version.
+# CI hashes this file into its cache key. Format: <major>=<tag>
+10=10.0.6
+9=9.0.9.1
