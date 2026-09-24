@@ -88,6 +88,7 @@ jobs:
       - name: AI review
         id: ai
         if: steps.pr.outputs.skip == 'false'
+        timeout-minutes: 20
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           CR_MODEL: ${{ vars.CR_MODEL }}
@@ -97,16 +98,31 @@ jobs:
           pages="${CR_PAGES_URL:-https://${GITHUB_REPOSITORY_OWNER,,}.github.io/${GITHUB_REPOSITORY#*/}/}"
           export CR_SITE_URL="${pages%/}/pr/$PR_NUMBER/"   # linked from review.md
           ai=tools/component-review/ai/cr_ai_review.py
+          work="$RUNNER_TEMP/ai-work"
           note=""
           if [ ! -f "$ai" ]; then
-            note="AI review not available on the default branch yet."
-          elif [ -z "$ANTHROPIC_API_KEY" ]; then
-            note="LLM review skipped: the ANTHROPIC_API_KEY secret is not configured. Showing deterministic checks only."
-            python3 "$ai" --out "$SITE" --no-llm || note="Deterministic checks failed; see the workflow log."
-          elif ! python3 "$ai" --out "$SITE" ${CR_MODEL:+--model "$CR_MODEL"}; then
-            note="LLM review failed (see the workflow log). Showing deterministic checks only."
-            python3 "$ai" --out "$SITE" --no-llm || true
+            echo "note=AI review not available on the default branch yet." >> "$GITHUB_OUTPUT"
+            exit 0
           fi
+          # Private work copy for the AI. PR-named datasheets are fetched by our strict fetcher
+          # (https only, 20 MB / 20 s per file, 20 files, public IPs, must be a PDF) and never
+          # published; the ai tool itself is told not to download anything.
+          if [ -n "$ANTHROPIC_API_KEY" ]; then
+            python3 "$CI/fetch_datasheets.py" --site "$SITE" --work "$work" \
+              || python3 "$CI/fetch_datasheets.py" --site "$SITE" --work "$work" --no-fetch
+          else
+            python3 "$CI/fetch_datasheets.py" --site "$SITE" --work "$work" --no-fetch
+          fi
+          if [ -z "$ANTHROPIC_API_KEY" ]; then
+            note="LLM review skipped: the ANTHROPIC_API_KEY secret is not configured. Showing deterministic checks only."
+            python3 "$ai" --out "$work" --no-llm --no-download || note="Deterministic checks failed; see the workflow log."
+          elif ! python3 "$ai" --out "$work" --no-download ${CR_MODEL:+--model "$CR_MODEL"}; then
+            note="LLM review failed (see the workflow log). Showing deterministic checks only."
+            python3 "$ai" --out "$work" --no-llm --no-download || true
+          fi
+          for f in review.json review.md; do
+            if [ -f "$work/$f" ]; then cp "$work/$f" "$SITE/$f"; fi
+          done
           echo "note=$note" >> "$GITHUB_OUTPUT"
 
       - name: Bundle viewer (trusted)

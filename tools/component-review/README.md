@@ -55,8 +55,11 @@ privileged stage never runs PR code.
 │                       says PR N is open and its head == run head_sha   │
 │  ci/sanitize_site.py  allow-listed data files only; no HTML/JS; SVGs   │
 │                       with scripts/handlers/external refs dropped;     │
-│                       untrusted review.json discarded                  │
-│  ai/cr_ai_review.py   LLM review (or --no-llm if no key / on error)    │
+│                       size caps; untrusted review.json discarded       │
+│  ci/fetch_datasheets.py  private AI work copy + strict https datasheet │
+│                       fetch (never published)                          │
+│  ai/cr_ai_review.py   LLM review on the work copy, --no-download       │
+│                       (or --no-llm if no key / on error)               │
 │  viewer/build_site.py trusted viewer copied over the data              │
 │  ci/deploy_pages.py   commit to gh-pages under pr/<N>/ (other PRs kept,│
 │                       retries on push races)                           │
@@ -88,8 +91,18 @@ cleanup, because the old commit still has them.
 - The LLM reads PR-controlled text (footprint/symbol sources and datasheet PDFs linked from
   them), so a PR could try prompt injection. That can only change the wording of the advisory
   review. The model has no tools, and its output is escaped like everything else.
-- The AI step downloads datasheet URLs named in the PR, from inside the privileged job. To
-  turn that off, add `--no-download` in the publish workflow.
+- Datasheet URLs named in the PR are fetched by `ci/fetch_datasheets.py`, not by the ai
+  tool, which runs with `--no-download`. Limits: https only (redirects too, default port),
+  hosts must resolve to public IPs (connections are pinned to the checked IP), 20 MB and
+  20 s wall-clock per file, 20 files and 120 s per run. The body must be a PDF; for
+  distributor landing pages, one same-site PDF link is followed. These can be tuned with
+  `CR_DS_MAX_BYTES`, `CR_DS_TIMEOUT_S`, `CR_DS_MAX_DOWNLOADS` and `CR_DS_BUDGET_S`. The PDFs
+  only go into a private work copy for the AI and are never published on Pages.
+- Size caps in `sanitize_site.py`: 25 MB per STEP/WRL/GLB file, 30 MB per PDF, 10 MB for
+  anything else, and 300 MB per PR site (`CR_MAX_SITE_MB`). When the site cap is hit, the
+  bulky files (PDF, GLB, STEP) are dropped first. Manifest references to dropped files are
+  set to `null`, with a warning on the item, so the viewer shows "missing".
+  `.step`/`.stp` files must start with the STEP header.
 
 ## Repository setup (admin, one-time)
 

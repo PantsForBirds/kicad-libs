@@ -13,6 +13,7 @@ sys.path.insert(0, str(HERE))
 
 import common  # noqa: E402
 import deploy_pages  # noqa: E402
+import fetch_datasheets  # noqa: E402
 import make_mock  # noqa: E402
 import post_review  # noqa: E402
 import resolve_pr  # noqa: E402
@@ -100,6 +101,111 @@ class TestSanitize(Tmp):
         (self.site / "manifest.json").unlink()
         with self.assertRaises(SystemExit):
             sanitize_site.sanitize(self.site, self.tmp / "clean")
+
+
+class TestSanitizeLimits(Tmp):
+    def item_dir(self, idx=0):
+        m = json.loads((self.site / "manifest.json").read_text())
+        return m, m["items"][idx]["slug"]
+
+    def add_step(self, name, size, magic=True):
+        m, slug = self.item_dir()
+        p = self.site / "items" / slug / name
+        with open(p, "wb") as f:
+            f.write(b"ISO-10303-21;\nHEADER;\n" if magic else b"not a step file")
+            f.truncate(size)
+        m["items"][0]["model3d"] = [{"path_raw": "x", "file": f"items/{slug}/{name}"}]
+        m["items"][0]["geom"] = {"head": f"items/{slug}/head_geom.json", "base": None}
+        (self.site / "items" / slug / "head_geom.json").write_text('{"bbox": [0, 0, 1, 1], "pads": []}')
+        (self.site / "manifest.json").write_text(json.dumps(m))
+        return slug
+
+    def test_geom_and_step_kept(self):
+        slug = self.add_step("model_1.step", 1000)
+        sanitize_site.sanitize(self.site, self.tmp / "clean")
+        clean = self.tmp / "clean" / "items" / slug
+        self.assertTrue((clean / "model_1.step").is_file())
+        self.assertTrue((clean / "head_geom.json").is_file())
+        m = json.loads((self.tmp / "clean" / "manifest.json").read_text())
+        self.assertEqual(m["items"][0]["model3d"][0]["file"], f"items/{slug}/model_1.step")
+
+    def test_step_cap_nulls_manifest(self):
+        slug = self.add_step("model_1.step", 26 * 1024 * 1024)
+        stats = sanitize_site.sanitize(self.site, self.tmp / "clean")
+        self.assertFalse((self.tmp / "clean" / "items" / slug / "model_1.step").exists())
+        m = json.loads((self.tmp / "clean" / "manifest.json").read_text())
+        self.assertIsNone(m["items"][0]["model3d"][0]["file"])
+        self.assertTrue(any("model_1.step not published" in w for w in m["items"][0]["warnings"]))
+        self.assertEqual(stats["manifest_refs_nulled"], 1)
+
+    def test_fake_step_dropped(self):
+        slug = self.add_step("model_1.step", 1000, magic=False)
+        sanitize_site.sanitize(self.site, self.tmp / "clean")
+        self.assertFalse((self.tmp / "clean" / "items" / slug / "model_1.step").exists())
+
+    def test_site_budget_drops_bulky_first(self):
+        slug = self.add_step("model_1.step", 3 * 1024 * 1024)
+        sanitize_site.sanitize(self.site, self.tmp / "clean", max_total=2 * 1024 * 1024)
+        clean = self.tmp / "clean" / "items" / slug
+        self.assertFalse((clean / "model_1.step").exists())
+        self.assertTrue((clean / "head.png").exists())
+        self.assertTrue((clean / "head_geom.json").exists())
+
+
+class TestFetchDatasheets(Tmp):
+    def urls(self, mapping):
+        m = json.loads((self.site / "manifest.json").read_text())
+        for i, item in enumerate(m["items"]):
+            item["datasheet"] = {"url": mapping[i] if i < len(mapping) else None, "local": None, "file": None}
+        (self.site / "manifest.json").write_text(json.dumps(m))
+
+    def test_check_url(self):
+        for bad in ("http://example.com/a.pdf", "ftp://x/a.pdf", "https://user:pw@x.com/a.pdf",
+                    "https://x.com:8443/a.pdf", "file:///etc/passwd"):
+            with self.assertRaises(fetch_datasheets.Refused, msg=bad):
+                fetch_datasheets.check_url(bad)
+        fetch_datasheets.check_url("https://www.lcsc.com/datasheet/C1.pdf")
+
+    def test_private_ip_refused(self):
+        with self.assertRaises(fetch_datasheets.Refused):
+            fetch_datasheets._public_ip("localhost")
+
+    def test_embedded_link_same_site_only(self):
+        html = b'<a href="https://evil.example/x.pdf"></a><iframe src="https://datasheet.lcsc.com/p/a.pdf?c=1">'
+        self.assertEqual(fetch_datasheets.embedded_pdf_link(html, "https://www.lcsc.com/datasheet/C1.pdf"),
+                         "https://datasheet.lcsc.com/p/a.pdf?c=1")
+        self.assertIsNone(fetch_datasheets.embedded_pdf_link(b'"https://evil.example/x.pdf"', "https://a.com/b.pdf"))
+
+    def test_work_copy(self):
+        self.urls(["https://a.com/1.pdf", "http://b.com/2.pdf", "https://a.com/1.pdf", "https://c.com/3.pdf"])
+        calls = []
+
+        def fake(url, max_bytes, timeout):
+            calls.append(url)
+            fetch_datasheets.check_url(url)
+            if "c.com" in url:
+                raise fetch_datasheets.Refused("response is not a PDF")
+            return b"%PDF-1.4 fake"
+
+        before = (self.site / "manifest.json").read_bytes()
+        stats = fetch_datasheets.prepare(self.site, self.tmp / "work", fetcher=fake, max_downloads=5)
+        self.assertEqual((self.site / "manifest.json").read_bytes(), before)   # site untouched
+        self.assertFalse(list(self.site.rglob("datasheet_dl.pdf")))           # PDFs never in the site
+        m = json.loads((self.tmp / "work" / "manifest.json").read_text())
+        files = [i["datasheet"].get("file") for i in m["items"]]
+        self.assertTrue(files[0].endswith("datasheet_dl.pdf"))
+        self.assertIsNone(files[1])                    # http refused
+        self.assertEqual(files[2], files[0])           # same URL fetched once, reused
+        self.assertIsNone(files[3])
+        self.assertEqual(calls.count("https://a.com/1.pdf"), 1)
+        self.assertEqual(stats["fetched"], 1)
+
+    def test_download_budget(self):
+        self.urls([f"https://a{i}.com/x.pdf" for i in range(5)])
+        stats = fetch_datasheets.prepare(self.site, self.tmp / "work", fetcher=lambda u, b, t: b"%PDF",
+                                         max_downloads=2)
+        self.assertEqual(stats["fetched"], 2)
+        self.assertEqual(sum("budget" in s for s in stats["skipped"]), 3)
 
 
 class TestReview(Tmp):
