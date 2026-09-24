@@ -1,0 +1,270 @@
+# Component review (unprivileged, artifacts only).
+#
+# Runs on every PR (including PRs from forks) that touches footprints, symbols or 3D models.
+# It executes code from the PR, so it gets a read-only token and no secrets. It renders the
+# changed components, runs the deterministic checks (KLC-style rules + the official KLC
+# checker; no LLM) and uploads the results as artifacts:
+#   component-review.html   one self-contained HTML report, uploaded NON-zipped: click it on the
+#                           run page and it opens in the browser (no JavaScript inside)
+#   component-review-site   the interactive viewer (zip; unzip and open index.html)
+#   component-review-data   manifest.json + review.json + review.md
+# Findings with a file/line also show up as annotations in the PR's "Files changed" tab.
+# The Pages preview + sticky PR comment are posted by component-review-publish.yml (never runs
+# PR code); set the repo variable CR_PUBLISH=false to turn that off.
+name: Component review
+
+on:
+  pull_request:
+    paths:
+      - "lib_fp/**"
+      - "lib_sch/**"
+      - "lib_3d/**"
+      - "tools/component-review/**"
+  # TEMPORARY: lets us try the workflow on GitHub before a PR exists. Base = merge-base with
+  # origin/main. Remove this trigger once the workflow is merged.
+  push:
+    branches:
+      - "claud/**"
+    paths:
+      - "lib_fp/**"
+      - "lib_sch/**"
+      - "lib_3d/**"
+      - "tools/component-review/**"
+      - ".github/workflows/component-review*.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: component-review-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    # KiCad container for kicad-cli renders. Set the repo variable CR_KICAD_IMAGE to another
+    # image, or to "none" to run directly on the runner (the renderer then uses its
+    # pure-Python fallback, if it has one).
+    # (The image's default user is `kicad`; root is needed for apt and the runner's workspace.
+    # An empty container value makes the job run on the host.)
+    container: ${{ vars.CR_KICAD_IMAGE != 'none' && fromJSON(format('{{"image":"{0}","options":"--user root"}}', vars.CR_KICAD_IMAGE || 'kicad/kicad:10.0')) || '' }}
+    defaults:
+      run:
+        shell: bash
+    env:
+      PR_NUMBER: ${{ github.event.pull_request.number }}   # empty on push
+      BASE_SHA: ${{ github.event.pull_request.base.sha }}  # empty on push: origin/main is used
+      HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      OUT: cr-out
+    steps:
+      - name: Prepare tools
+        run: |
+          # The KiCad image may lack git (needed for a real clone) and venv/pip.
+          # The renderer needs libcairo2 + fonts-dejavu-core (PNG output).
+          need=""
+          command -v git >/dev/null || need="$need git"
+          python3 -c 'import venv, ensurepip' 2>/dev/null || need="$need python3-venv python3-pip"
+          ldconfig -p 2>/dev/null | grep -q 'libcairo\.so\.2' || need="$need libcairo2"
+          [ -f /usr/share/fonts/truetype/dejavu/DejaVuSans.ttf ] || need="$need fonts-dejavu-core"
+          if [ -n "$need" ]; then
+            sudo=""; [ "$(id -u)" = 0 ] || sudo="sudo"
+            $sudo apt-get update -qq
+            # shellcheck disable=SC2086  # $need is a word list
+            $sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends ca-certificates $need
+          fi
+          git --version; python3 --version; command -v kicad-cli && kicad-cli version || echo "kicad-cli not available"
+
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Find merge base
+        id: base
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          if [ -z "$BASE_SHA" ]; then   # push trigger (temporary): compare with main
+            BASE_SHA=$(git rev-parse origin/main)
+          fi
+          mb=$(git merge-base "$BASE_SHA" "$HEAD_SHA")
+          echo "merge_base=$mb" >> "$GITHUB_OUTPUT"
+          echo "base $BASE_SHA, head $HEAD_SHA, merge-base $mb"
+
+      - name: Install Python dependencies
+        run: |
+          python3 -m venv --system-site-packages "$RUNNER_TEMP/venv"
+          echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
+          req=tools/component-review/render/requirements.txt
+          if [ -f "$req" ]; then "$RUNNER_TEMP/venv/bin/pip" install -q -r "$req"; fi
+
+      # KiCad stock 3D models (${KICAD10_3DMODEL_DIR}/...) are downloaded by the renderer from
+      # the official kicad-packages3D repo at a pinned tag. Repo var CR_FETCH_STOCK_MODELS=false
+      # turns this off. Only enabled if this renderer version supports the flag.
+      - name: Stock 3D models setup
+        id: stock
+        if: vars.CR_FETCH_STOCK_MODELS != 'false'
+        run: |
+          r=tools/component-review/render/cr_render.py
+          if ! python3 "$r" --help 2>/dev/null | grep -q -- '--fetch-stock-models'; then
+            echo "::notice::cr_render.py has no --fetch-stock-models; stock 3D models not fetched"
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          # Cache key: hash of the pinned-tag file (one tag per KiCad major).
+          tags=tools/component-review/render/stock_models_tag.txt
+          if [ -f "$tags" ]; then key=$(sha256sum "$tags" | cut -c1-16); else key="src-$(sha256sum "$r" | cut -c1-16)"; fi
+          {
+            echo "enabled=true"
+            echo "key=$key"
+            echo "dir=$RUNNER_TEMP/kicad-3d"
+          } >> "$GITHUB_OUTPUT"
+          mkdir -p "$RUNNER_TEMP/kicad-3d"
+
+      # Grows over time: each run saves a new entry and restores the newest one for the tag.
+      # Caches saved by PR runs are only visible to that PR (and can't poison main's).
+      - name: Restore stock 3D model cache
+        if: steps.stock.outputs.enabled == 'true'
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.stock.outputs.dir }}
+          key: kicad-stock-3d-${{ steps.stock.outputs.key }}-${{ github.run_id }}
+          restore-keys: |
+            kicad-stock-3d-${{ steps.stock.outputs.key }}-
+
+      - name: Render changed components
+        env:
+          MERGE_BASE: ${{ steps.base.outputs.merge_base }}
+          STOCK_ENABLED: ${{ steps.stock.outputs.enabled }}
+          CR_STOCK_MODELS_DIR: ${{ steps.stock.outputs.dir }}
+        run: |
+          r=tools/component-review/render/cr_render.py
+          extra=()
+          if [ "$STOCK_ENABLED" = "true" ]; then
+            # layout DIR/<tag>/<Lib>.3dshapes/...; https-only from gitlab.com, 25 MB/file, 300 MB total
+            extra+=(--fetch-stock-models --stock-models-dir "$CR_STOCK_MODELS_DIR")
+          fi
+          if [ -n "$PR_NUMBER" ]; then extra+=(--pr "$PR_NUMBER"); fi
+          python3 "$r" --repo . --base "$MERGE_BASE" --head "$HEAD_SHA" --out "$OUT" "${extra[@]}"
+
+      # Optional KLC checker: kicad-library-utils at the commit pinned in ci/klc_utils.ref.
+      # Repo var CR_KLC=false disables it.
+      - name: Restore KLC checker cache
+        if: vars.CR_KLC != 'false' && hashFiles('tools/component-review/ci/klc_utils.ref') != ''
+        uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/klc-utils
+          key: klc-utils-${{ hashFiles('tools/component-review/ci/klc_utils.ref') }}
+
+      - name: Deterministic checks
+        continue-on-error: true
+        env:
+          CR_KLC: ${{ vars.CR_KLC }}
+        run: |
+          extra=()
+          fetch=tools/component-review/ci/fetch_klc_utils.sh
+          if [ "$CR_KLC" != "false" ] && [ -f "$fetch" ]; then
+            if klc=$(bash "$fetch" "$RUNNER_TEMP/klc-utils"); then
+              extra+=(--klc-utils "$klc")
+            else
+              echo "::warning::could not fetch kicad-library-utils; KLC checker skipped"
+            fi
+          fi
+          python3 tools/component-review/ai/cr_ai_review.py --out "$OUT" --no-llm "${extra[@]}"
+
+      - name: Bundle viewer
+        continue-on-error: true
+        run: python3 tools/component-review/viewer/build_site.py --out "$OUT"
+
+      - name: Build HTML report
+        continue-on-error: true
+        run: |
+          mkdir -p "$RUNNER_TEMP/report"
+          python3 tools/component-review/report/make_report.py --out "$OUT" \
+            --output "$RUNNER_TEMP/report/component-review.html"
+
+      - name: Annotate findings
+        if: always()
+        continue-on-error: true
+        run: |
+          if [ -f "$OUT/manifest.json" ]; then
+            python3 tools/component-review/ci/job_summary.py --out "$OUT" --annotate
+          fi
+
+      - name: Collect review data
+        if: always()
+        run: |
+          mkdir -p "$RUNNER_TEMP/data"
+          for f in manifest.json review.json review.md; do
+            if [ -f "$OUT/$f" ]; then cp "$OUT/$f" "$RUNNER_TEMP/data/"; fi
+          done
+
+      # Opens directly in the browser from the run page (non-zipped artifact).
+      - name: Upload HTML report
+        id: report
+        if: always()
+        continue-on-error: true
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          path: ${{ runner.temp }}/report/component-review.html
+          archive: false
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Upload interactive viewer
+        id: site
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: component-review-site
+          path: ${{ env.OUT }}
+          retention-days: 30
+          if-no-files-found: error
+
+      - name: Upload review data
+        id: data
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: component-review-data
+          path: ${{ runner.temp }}/data
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Write PR metadata
+        if: github.event_name == 'pull_request'
+        env:
+          MERGE_BASE: ${{ steps.base.outputs.merge_base }}
+        run: |
+          mkdir -p pr-meta
+          python3 - <<'PY'
+          import json, os
+          json.dump({"pr": int(os.environ["PR_NUMBER"]), "head_sha": os.environ["HEAD_SHA"],
+                     "base_sha": os.environ["BASE_SHA"], "merge_base": os.environ["MERGE_BASE"]},
+                    open("pr-meta/pr.json", "w"))
+          PY
+
+      # Read by component-review-publish.yml (Pages preview + sticky comment).
+      - name: Upload PR metadata
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: pr-meta
+          path: pr-meta/pr.json
+          retention-days: 30
+
+      - name: Job summary
+        if: always()
+        env:
+          REPORT_URL: ${{ steps.report.outputs.artifact-url }}
+          SITE_URL: ${{ steps.site.outputs.artifact-url }}
+          DATA_URL: ${{ steps.data.outputs.artifact-url }}
+        run: |
+          if [ -f "$OUT/manifest.json" ]; then
+            python3 tools/component-review/ci/job_summary.py --out "$OUT" --summary "$GITHUB_STEP_SUMMARY" \
+              --link "component-review.html (report)=$REPORT_URL" \
+              --link "component-review-site (viewer zip)=$SITE_URL" \
+              --link "component-review-data (JSON)=$DATA_URL"
+          else
+            echo "### Component review: rendering failed, see the log." >> "$GITHUB_STEP_SUMMARY"
+          fi

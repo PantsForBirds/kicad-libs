@@ -1,0 +1,43 @@
+# Removes a PR's preview (pr/<N>/ on gh-pages) when the PR is closed or merged.
+# pull_request_target runs this file from the base branch; no PR code is checked out.
+# Off when the repository variable CR_PUBLISH is 'false' (same switch as the publish workflow).
+name: Component review (cleanup)
+
+on:
+  pull_request_target:
+    types: [closed]
+    paths:
+      - "lib_fp/**"
+      - "lib_sch/**"
+      - "lib_3d/**"
+      - "tools/component-review/**"
+
+permissions: {}
+
+jobs:
+  cleanup:
+    if: vars.CR_PUBLISH != 'false'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write        # push to gh-pages
+      pull-requests: write   # note on the sticky comment
+    concurrency:
+      group: component-review-cleanup-${{ github.event.pull_request.number }}
+      cancel-in-progress: false
+    env:
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      GITHUB_TOKEN: ${{ github.token }}
+    steps:
+      - name: Check out trusted tools (default branch)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+
+      - name: Remove preview from gh-pages
+        run: python3 tools/component-review/ci/deploy_pages.py --repo "$GITHUB_REPOSITORY" --pr "$PR_NUMBER" --delete --push
+
+      - name: Mark the review comment
+        continue-on-error: true
+        run: python3 tools/component-review/ci/post_review.py --mark-closed --repo "$GITHUB_REPOSITORY" --pr "$PR_NUMBER"

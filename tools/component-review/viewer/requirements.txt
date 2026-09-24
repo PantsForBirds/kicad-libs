@@ -1,0 +1,4 @@
+# Viewer runtime has no Python dependencies (build_site.py is stdlib-only).
+# Dev/test only:
+Pillow>=10        # testdata/make_mock.py
+playwright>=1.45  # testdata/screenshot.py, testdata/xss_check.py (+ `python -m playwright install chromium`)

@@ -1,0 +1,163 @@
+# Component review: Pages preview + sticky PR comment (privileged, optional).
+#
+# On by default; set the repository variable CR_PUBLISH=false to turn it (and the cleanup
+# workflow) off, leaving just the artifacts of component-review.yml. No LLM and no secrets:
+# the review is the same deterministic checks, re-run here with trusted code.
+#
+# Triggered when "Component review" finishes. This workflow file and all code it runs come
+# from the DEFAULT BRANCH; the PR's code is never checked out or executed here. The artifact
+# produced by the PR run is treated as untrusted data: the PR number is verified against the
+# API, the files are filtered by sanitize_site.py (no HTML/JS, no scripted SVG), the viewer is
+# re-bundled from trusted code, and all text is escaped before it reaches the PR.
+name: Component review (publish)
+
+on:
+  workflow_run:
+    workflows: ["Component review"]
+    types: [completed]
+
+permissions: {}
+
+jobs:
+  publish:
+    if: >-
+      vars.CR_PUBLISH != 'false' &&
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write        # push the preview to gh-pages
+      pull-requests: write   # sticky comment + inline review
+      checks: write          # "Component review" check run
+      actions: read          # download the artifacts of the triggering run
+    # One publish at a time per PR branch; different PRs publish in parallel and
+    # deploy_pages.py retries on push races to gh-pages.
+    concurrency:
+      group: component-review-publish-${{ github.event.workflow_run.head_repository.full_name }}-${{ github.event.workflow_run.head_branch }}
+      cancel-in-progress: false
+    env:
+      RUN_ID: ${{ github.event.workflow_run.id }}
+      RUN_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+      CI: tools/component-review/ci
+    steps:
+      - name: Set paths
+        run: |
+          # Untrusted downloads live outside the workspace, away from the trusted checkout.
+          { echo "UNTRUSTED=$RUNNER_TEMP/untrusted"; echo "SITE=$RUNNER_TEMP/site"; } >> "$GITHUB_ENV"
+
+      - name: Check out trusted tools (default branch)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+
+      - name: Download PR metadata
+        uses: actions/download-artifact@v4
+        with:
+          name: pr-meta
+          path: ${{ runner.temp }}/untrusted/meta
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+
+      - name: Resolve and verify PR
+        id: pr
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          python3 "$CI/resolve_pr.py" --meta "$UNTRUSTED/meta/pr.json" \
+            --repo "$GITHUB_REPOSITORY" --run-head-sha "$RUN_HEAD_SHA"
+
+      - name: Download review bundle
+        if: steps.pr.outputs.skip == 'false'
+        uses: actions/download-artifact@v4
+        with:
+          name: component-review-site
+          path: ${{ runner.temp }}/untrusted/site
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+
+      - name: Sanitize review bundle
+        if: steps.pr.outputs.skip == 'false'
+        run: python3 "$CI/sanitize_site.py" --src "$UNTRUSTED/site" --dst "$SITE"
+
+      # review.json from the PR run is untrusted and was dropped by sanitize_site.py: the
+      # deterministic checks are re-run here with default-branch code on the sanitized data.
+      - name: Deterministic checks (trusted)
+        id: ai
+        if: steps.pr.outputs.skip == 'false'
+        env:
+          CR_KLC: ${{ vars.CR_KLC }}
+          CR_PAGES_URL: ${{ vars.CR_PAGES_URL }}
+          PR_NUMBER: ${{ steps.pr.outputs.pr }}
+        run: |
+          pages="${CR_PAGES_URL:-https://${GITHUB_REPOSITORY_OWNER,,}.github.io/${GITHUB_REPOSITORY#*/}/}"
+          site_url="${pages%/}/pr/$PR_NUMBER/"   # linked from review.md
+          ai=tools/component-review/ai/cr_ai_review.py
+          if [ ! -f "$ai" ]; then
+            echo "note=Checks not available on the default branch yet." >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          extra=()
+          # KLC checker: a trusted external repo at a pinned commit, fetched fresh (about 1 s)
+          # rather than from a cache, so nothing restored here needs to be trusted.
+          if [ "$CR_KLC" != "false" ] && [ -f "$CI/fetch_klc_utils.sh" ]; then
+            if klc=$(bash "$CI/fetch_klc_utils.sh" "$RUNNER_TEMP/klc-utils"); then
+              extra+=(--klc-utils "$klc")
+            else
+              echo "::warning::could not fetch kicad-library-utils; KLC checker skipped"
+            fi
+          fi
+          if ! python3 "$ai" --out "$SITE" --no-llm --no-download --site-url "$site_url" "${extra[@]}"; then
+            echo "note=Deterministic checks failed; see the workflow log." >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Bundle viewer (trusted)
+        if: steps.pr.outputs.skip == 'false'
+        continue-on-error: true   # the comment and images are still useful without the viewer
+        run: python3 tools/component-review/viewer/build_site.py --out "$SITE"
+
+      - name: Deploy preview to gh-pages
+        id: deploy
+        if: steps.pr.outputs.skip == 'false'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ steps.pr.outputs.pr }}
+        run: python3 "$CI/deploy_pages.py" --repo "$GITHUB_REPOSITORY" --pr "$PR_NUMBER" --site "$SITE" --push
+
+      - name: Comment, review and check
+        if: steps.pr.outputs.skip == 'false'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ steps.pr.outputs.pr }}
+          HEAD_SHA: ${{ steps.pr.outputs.head_sha }}
+          PAGES_SHA: ${{ steps.deploy.outputs.sha }}
+          NOTE: ${{ steps.ai.outputs.note }}
+          CR_PAGES_URL: ${{ vars.CR_PAGES_URL }}
+          CR_FAIL_CONCLUSION: ${{ vars.CR_FAIL_CONCLUSION }}
+        run: |
+          run_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$RUN_ID"
+          # Artifacts of the triggering run: the viewer zip and the non-zipped HTML report.
+          artifacts=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RUN_ID/artifacts" || echo '{}')
+          id_of() { jq -r --arg n "$1" '[.artifacts[]? | select(.name == $n) | .id][0] // empty' <<< "$artifacts"; }
+          site_id=$(id_of component-review-site)
+          report_id=$(id_of component-review.html)
+          artifact_url="$run_url"
+          if [ -n "$site_id" ]; then artifact_url="$run_url/artifacts/$site_id"; fi
+          report_url=""
+          if [ -n "$report_id" ]; then report_url="$run_url/artifacts/$report_id"; fi
+          python3 "$CI/post_review.py" --site "$SITE" --repo "$GITHUB_REPOSITORY" --pr "$PR_NUMBER" \
+            --head-sha "$HEAD_SHA" ${PAGES_SHA:+--pages-sha "$PAGES_SHA"} \
+            ${CR_PAGES_URL:+--pages-url "$CR_PAGES_URL"} \
+            --artifact-url "$artifact_url" ${report_url:+--report-url "$report_url"} \
+            --run-url "$run_url" ${NOTE:+--note "$NOTE"} \
+            --comment-out "$RUNNER_TEMP/comment.md"
+          cat "$RUNNER_TEMP/comment.md" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Skipped
+        if: steps.pr.outputs.skip == 'true'
+        env:
+          REASON: ${{ steps.pr.outputs.reason }}
+        run: |
+          echo "::notice::Component review not published: $REASON"
