@@ -174,7 +174,7 @@ class TestEscaping(Base):
         it["text_diff"] = f"items/{it['slug']}/diff.patch"
         (self.site / it["text_diff"]).write_text(f"--- a\n+++ b\n@@ -1 +1 @@\n-{XSS}\n+{XSS}\n")
         rid = self.m["items"][1]["id"]
-        self.r["model"] = XSS
+        self.r["generator"] = XSS
         self.r["summary_markdown"] = XSS + " **bold** `code`"
         self.r["items"][rid] = {"verdict": XSS, "summary": XSS, "findings": [
             {"severity": XSS, "category": XSS, "message": XSS, "suggestion": XSS, "path": XSS, "line": XSS},

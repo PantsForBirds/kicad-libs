@@ -1,32 +1,27 @@
-"""Unit tests for the component-review AI step. Stdlib unittest; also runs under pytest.
+"""Unit tests for the component-review checks step. Stdlib unittest; also runs under pytest.
 
-  python3 -m unittest discover -s tools/component-review/ai/tests -v
+  python3 -m unittest discover -s tools/component-review/checks/tests -v
 """
 
 from __future__ import annotations
 
-import base64
 import json
 import os
 import shutil
 import subprocess
 import sys
 import tempfile
-import types
 import unittest
-from unittest import mock
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-AI_DIR = os.path.dirname(HERE)
-REPO = os.path.abspath(os.path.join(AI_DIR, "..", "..", ".."))
-sys.path.insert(0, AI_DIR)
+CHECKS_DIR = os.path.dirname(HERE)
+REPO = os.path.abspath(os.path.join(CHECKS_DIR, "..", "..", ".."))
+sys.path.insert(0, CHECKS_DIR)
 sys.path.insert(0, HERE)
 
-import cr_ai_review as cr  # noqa: E402
-import datasheet as ds_mod  # noqa: E402
+import cr_checks as cr  # noqa: E402
 import kicad_checks as kc  # noqa: E402
 import make_mock_out  # noqa: E402
-import prompts  # noqa: E402
 import sexpr  # noqa: E402
 
 FP_OK = """(footprint "R_0603_1608Metric"
@@ -264,128 +259,6 @@ class PathSafetyTests(unittest.TestCase):
             os.symlink(other, os.path.join(d, "link"))
             self.assertIsNone(cr.safe_join(d, "link/file"))
 
-    def test_download_blocks_private_hosts(self):
-        data, note = ds_mod.download("http://127.0.0.1/x.pdf")
-        self.assertIsNone(data)
-        self.assertIn("non-public", note)
-        data, note = ds_mod.download("file:///etc/passwd")
-        self.assertIsNone(data)
-
-
-class _FakeResp:
-    def __init__(self, body: bytes, ctype="application/pdf", url="https://ds.example.com/x.pdf", delay=0.0, length=True):
-        self._chunks = [body[i:i + 1000] for i in range(0, len(body), 1000)]
-        self.headers = {"Content-Type": ctype}
-        if length:
-            self.headers["Content-Length"] = str(len(body))
-        self._url, self._delay = url, delay
-
-    def geturl(self):
-        return self._url
-
-    def read(self, n=-1):
-        import time
-        time.sleep(self._delay)
-        return self._chunks.pop(0) if self._chunks else b""
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, *a):
-        return False
-
-
-class _FakeOpener:
-    def __init__(self, *resps):
-        self.resps = list(resps)
-        self.urls = []
-
-    def open(self, req, timeout=None):
-        self.urls.append(req.full_url)
-        return self.resps.pop(0)
-
-
-PUBLIC_DNS = mock.patch("socket.getaddrinfo", return_value=[(2, 1, 6, "", ("93.184.216.34", 443))])
-
-
-class DownloadGuardTests(unittest.TestCase):
-    def setUp(self):
-        ds_mod.reset()
-
-    def test_ok_pdf(self):
-        with PUBLIC_DNS:
-            data, note = ds_mod.download("https://ds.example.com/a.pdf", opener=_FakeOpener(_FakeResp(b"%PDF-1.4 hello")))
-        self.assertEqual(data, b"%PDF-1.4 hello")
-
-    def test_https_only(self):
-        with PUBLIC_DNS, mock.patch.dict(os.environ, {"CR_DS_HTTPS_ONLY": "1"}):
-            data, note = ds_mod.download("http://ds.example.com/a.pdf", opener=_FakeOpener(_FakeResp(b"%PDF")))
-            self.assertIsNone(data)
-            self.assertIn("CR_DS_HTTPS_ONLY", note)
-            # a redirect to http is refused by the redirect handler's check too
-            with self.assertRaises(ds_mod._Blocked):
-                ds_mod._SafeRedirect().redirect_request(None, None, 302, "", {}, "http://ds.example.com/b.pdf")
-
-    def test_private_hosts_resolved(self):
-        for ip in ("10.0.0.5", "127.0.0.1", "169.254.169.254", "::1", "fe80::1", "::ffff:192.168.1.1"):
-            fam = 10 if ":" in ip else 2
-            with mock.patch("socket.getaddrinfo", return_value=[(fam, 1, 6, "", (ip, 443))]):
-                with self.assertRaises(ds_mod._Blocked, msg=ip):
-                    ds_mod._check_url("https://innocent.example.com/x.pdf")
-
-    def test_max_bytes_streaming(self):
-        body = b"%PDF" + b"x" * 5000
-        with PUBLIC_DNS, mock.patch.dict(os.environ, {"CR_DS_MAX_BYTES": "2000"}):
-            data, note = ds_mod.download("https://ds.example.com/big.pdf",
-                                         opener=_FakeOpener(_FakeResp(body, length=False)))
-        self.assertIsNone(data)
-        self.assertIn("CR_DS_MAX_BYTES", note)
-
-    def test_total_deadline(self):
-        body = b"%PDF" + b"x" * 5000  # 6 chunks x 0.3 s > 1 s total, although each read is fast enough
-        with PUBLIC_DNS, mock.patch.dict(os.environ, {"CR_DS_TIMEOUT_S": "1"}):
-            data, note = ds_mod.download("https://ds.example.com/slow.pdf",
-                                         opener=_FakeOpener(_FakeResp(body, delay=0.3)))
-        self.assertIsNone(data)
-        self.assertIn("CR_DS_TIMEOUT_S", note)
-
-    def test_non_pdf_rejected(self):
-        with PUBLIC_DNS:
-            data, note = ds_mod.download("https://ds.example.com/p.png", opener=_FakeOpener(_FakeResp(b"\x89PNG", "image/png")))
-            self.assertIsNone(data)
-            data, note = ds_mod.download("https://ds.example.com/page", opener=_FakeOpener(_FakeResp(b"<html>hi</html>", "text/html")))
-            self.assertIsNone(data)
-            self.assertIn("did not return a PDF", note)
-
-    def test_html_landing_page_follows_same_site_pdf(self):
-        html = b'<a href="https://cdn.example.com/files/real.pdf?x=1">pdf</a><a href="https://evil.test/a.pdf">'
-        op = _FakeOpener(_FakeResp(html, "text/html"), _FakeResp(b"%PDF-real"))
-        with PUBLIC_DNS:
-            data, note = ds_mod.download("https://www.example.com/datasheet/C1.pdf", opener=op)
-        self.assertEqual(data, b"%PDF-real")
-        self.assertEqual(op.urls[1], "https://cdn.example.com/files/real.pdf?x=1")
-
-    def test_download_limit(self):
-        with PUBLIC_DNS, mock.patch.dict(os.environ, {"CR_DS_MAX_DOWNLOADS": "1"}):
-            ds_mod.download("https://ds.example.com/1.pdf", opener=_FakeOpener(_FakeResp(b"%PDF1")))
-            data, note = ds_mod.download("https://ds.example.com/2.pdf", opener=_FakeOpener(_FakeResp(b"%PDF2")))
-        self.assertIsNone(data)
-        self.assertIn("datasheet not fetched (limit)", note)
-
-    def test_no_download_flag_uses_file_only(self):
-        with tempfile.TemporaryDirectory() as out:
-            os.makedirs(os.path.join(out, "items", "s"))
-            with open(os.path.join(out, "items", "s", "datasheet.pdf"), "wb") as f:
-                f.write(b"%PDF-local")
-            item = {"datasheet": {"url": "https://ds.example.com/x.pdf", "local": None, "file": "items/s/datasheet.pdf"}}
-            with mock.patch.object(ds_mod, "download", side_effect=AssertionError("must not download")):
-                sh = ds_mod.resolve(item, out, None, None, False, 40, cr.safe_join)
-                self.assertTrue(sh.pdf.startswith(b"%PDF-local"))
-                item["datasheet"]["file"] = None
-                sh = ds_mod.resolve(item, out, None, None, False, 40, cr.safe_join)
-                self.assertIsNone(sh.pdf)
-                self.assertIn("download disabled", sh.note)
-
 
 # ---------------------------------------------------------------------------
 # end-to-end on a mock OUT built from this repo's PR range (or synthetic data)
@@ -428,57 +301,6 @@ def build_synthetic_out(out):
         json.dump({"schema": 1, "items": items, "unreferenced_changed_3d_files": ["lib_3d/Custom_Module/Orphan.step"]}, f)
 
 
-class FakeStream:
-    def __init__(self, msg):
-        self.msg = msg
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, *a):
-        return False
-
-    def get_final_message(self):
-        return self.msg
-
-
-class FakeClient:
-    """Stands in for anthropic.Anthropic(); records every request."""
-
-    def __init__(self, reply_fn):
-        self.calls = []
-        outer = self
-
-        class _Messages:
-            def stream(self_inner, **params):
-                outer.calls.append(params)
-                return FakeStream(reply_fn(params))
-
-        self.beta = types.SimpleNamespace(messages=_Messages())
-
-
-def fake_message(payload, stop_reason="end_turn", model="claude-fable-5-1"):
-    return types.SimpleNamespace(
-        content=[types.SimpleNamespace(type="thinking", thinking=""),
-                 types.SimpleNamespace(type="text", text=json.dumps(payload) if not isinstance(payload, str) else payload)],
-        stop_reason=stop_reason, stop_details=None, model=model, _request_id="req_test",
-        usage=types.SimpleNamespace(input_tokens=1000, output_tokens=500, cache_creation_input_tokens=3000,
-                                    cache_read_input_tokens=0))
-
-
-AI_REPLY = {
-    "verdict": "fail", "summary": "Pad 1 is too small versus the datasheet land pattern.",
-    "findings": [
-        {"severity": "error", "category": "land-pattern", "target": "this_item",
-         "message": "Pad width 0.88 mm vs datasheet 0.95 mm", "line": 20, "suggestion": "Use 0.95 mm"},
-        {"severity": "warning", "category": "pinout", "target": "this_item",
-         "message": "cites a line outside the item", "line": 99999, "suggestion": ""},
-    ],
-    "checks": [{"name": "Pad size vs land pattern", "result": "fail", "detail": "0.88 vs 0.95"},
-               {"name": "Pin count vs datasheet", "result": "unknown", "detail": "not shown"}],
-}
-
-
 class EndToEndTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.mkdtemp()
@@ -489,7 +311,7 @@ class EndToEndTests(unittest.TestCase):
         shutil.rmtree(self.tmp, ignore_errors=True)
 
     def args(self, *extra):
-        return cr.parse_args(["--out", self.out, "--no-download", "--cache-dir", os.path.join(self.tmp, "cache"), *extra])
+        return cr.parse_args(["--out", self.out, *extra])
 
     def load(self):
         with open(os.path.join(self.out, "review.json")) as f:
@@ -497,119 +319,59 @@ class EndToEndTests(unittest.TestCase):
 
     def assert_contract(self, review):
         self.assertEqual(review["schema"], 1)
-        for k in ("model", "generated_at", "summary_markdown", "items"):
+        for k in ("generator", "generated_at", "summary_markdown", "items"):
             self.assertIn(k, review)
+        self.assertNotIn("model", review)
+        self.assertNotIn("usage", review)
         for iid, e in review["items"].items():
             self.assertIn(e["verdict"], ("pass", "warn", "fail"))
             self.assertIsInstance(e["summary"], str)
             self.assertIn("datasheet_used", e)
             for f in e["findings"]:
                 self.assertIn(f["severity"], ("error", "warning", "info"))
-                self.assertIn(f["category"], prompts.FINDING_CATEGORIES + ["klc"])
+                self.assertIn(f["category"], ("klc", "3d-model"))
                 self.assertTrue(f["message"])
                 self.assertIn("path", f)
                 self.assertTrue(f["line"] is None or isinstance(f["line"], int))
             for c in e["checks"]:
                 self.assertIn(c["result"], ("pass", "fail", "unknown"))
 
-    def test_no_llm(self):
-        self.assertEqual(cr.run(self.args("--no-llm")), 0)
+    def test_checks(self):
+        self.assertEqual(cr.run(self.args()), 0)
         r = self.load()
         self.assert_contract(r)
+        klc = cr.klc_utils.available(os.environ.get("CR_KLC_UTILS"))
+        self.assertEqual(r["generator"], "deterministic checks + KLC" if klc else "deterministic checks")
         self.assertEqual(r["items"]["footprint:Custom_Test:Gone"]["verdict"], "pass")
         sym = r["items"]["symbol:Custom_Test:AMP1"]
         self.assertEqual(sym["verdict"], "fail")
         self.assertTrue(any("no matching pad" in f["message"] for f in sym["findings"]))
+        self.assertEqual(sym["datasheet_used"], "items/symbol__Custom_Test__AMP1/datasheet.pdf")
+        self.assertIsNone(r["items"]["footprint:Custom_Test:Gone"]["datasheet_used"])
         self.assertEqual(len(r["pr_findings"]), 1)
         self.assertEqual(r["pr_findings"][0]["path"], "lib_3d/Custom_Module/Orphan.step")
         md = open(os.path.join(self.out, "review.md")).read()
         self.assertIn("Orphan.step", md)
         self.assertIn("| Component | Status | Verdict | Top findings |", md)
         self.assertIn("Custom_Test:AMP1", md)
+        self.assertIn(f"Checks: {r['generator']}.", md)
 
-    def test_missing_key_degrades(self):
-        with mock.patch.dict(os.environ, {"ANTHROPIC_API_KEY": "", "ANTHROPIC_AUTH_TOKEN": ""}):
-            self.assertEqual(cr.run(self.args()), 0)
-            self.assertIn("ANTHROPIC_API_KEY is not set", self.load()["summary_markdown"])
-            self.assertEqual(cr.run(self.args("--require-llm")), 2)
+    def test_datasheet_url_when_no_local_copy(self):
+        with open(os.path.join(self.out, "manifest.json")) as f:
+            m = json.load(f)
+        m["items"][0]["datasheet"] = {"url": "https://example.com/r.pdf", "local": None, "file": "items/missing.pdf"}
+        with open(os.path.join(self.out, "manifest.json"), "w") as f:
+            json.dump(m, f)
+        self.assertEqual(cr.run(self.args()), 0)
+        self.assertEqual(self.load()["items"][m["items"][0]["id"]]["datasheet_used"], "https://example.com/r.pdf")
 
-    def test_dry_run_writes_requests(self):
-        self.assertEqual(cr.run(self.args("--dry-run", "--model", "claude-fable-5-1")), 0)
-        req_dir = os.path.join(self.out, "ai-requests")
-        files = sorted(os.listdir(req_dir))
-        self.assertEqual(files, ["footprint__Custom_Test__R_0603_1608Metric.json", "symbol__Custom_Test__AMP1.json"])
-        with open(os.path.join(req_dir, files[0])) as f:
-            dump = json.load(f)
-        p = dump["params"]
-        self.assertEqual(p["model"], "claude-fable-5-1")
-        self.assertNotIn("thinking", p)  # Fable 5.1: thinking is always on; don't send it
-        self.assertEqual(p["fallbacks"], "default")
-        self.assertEqual(p["betas"], [cr.FALLBACK_BETA])
-        self.assertEqual(p["output_config"]["format"]["schema"], prompts.OUTPUT_SCHEMA)
-        self.assertEqual(p["output_config"]["effort"], "high")
-        self.assertEqual(p["system"][0]["cache_control"], {"type": "ephemeral"})
-        content = p["messages"][0]["content"]
-        self.assertEqual(content[0]["type"], "document")
-        self.assertTrue(content[0]["source"]["data"].startswith("<elided application/pdf"))
-        self.assertTrue(any(b["type"] == "image" for b in content))
-        text = content[-1]["text"]
-        self.assertIn('<source file="lib_x/R_0603_1608Metric">', text)
-        self.assertIn("1| (footprint", text)
-        self.assertIn("<paired_items>", text)
-        self.assertIn("<deterministic_findings>", text)
-        self.assertGreater(dump["estimated_input_tokens"], 500)
-        self.assert_contract(self.load())
-
-    def test_llm_merge_with_fake_client(self):
-        client = FakeClient(lambda params: fake_message(AI_REPLY))
-        with mock.patch.dict(os.environ, {"ANTHROPIC_API_KEY": "test"}):
-            self.assertEqual(cr.run(self.args("--jobs", "1"), client_factory=lambda: client), 0)
-        self.assertEqual(len(client.calls), 2)  # deleted item is not sent
-        r = self.load()
-        self.assert_contract(r)
-        self.assertEqual(r["model"], "claude-fable-5-1")
-        fp = r["items"]["footprint:Custom_Test:R_0603_1608Metric"]
-        self.assertEqual(fp["verdict"], "fail")
-        self.assertEqual(fp["summary"], AI_REPLY["summary"])
-        self.assertEqual(fp["datasheet_used"], "datasheets/x.pdf")
-        pad = next(f for f in fp["findings"] if f["category"] == "land-pattern")
-        self.assertEqual(pad["line"], 20)
-        self.assertEqual(pad["suggestion"], "Use 0.95 mm")
-        outside = next(f for f in fp["findings"] if "outside the item" in f["message"])
-        self.assertIsNone(outside["line"])
-        self.assertIn("usage", r)
-        self.assertGreater(r["usage"]["cost"], 0)
-        # the model saw numbered repo lines for the symbol (symbol opens at file line 4)
-        sym_call = next(c for c in client.calls if "AMP1" in c["messages"][0]["content"][-1]["text"]
-                        and "Review the symbol" in c["messages"][0]["content"][-1]["text"])
-        self.assertIn('4| \t(symbol "AMP1"', sym_call["messages"][0]["content"][-1]["text"])
-
-    def test_refusal_and_bad_json(self):
-        replies = iter([fake_message("", stop_reason="refusal"), fake_message("{not json")])
-        client = FakeClient(lambda params: next(replies))
-        with mock.patch.dict(os.environ, {"ANTHROPIC_API_KEY": "test"}):
-            self.assertEqual(cr.run(self.args("--jobs", "1"), client_factory=lambda: client), 0)
-        r = self.load()
-        self.assert_contract(r)
-        notes = [f["message"] for e in r["items"].values() for f in e["findings"] if "AI review unavailable" in f["message"]]
-        self.assertEqual(len(notes), 2, notes)
-
-    def test_api_errors_are_per_item(self):
-        import anthropic
-        import httpx2
-
-        def boom(params):
-            req = httpx2.Request("POST", "https://api.anthropic.com/v1/messages")
-            raise anthropic.InternalServerError("overloaded", response=httpx2.Response(529, request=req), body=None)
-
-        client = FakeClient(boom)
-        with mock.patch.dict(os.environ, {"ANTHROPIC_API_KEY": "test"}):
-            self.assertEqual(cr.run(self.args(), client_factory=lambda: client), 0)
+    def test_old_flags_accepted(self):
+        self.assertEqual(cr.run(self.args("--no-llm", "--no-download")), 0)
         self.assert_contract(self.load())
 
     def test_manifest_missing(self):
         os.remove(os.path.join(self.out, "manifest.json"))
-        self.assertEqual(cr.run(self.args("--no-llm")), 2)
+        self.assertEqual(cr.run(self.args()), 2)
 
 
 @unittest.skipUnless(_have_git_range(), "needs origin/main in the repo")
@@ -622,17 +384,10 @@ class RepoMockOutTests(unittest.TestCase):
             m = make_mock_out.build(REPO, "origin/main", "HEAD", out)
             if not m["items"]:
                 self.skipTest("no KiCad items changed in origin/main..HEAD")
-            self.assertEqual(cr.run(cr.parse_args(["--out", out, "--no-llm", "--repo", REPO])), 0)
+            self.assertEqual(cr.run(cr.parse_args(["--out", out, "--repo", REPO])), 0)
             with open(os.path.join(out, "review.json")) as f:
                 review = json.load(f)
             self.assertEqual(set(review["items"]), {i["id"] for i in m["items"]})
-
-
-try:  # the SDK is only needed for the tests that exercise the API-call path
-    import anthropic  # noqa: F401
-except ImportError:
-    for _t in ("test_api_errors_are_per_item", "test_llm_merge_with_fake_client", "test_refusal_and_bad_json"):
-        setattr(EndToEndTests, _t, unittest.skip("anthropic not installed")(getattr(EndToEndTests, _t)))
 
 
 if __name__ == "__main__":

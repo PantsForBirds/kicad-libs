@@ -6,7 +6,7 @@ Automated review of pull requests that add or change KiCad footprints (`lib_fp/`
 - renders before/after images (plus a red/green diff overlay for modified parts), per-layer SVGs
   and 3D previews;
 - runs deterministic checks (pad counts, KLC-style rules, properties, 3D-model paths, and the
-  official KLC checker from kicad-library-utils). There is no LLM and no secret is needed;
+  official KLC checker from kicad-library-utils). No secret is needed;
 - uploads the results as **artifacts** of the workflow run:
   - **`component-review.html`**: one self-contained HTML report, uploaded *non-zipped*, so it
     opens straight in the browser from the run page. No JavaScript, all images embedded;
@@ -36,7 +36,7 @@ model diffs, findings with links to the lines at the PR head, and the text diff.
 | Dir        | What                                                                        |
 |------------|-----------------------------------------------------------------------------|
 | `render/`  | `cr_render.py`: diffs base..head and renders every changed item into `OUT/` (`manifest.json`, `items/<slug>/…`) |
-| `ai/`      | `cr_ai_review.py --no-llm`: deterministic + KLC checks, writes `OUT/review.json` and `review.md`. (Its LLM mode is not used by CI) |
+| `checks/`  | `cr_checks.py`: deterministic + KLC checks, writes `OUT/review.json` and `review.md` |
 | `report/`  | `make_report.py --out OUT`: the self-contained `component-review.html`      |
 | `viewer/`  | a static web app; `build_site.py --out OUT` copies it into `OUT/`          |
 | `ci/`      | GitHub glue: job summary/annotations, artifact sanitizing, gh-pages deploy, PR comment/review/check |
@@ -51,16 +51,16 @@ workflow therefore produces **artifacts only**. The optional publish stage, whic
 access, never runs PR code.
 
 ```
- PR opened / pushed (fork or branch)            push to claud/** (TEMPORARY test trigger;
-        │  pull_request (paths: lib_fp/**, lib_sch/**,     base = merge-base with origin/main)
-        │  lib_3d/**, tools/component-review/**)          │
-        ▼                                                 ▼
+ PR opened / pushed (fork or branch)
+        │  pull_request (paths: lib_fp/**, lib_sch/**,
+        │  lib_3d/**, tools/component-review/**)
+        ▼
 ┌──────────────────────── component-review.yml ─────────────────────────┐
 │ UNPRIVILEGED: contents: read, no secrets, runs the PR's code           │
 │ container kicad/kicad:10.0 (optional)                                  │
 │  checkout PR head (full history) → merge-base with base branch         │
 │  render/cr_render.py  --base <merge-base> --head <head> --out cr-out   │
-│  ai/cr_ai_review.py   --out cr-out --no-llm   (deterministic + KLC)    │
+│  checks/cr_checks.py  --out cr-out            (deterministic + KLC)    │
 │  viewer/build_site.py --out cr-out                                     │
 │  report/make_report.py --out cr-out --output component-review.html     │
 │  ci/job_summary.py    ::error/::warning annotations + job summary      │
@@ -71,7 +71,7 @@ access, never runs PR code.
                                 │ workflow_run: completed + success
                                 ▼   (skipped when repo var CR_PUBLISH == 'false')
 ┌───────────────────── component-review-publish.yml ────────────────────┐
-│ PRIVILEGED: contents/pull-requests/checks: write. No secrets, no LLM.  │
+│ PRIVILEGED: contents/pull-requests/checks: write. No secrets.          │
 │ Code comes from the DEFAULT BRANCH checkout only. Artifact = data.     │
 │  ci/resolve_pr.py     PR number from pr-meta, accepted only if the API │
 │                       says PR N is open and its head == run head_sha   │
@@ -79,7 +79,7 @@ access, never runs PR code.
 │                       with scripts/handlers/external refs dropped;     │
 │                       size caps; untrusted review.json discarded       │
 │  ci/fetch_klc_utils.sh  kicad-library-utils at the pinned commit       │
-│  ai/cr_ai_review.py   --no-llm: checks re-run with trusted code        │
+│  checks/cr_checks.py  checks re-run with trusted code                  │
 │  viewer/build_site.py trusted viewer copied over the data              │
 │  ci/deploy_pages.py   commit to gh-pages under pr/<N>/ (other PRs kept,│
 │                       retries on push races)                           │
@@ -116,8 +116,6 @@ cleanup, because the old commit still has them.
   no scripts and no network access. A malicious PR could still change `make_report.py`
   itself, and then the report holds whatever that version writes. Open reports from PRs you
   don't trust with the same care as a downloaded HTML file.
-- `ci/fetch_datasheets.py` (strict datasheet fetcher for the former LLM step) is kept in the
-  tree but no workflow uses it.
 - Size caps in `sanitize_site.py`: 25 MB per STEP/WRL/GLB file, 30 MB per PDF, 10 MB for
   anything else, and 300 MB per PR site (`CR_MAX_SITE_MB`). When the site cap is hit, the
   bulky files (PDF, GLB, STEP) are dropped first. Manifest references to dropped files are
@@ -165,7 +163,7 @@ Needs Python 3.11+. Run from the repo root:
 pip install -r tools/component-review/render/requirements.txt   # if present
 base=$(git merge-base origin/main HEAD)
 python3 tools/component-review/render/cr_render.py --repo . --base "$base" --head HEAD --out cr-out
-python3 tools/component-review/ai/cr_ai_review.py --out cr-out --no-llm
+python3 tools/component-review/checks/cr_checks.py --out cr-out
 python3 tools/component-review/viewer/build_site.py --out cr-out
 python3 tools/component-review/report/make_report.py --out cr-out           # -> cr-out/component-review.html
 python3 -m http.server -d cr-out 8000                                     # open http://localhost:8000/
@@ -190,6 +188,7 @@ any git remote, for trying it out. Leave out `--push` to only build the commit.
 Tests (stdlib only, they use generated mock data):
 
 ```sh
+python3 -m unittest discover -s tools/component-review/checks/tests -v
 python3 -m unittest discover -s tools/component-review/ci/tests -v
 python3 -m unittest discover -s tools/component-review/report/tests -v
 python3 tools/component-review/ci/tests/make_mock.py /tmp/mock    # mock site + PR file list

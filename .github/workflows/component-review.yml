@@ -3,7 +3,7 @@
 # Runs on every PR (including PRs from forks) that touches footprints, symbols or 3D models.
 # It executes code from the PR, so it gets a read-only token and no secrets. It renders the
 # changed components, runs the deterministic checks (KLC-style rules + the official KLC
-# checker; no LLM) and uploads the results as artifacts:
+# checker) and uploads the results as artifacts:
 #   component-review.html   one self-contained HTML report, uploaded NON-zipped: click it on the
 #                           run page and it opens in the browser (no JavaScript inside)
 #   component-review-site   the interactive viewer (zip; unzip and open index.html)
@@ -20,17 +20,6 @@ on:
       - "lib_sch/**"
       - "lib_3d/**"
       - "tools/component-review/**"
-  # TEMPORARY: lets us try the workflow on GitHub before a PR exists. Base = merge-base with
-  # origin/main. Remove this trigger once the workflow is merged.
-  push:
-    branches:
-      - "claud/**"
-    paths:
-      - "lib_fp/**"
-      - "lib_sch/**"
-      - "lib_3d/**"
-      - "tools/component-review/**"
-      - ".github/workflows/component-review*.yml"
 
 permissions:
   contents: read
@@ -54,7 +43,7 @@ jobs:
         shell: bash
     env:
       PR_NUMBER: ${{ github.event.pull_request.number }}   # empty on push
-      BASE_SHA: ${{ github.event.pull_request.base.sha }}  # empty on push: origin/main is used
+      BASE_SHA: ${{ github.event.pull_request.base.sha }}
       HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
       OUT: cr-out
     steps:
@@ -85,7 +74,7 @@ jobs:
         id: base
         run: |
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
-          if [ -z "$BASE_SHA" ]; then   # push trigger (temporary): compare with main
+          if [ -z "$BASE_SHA" ]; then   # no PR base (should not happen): compare with main
             BASE_SHA=$(git rev-parse origin/main)
           fi
           mb=$(git merge-base "$BASE_SHA" "$HEAD_SHA")
@@ -171,7 +160,7 @@ jobs:
               echo "::warning::could not fetch kicad-library-utils; KLC checker skipped"
             fi
           fi
-          python3 tools/component-review/ai/cr_ai_review.py --out "$OUT" --no-llm "${extra[@]}"
+          python3 tools/component-review/checks/cr_checks.py --out "$OUT" "${extra[@]}"
 
       - name: Bundle viewer
         continue-on-error: true

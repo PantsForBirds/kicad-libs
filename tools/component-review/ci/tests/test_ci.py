@@ -14,7 +14,6 @@ sys.path.insert(0, str(HERE))
 
 import common  # noqa: E402
 import deploy_pages  # noqa: E402
-import fetch_datasheets  # noqa: E402
 import job_summary  # noqa: E402
 import make_mock  # noqa: E402
 import post_review  # noqa: E402
@@ -154,76 +153,6 @@ class TestSanitizeLimits(Tmp):
         self.assertTrue((clean / "head_geom.json").exists())
 
 
-class TestFetchDatasheets(Tmp):
-    def urls(self, mapping):
-        m = json.loads((self.site / "manifest.json").read_text())
-        for i, item in enumerate(m["items"]):
-            item["datasheet"] = {"url": mapping[i] if i < len(mapping) else None, "local": None, "file": None}
-        (self.site / "manifest.json").write_text(json.dumps(m))
-
-    def test_check_url(self):
-        for bad in ("http://example.com/a.pdf", "ftp://x/a.pdf", "https://user:pw@x.com/a.pdf",
-                    "https://x.com:8443/a.pdf", "file:///etc/passwd"):
-            with self.assertRaises(fetch_datasheets.Refused, msg=bad):
-                fetch_datasheets.check_url(bad)
-        fetch_datasheets.check_url("https://www.lcsc.com/datasheet/C1.pdf")
-
-    def test_private_ip_refused(self):
-        with self.assertRaises(fetch_datasheets.Refused):
-            fetch_datasheets._public_ip("localhost")
-
-    def test_embedded_link_same_site_only(self):
-        html = b'<a href="https://evil.example/x.pdf"></a><iframe src="https://datasheet.lcsc.com/p/a.pdf?c=1">'
-        self.assertEqual(fetch_datasheets.embedded_pdf_link(html, "https://www.lcsc.com/datasheet/C1.pdf"),
-                         "https://datasheet.lcsc.com/p/a.pdf?c=1")
-        self.assertIsNone(fetch_datasheets.embedded_pdf_link(b'"https://evil.example/x.pdf"', "https://a.com/b.pdf"))
-
-    def test_work_copy(self):
-        self.urls(["https://a.com/1.pdf", "http://b.com/2.pdf", "https://a.com/1.pdf", "https://c.com/3.pdf"])
-        calls = []
-
-        def fake(url, max_bytes, timeout):
-            calls.append(url)
-            fetch_datasheets.check_url(url)
-            if "c.com" in url:
-                raise fetch_datasheets.Refused("response is not a PDF")
-            return b"%PDF-1.4 fake"
-
-        before = (self.site / "manifest.json").read_bytes()
-        stats = fetch_datasheets.prepare(self.site, self.tmp / "work", fetcher=fake, max_downloads=5)
-        self.assertEqual((self.site / "manifest.json").read_bytes(), before)   # site untouched
-        self.assertFalse(list(self.site.rglob("datasheet_dl.pdf")))           # PDFs never in the site
-        m = json.loads((self.tmp / "work" / "manifest.json").read_text())
-        files = [i["datasheet"].get("file") for i in m["items"]]
-        self.assertTrue(files[0].endswith("datasheet_dl.pdf"))
-        self.assertTrue(files[1].endswith("datasheet_dl.pdf"))   # http upgraded to https
-        self.assertIn("https://b.com/2.pdf", calls)
-        self.assertNotIn("http://b.com/2.pdf", calls)
-        self.assertEqual(files[2], files[0])           # same URL fetched once, reused
-        self.assertIsNone(files[3])
-        self.assertEqual(calls.count("https://a.com/1.pdf"), 1)
-        self.assertEqual(stats["fetched"], 2)
-        self.assertEqual(stats["upgraded"], ["http://b.com/2.pdf -> https://b.com/2.pdf"])
-
-    def test_http_upgrade_failure_refused(self):
-        self.urls(["http://b.com/2.pdf", "ftp://c.com/3.pdf", "http://d.com:8080/4.pdf"])
-
-        def fake(url, max_bytes, timeout):
-            raise fetch_datasheets.Refused("HTTP 404")
-
-        stats = fetch_datasheets.prepare(self.site, self.tmp / "work", fetcher=fake)
-        self.assertEqual(stats["fetched"], 0)
-        self.assertIn("http:// not allowed and https://b.com/2.pdf failed: HTTP 404", stats["skipped"][0])
-        self.assertTrue(all("not https" in s for s in stats["skipped"][1:]))
-
-    def test_download_budget(self):
-        self.urls([f"https://a{i}.com/x.pdf" for i in range(5)])
-        stats = fetch_datasheets.prepare(self.site, self.tmp / "work", fetcher=lambda u, b, t: b"%PDF",
-                                         max_downloads=2)
-        self.assertEqual(stats["fetched"], 2)
-        self.assertEqual(sum("budget" in s for s in stats["skipped"]), 3)
-
-
 class TestReview(Tmp):
     def load(self):
         return common.load_site(self.site)
@@ -306,15 +235,13 @@ class TestReview(Tmp):
         self.assertLess(len(body), 65536)
         self.assertIn("omitted", body)
 
-    def test_pr_findings_usage_and_model(self):
+    def test_pr_findings_and_generator(self):
         r = json.loads((self.site / "review.json").read_text())
-        r["model"] = "deterministic checks only"
+        r["generator"] = "deterministic checks + KLC"
         r["pr_findings"] = [
             {"severity": "warning", "category": "3d-model", "path": "lib_3d/Custom_Module/SH1421-C.step",
              "line": None, "message": "3D model file is unreferenced <b>@x</b>", "suggestion": "Drop it."},
             "junk", {"severity": "bogus", "message": None}]
-        r["usage"] = {"input_tokens": 1000, "output_tokens": 200, "cache_creation_input_tokens": 50,
-                      "cache_read_input_tokens": 3000, "cost": 0.4271}
         (self.site / "review.json").write_text(json.dumps(r))
         manifest, review = self.load()
         ctx = Ctx(self.site, REPO, 8, HEAD, "https://o.github.io/r/", PAGES)
@@ -324,19 +251,26 @@ class TestReview(Tmp):
         self.assertIn("unreferenced &lt;b&gt;&#64;x&lt;/b&gt;", body)
         self.assertNotIn("<b>@x", body)
         self.assertNotIn("**info** ·  — ", body)      # message-less finding skipped
-        self.assertIn("AI usage: 4,050 input / 200 output tokens (3,000 from cache), about $0.43.", body)
-        self.assertIn("(deterministic checks only)", body)
+        self.assertIn("(deterministic checks + KLC)", body)
         self.assertLess(body.index("PR-level"), body.index("### Details"))
         check = post_review.check_payload(HEAD, manifest, review, "u", "neutral")
         self.assertIn("5 warning(s)", check["output"]["title"])   # 4 item warnings + 1 PR-level
 
-    def test_odd_usage_and_model_types(self):
+    def test_old_model_field_is_fallback(self):
         r = json.loads((self.site / "review.json").read_text())
-        r.update(model={"x": 1}, usage={"input_tokens": "lots", "cost": True}, pr_findings="nope")
+        del r["generator"]
+        r["model"] = "deterministic checks only"
         (self.site / "review.json").write_text(json.dumps(r))
         manifest, review = self.load()
         body = build_comment(Ctx(self.site, REPO, 8, HEAD, "https://o.github.io/r/", PAGES), manifest, review)
-        self.assertNotIn("AI usage", body)
+        self.assertIn("(deterministic checks only)", body)
+
+    def test_odd_generator_types(self):
+        r = json.loads((self.site / "review.json").read_text())
+        r.update(generator={"x": 1}, model=None, pr_findings="nope")
+        (self.site / "review.json").write_text(json.dumps(r))
+        manifest, review = self.load()
+        body = build_comment(Ctx(self.site, REPO, 8, HEAD, "https://o.github.io/r/", PAGES), manifest, review)
         self.assertNotIn("PR-level", body)
         self.assertIn("Generated by the component-review workflow. ", body)
 

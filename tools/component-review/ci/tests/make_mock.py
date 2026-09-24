@@ -88,14 +88,12 @@ def main(out: Path) -> None:
     manifest = {"schema": 1, "repo": "PantsForBirds/kicad-libs", "pr": 8,
                 "base_sha": "c5c2cdf" + "0" * 33, "head_sha": "1627ad2136c15edddf09c6034d03ee3de04acf9b",
                 "generated_at": "2026-09-24T00:00:00Z", "kicad_version": "10.0.0", "items": items}
-    review = {"schema": 1, "model": "claude-mock", "generated_at": "2026-09-24T00:00:00Z",
+    review = {"schema": 1, "generator": "deterministic checks + KLC", "generated_at": "2026-09-24T00:00:00Z",
               "summary_markdown": "Mock review: **1 fail**, 2 warn. The microSD card-detect pad needs attention.",
               "items": {},
               "pr_findings": [{"severity": "warning", "category": "3d-model", "path": "lib_3d/Custom_Module/SH1421-C.step",
                                "line": None, "message": "3D model file `lib_3d/Custom_Module/SH1421-C.step` is added/changed "
-                               "in this PR but no footprint references it."}],
-              "usage": {"input_tokens": 41210, "output_tokens": 5120, "cache_creation_input_tokens": 12000,
-                        "cache_read_input_tokens": 84000, "cost": 0.6123}}
+                               "in this PR but no footprint references it."}]}
     for iid, (verdict, fs) in REVIEW.items():
         path = next(i["path"] for i in items if i["id"] == iid)
         review["items"][iid] = {"verdict": verdict, "summary": f"Mock summary for {iid.split(':')[-1]}.",

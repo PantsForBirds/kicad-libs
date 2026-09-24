@@ -1,8 +1,8 @@
 # Component review: Pages preview + sticky PR comment (privileged, optional).
 #
 # On by default; set the repository variable CR_PUBLISH=false to turn it (and the cleanup
-# workflow) off, leaving just the artifacts of component-review.yml. No LLM and no secrets:
-# the review is the same deterministic checks, re-run here with trusted code.
+# workflow) off, leaving just the artifacts of component-review.yml. No secrets: the review is
+# the same deterministic checks, re-run here with trusted code.
 #
 # Triggered when "Component review" finishes. This workflow file and all code it runs come
 # from the DEFAULT BRANCH; the PR's code is never checked out or executed here. The artifact
@@ -84,7 +84,7 @@ jobs:
       # review.json from the PR run is untrusted and was dropped by sanitize_site.py: the
       # deterministic checks are re-run here with default-branch code on the sanitized data.
       - name: Deterministic checks (trusted)
-        id: ai
+        id: checks
         if: steps.pr.outputs.skip == 'false'
         env:
           CR_KLC: ${{ vars.CR_KLC }}
@@ -93,8 +93,8 @@ jobs:
         run: |
           pages="${CR_PAGES_URL:-https://${GITHUB_REPOSITORY_OWNER,,}.github.io/${GITHUB_REPOSITORY#*/}/}"
           site_url="${pages%/}/pr/$PR_NUMBER/"   # linked from review.md
-          ai=tools/component-review/ai/cr_ai_review.py
-          if [ ! -f "$ai" ]; then
+          checks=tools/component-review/checks/cr_checks.py
+          if [ ! -f "$checks" ]; then
             echo "note=Checks not available on the default branch yet." >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -108,14 +108,14 @@ jobs:
               echo "::warning::could not fetch kicad-library-utils; KLC checker skipped"
             fi
           fi
-          if ! python3 "$ai" --out "$SITE" --no-llm --no-download --site-url "$site_url" "${extra[@]}"; then
+          if ! python3 "$checks" --out "$SITE" --site-url "$site_url" "${extra[@]}"; then
             echo "note=Deterministic checks failed; see the workflow log." >> "$GITHUB_OUTPUT"
           fi
 
       - name: Bundle viewer (trusted)
         if: steps.pr.outputs.skip == 'false'
         continue-on-error: true   # the comment and images are still useful without the viewer
-        run: python3 tools/component-review/viewer/build_site.py --out "$SITE"
+        run: python3 tools/component-review/viewer/build_site.py --out "$SITE" --no-offline
 
       - name: Deploy preview to gh-pages
         id: deploy
@@ -133,7 +133,7 @@ jobs:
           PR_NUMBER: ${{ steps.pr.outputs.pr }}
           HEAD_SHA: ${{ steps.pr.outputs.head_sha }}
           PAGES_SHA: ${{ steps.deploy.outputs.sha }}
-          NOTE: ${{ steps.ai.outputs.note }}
+          NOTE: ${{ steps.checks.outputs.note }}
           CR_PAGES_URL: ${{ vars.CR_PAGES_URL }}
           CR_FAIL_CONCLUSION: ${{ vars.CR_FAIL_CONCLUSION }}
         run: |

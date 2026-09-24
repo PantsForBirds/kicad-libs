@@ -188,6 +188,15 @@ def item_review(review, item_id) -> dict:
     return r if isinstance(r, dict) else {}
 
 
+def generator_of(review) -> str:
+    """What produced review.json: `generator`, or `model` in files written before it existed."""
+    for k in ("generator", "model"):
+        v = review.get(k) if review else None
+        if isinstance(v, str) and v.strip():
+            return v
+    return ""
+
+
 def findings_of(ir: dict) -> list[dict]:
     fs = ir.get("findings")
     out = [f for f in fs if isinstance(f, dict)] if isinstance(fs, list) else []
