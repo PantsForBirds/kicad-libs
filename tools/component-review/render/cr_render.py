@@ -398,18 +398,15 @@ class Renderer:
             return m
         ink_a, ink_b = ink(a), ink(b)
         changed = np.abs(a - b).max(axis=2) > 40
-        dark = bg.sum() < 384
-        out = np.empty_like(a)
-        out[:] = bg
-        grey = np.array([90, 90, 100] if dark else [185, 185, 185], dtype=np.int16)
-        out[(ink_a | ink_b) & ~changed] = grey
+        # RGBA: fully transparent wherever nothing changed, so it can be laid over either render
+        out = np.zeros(a.shape[:2] + (4,), dtype=np.uint8)
         added = changed & ink_b & ~ink_a
         removed = changed & ink_a & ~ink_b
         both = changed & ink_a & ink_b
-        out[added] = [0, 200, 60]
-        out[removed] = [230, 40, 40]
-        out[both] = [240, 170, 0]
-        Image.fromarray(out.astype(np.uint8)).save(out_path, optimize=True)
+        out[added] = [0, 200, 60, 255]
+        out[removed] = [230, 40, 40, 255]
+        out[both] = [240, 170, 0, 255]
+        Image.fromarray(out, "RGBA").save(out_path, optimize=True)
         return {"added_px": int(added.sum()), "removed_px": int(removed.sum()), "changed_px": int(both.sum())}
 
     # -- common -----------------------------------------------------------------

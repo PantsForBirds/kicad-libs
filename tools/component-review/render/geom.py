@@ -137,7 +137,7 @@ def text_el(txt: str, x: float, y: float, size_h: float, size_w: float, angle: f
 def text_extent(txt: str, x, y, size_h, size_w, angle, anchor, valign, bbox: BBox):
     """Approximate bbox contribution of a text element."""
     lines = txt.split("\n") or [""]
-    w = max(len(l) for l in lines) * size_w * 0.9
+    w = max(len(l) for l in lines) * size_w * 1.0  # DejaVu ~0.6-0.7 em per glyph at font-size h/0.73: slack so nothing clips
     h = size_h * 1.6 * len(lines)
     dx0 = {"start": 0, "middle": -w / 2, "end": -w}[anchor]
     dy0 = {"center": -h / 2, "top": 0, "bottom": -h}[valign]

@@ -26,7 +26,8 @@ Exits 0 unless the tool itself fails. Per-item problems go into `items[].warning
 * **Parser.** `sexpr.py` is a small s-expression parser with source spans (line and char offsets). It handles KiCad 5 through 10
   formats, including KiCad 10 `|base64|` embedded data. kiutils was not used because it does not know the KiCad 10
   formats (`version 20260206` / `20251024`).
-* **Framing.** A footprint's viewBox is courtyard ∪ pads ∪ graphics ∪ silkscreen text, plus 1 mm. Long Fab value strings may be clipped at the edge.
+* **Framing.** A footprint's viewBox is courtyard ∪ pads ∪ graphics ∪ all visible text, plus 1 mm; nothing is clipped.
+  Layer SVGs have no background, so they can be stacked.
 * **2D.** Pure-Python SVG renderers: `fp.py` for footprints and `sym.py` for symbols.
   * **Footprints.**
     * Pads: rect, roundrect, circle, oval, chamfered, trapezoid, custom primitives.
@@ -41,12 +42,12 @@ Exits 0 unless the tool itself fails. Per-item problems go into `items[].warning
     * Units are drawn side by side. De Morgan body style 2 is not drawn but is reported in stats.
   * **Shared frame.** Base and head always share one viewBox and pixel scale, so their SVG/PNG renders overlay exactly.
     For footprints the viewBox is the item bbox plus a 1 mm margin, and it is also the `bbox` in `<side>_geom.json`.
-* **PNG / diff.** PNGs come from cairosvg. `diff.png` (modified items only) is a pixel diff:
+* **PNG / diff.** PNGs come from cairosvg. `diff.png` (modified items only) is a pixel diff, an RGBA PNG that is
+  transparent wherever nothing changed so it can be laid over either render:
   * a symbol's body fill counts as background
   * green = only in head
   * red = only in base
   * amber = changed colour
-  * grey = unchanged
 * **3D (Addendum 2: the browser does STEP).**
   * `model3d_by_side.{base,head}`: model records with a copy of the STEP (`items/<slug>/model_<n>.step`),
     offset/scale/rotate and `hide`. Handles `${KICAD_LIBS_DIR}`, KiCad 10 `kicad-embed://` models (zstd-decoded),
@@ -69,7 +70,7 @@ Exits 0 unless the tool itself fails. Per-item problems go into `items[].warning
 
 ## Approximations
 
-* Text uses DejaVu Sans rather than KiCad's stroke font, so widths are approximate. Knockout text and text boxes on PCB layers are simplified.
+* Text uses DejaVu Sans rather than KiCad's stroke font, so widths are approximate (text extents are estimated with some slack). Knockout text and text boxes on PCB layers are simplified.
 * Mask/paste expansion uses only pad-level margins; board-level defaults are unknown to a library.
 * Symbol field placement is approximate for rotated fields. Pin-name placement for `pin_names (offset 0)` follows KiCad in spirit.
 * `.wrl`-only models get no 3D (STEP only).
