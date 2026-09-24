@@ -115,7 +115,7 @@ jobs:
       - name: Bundle viewer (trusted)
         if: steps.pr.outputs.skip == 'false'
         continue-on-error: true   # the comment and images are still useful without the viewer
-        run: python3 tools/component-review/viewer/build_site.py --out "$SITE"
+        run: python3 tools/component-review/viewer/build_site.py --out "$SITE" --no-offline
 
       - name: Deploy preview to gh-pages
         id: deploy

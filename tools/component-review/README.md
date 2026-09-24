@@ -51,10 +51,10 @@ workflow therefore produces **artifacts only**. The optional publish stage, whic
 access, never runs PR code.
 
 ```
- PR opened / pushed (fork or branch)            push to claud/** (TEMPORARY test trigger;
-        │  pull_request (paths: lib_fp/**, lib_sch/**,     base = merge-base with origin/main)
-        │  lib_3d/**, tools/component-review/**)          │
-        ▼                                                 ▼
+ PR opened / pushed (fork or branch)
+        │  pull_request (paths: lib_fp/**, lib_sch/**,
+        │  lib_3d/**, tools/component-review/**)
+        ▼
 ┌──────────────────────── component-review.yml ─────────────────────────┐
 │ UNPRIVILEGED: contents: read, no secrets, runs the PR's code           │
 │ container kicad/kicad:10.0 (optional)                                  │

@@ -20,17 +20,6 @@ on:
       - "lib_sch/**"
       - "lib_3d/**"
       - "tools/component-review/**"
-  # TEMPORARY: lets us try the workflow on GitHub before a PR exists. Base = merge-base with
-  # origin/main. Remove this trigger once the workflow is merged.
-  push:
-    branches:
-      - "claud/**"
-    paths:
-      - "lib_fp/**"
-      - "lib_sch/**"
-      - "lib_3d/**"
-      - "tools/component-review/**"
-      - ".github/workflows/component-review*.yml"
 
 permissions:
   contents: read
@@ -54,7 +43,7 @@ jobs:
         shell: bash
     env:
       PR_NUMBER: ${{ github.event.pull_request.number }}   # empty on push
-      BASE_SHA: ${{ github.event.pull_request.base.sha }}  # empty on push: origin/main is used
+      BASE_SHA: ${{ github.event.pull_request.base.sha }}
       HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
       OUT: cr-out
     steps:
@@ -85,7 +74,7 @@ jobs:
         id: base
         run: |
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
-          if [ -z "$BASE_SHA" ]; then   # push trigger (temporary): compare with main
+          if [ -z "$BASE_SHA" ]; then   # no PR base (should not happen): compare with main
             BASE_SHA=$(git rev-parse origin/main)
           fi
           mb=$(git merge-base "$BASE_SHA" "$HEAD_SHA")
