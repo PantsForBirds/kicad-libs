@@ -1,0 +1,14 @@
+{
+ "schema": 1,
+ "repo": "PantsForBirds/kicad-libs",
+ "pr": 10,
+ "base_sha": "45413e9ec1cc7018069ea7defa2af8cf471f7039",
+ "base_ref_sha": "45413e9ec1cc7018069ea7defa2af8cf471f7039",
+ "head_sha": "bbf6da4ba5f2a63f9eb7744716f8372a43f44abe",
+ "generated_at": "2026-09-24T17:22:00+00:00",
+ "kicad_version": "10.0",
+ "generator": "cr_render.py (built-in SVG renderer)",
+ "changed_3d_files": [],
+ "unreferenced_changed_3d_files": [],
+ "items": []
+}
