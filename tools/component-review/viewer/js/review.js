@@ -1,4 +1,4 @@
-// AI review panel for one item (review.json is optional; everything here tolerates missing fields).
+// Checks panel for one item (review.json is optional; everything here tolerates missing fields).
 import { el, markdown, badge, githubBlobUrl, safeUrl, assetUrl } from './util.js';
 
 const SEV_ORDER = { error: 0, warning: 1, info: 2 };
@@ -15,14 +15,14 @@ export function findingCounts(r) {
 
 export function renderReview(item, manifest, review, container) {
   const r = reviewFor(review, item);
-  const head = el('div', { class: 'review-head' }, el('h3', {}, 'AI review'));
+  const head = el('div', { class: 'review-head' }, el('h3', {}, 'Checks'));
   container.append(head);
   if (!review) {
-    container.append(el('p', { class: 'muted' }, 'No review.json in this report. The AI review step did not run or failed.'));
+    container.append(el('p', { class: 'muted' }, 'No review.json in this report. The checks step did not run or failed.'));
     return;
   }
   if (!r) {
-    container.append(el('p', { class: 'muted' }, 'This item was not reviewed.'));
+    container.append(el('p', { class: 'muted' }, 'This item was not checked.'));
     return;
   }
   const vb = badge('verdict', typeof r.verdict === 'string' ? r.verdict : null);
@@ -32,7 +32,7 @@ export function renderReview(item, manifest, review, container) {
   if (r.datasheet_used) {
     const ds = String(r.datasheet_used);
     const href = /^https?:/i.test(ds) ? safeUrl(ds) : assetUrl(ds);
-    container.append(el('p', { class: 'small' }, 'Datasheet used: ', href ? el('a', { href, target: '_blank', rel: 'noopener' }, ds) : el('code', {}, ds)));
+    container.append(el('p', { class: 'small' }, 'Datasheet: ', href ? el('a', { href, target: '_blank', rel: 'noopener' }, ds) : el('code', {}, ds)));
   }
 
   const findings = sortFindings(r.findings);
@@ -42,7 +42,7 @@ export function renderReview(item, manifest, review, container) {
 
   const checks = (r.checks || []).filter(Boolean);
   if (checks.length) {
-    container.append(el('h4', {}, 'Checks'));
+    container.append(el('h4', {}, 'Rules checked'));
     container.append(el('table', { class: 'grid checks' },
       el('tbody', {}, checks.map((c) => el('tr', {},
         el('td', {}, badge('check', c.result)),
@@ -80,10 +80,11 @@ export function renderFindings(findings, manifest, item) {
   return list;
 }
 
-/** Token / cost usage block; shape is not fixed by the contract, so show scalar fields generically. */
-export function renderUsage(usage) {
-  if (!usage || typeof usage !== 'object') return null;
-  const rows = Object.entries(usage).filter(([, v]) => ['number', 'string'].includes(typeof v));
-  if (!rows.length) return null;
-  return el('p', { class: 'small muted' }, 'AI usage: ', rows.map(([k, v], i) => [i ? ' · ' : '', `${k.replace(/_/g, ' ')} ${typeof v === 'number' ? v.toLocaleString() : v}`]));
+/** What produced review.json: `generator`, or `model` in files written by older runs. */
+export function generatorOf(review) {
+  for (const k of ['generator', 'model']) {
+    const v = review?.[k];
+    if (typeof v === 'string' && v.trim()) return v;
+  }
+  return null;
 }

@@ -43,8 +43,8 @@ def poison(site: Path):
         if it.get("renders", {}).get("head"):
             it["renders"]["head"]["svg"] = "javascript:window.__pwned=1"
     (site / "manifest.json").write_text(json.dumps(m))
-    r = {"schema": 1, "model": P, "summary_markdown": f"**hi** {P} [click](javascript:window.__pwned=1) [d](data:text/html,x)",
-         "usage": {"input_tokens": P}, "pr_findings": [{"severity": P, "category": P, "message": P, "path": "../" + P, "line": "1"}],
+    r = {"schema": 1, "generator": P, "summary_markdown": f"**hi** {P} [click](javascript:window.__pwned=1) [d](data:text/html,x)",
+         "pr_findings": [{"severity": P, "category": P, "message": P, "path": "../" + P, "line": "1"}],
          "items": {it["id"]: {"verdict": P, "summary": P, "datasheet_used": "javascript:window.__pwned=1",
                                "findings": [{"severity": "error", "category": P, "message": f"`{P}` {P}", "path": P, "line": 3,
                                              "suggestion": "[x](javascript:window.__pwned=1)"}],

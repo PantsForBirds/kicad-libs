@@ -693,8 +693,9 @@ def build(site: Path, level: int = 0, server: str = "https://github.com", now: s
         meta.append(f"rendered {esc(str(manifest.get('generated_at'))[:40])}")
     if manifest.get("kicad_version"):
         meta.append(f"KiCad {esc(str(manifest.get('kicad_version'))[:20])}")
-    if review and review.get("model"):
-        meta.append(f"review: {esc(str(review.get('model'))[:80])}")
+    generator = review and (review.get("generator") or review.get("model"))  # `model`: files from older runs
+    if generator:
+        meta.append(f"checks: {esc(str(generator)[:80])}")
     h.append(" · ".join(meta) + "</p>")
     cards = [("components", len(items))] + [(k, v) for k, v in status.items() if v] + \
             [(f"{k} verdict", verdicts.count(k)) for k in ("fail", "warn", "pass") if verdicts.count(k)] + \

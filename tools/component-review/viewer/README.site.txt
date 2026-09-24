@@ -5,7 +5,7 @@ This folder is the interactive review of the KiCad footprints and symbols change
 request (unzipped from the CI artifact). Two ways to open it:
 
 1. Double-click index.html (Chrome, Edge or Firefox).
-   Overview, item list, all 2D view modes, details, text diffs and the AI review work straight
+   Overview, item list, all 2D view modes, details, text diffs and the checks work straight
    from disk. The 3D view also works in Chromium-based browsers; it needs internet access
    (three.js and the STEP kernel come from cdn.jsdelivr.net). If the 3D tab shows an error, use
    option 2.

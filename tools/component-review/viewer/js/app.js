@@ -3,7 +3,7 @@ import { el, clear, append, fetchJson, githubUrl, shortSha, markdown, badge } fr
 import { createView2D } from './view2d.js';
 import { createPanel3D, has3d } from './panel3d.js';
 import { renderDetails } from './details.js';
-import { renderReview, reviewFor, findingCounts, renderFindings, sortFindings, renderUsage } from './review.js';
+import { renderReview, reviewFor, findingCounts, renderFindings, sortFindings, generatorOf } from './review.js';
 
 const $ = (sel) => document.querySelector(sel);
 const KIND_LABEL = { footprint: 'Footprints', symbol: 'Symbols' };
@@ -53,7 +53,7 @@ function renderHeader() {
     m.kicad_version ? el('span', { class: 'hdr-item muted' }, `KiCad ${m.kicad_version}`) : null,
     el('span', { class: 'spacer' }),
     prFindingsChip(),
-    state.review ? el('span', { class: 'hdr-item muted' }, `AI: ${typeof state.review.model === 'string' ? state.review.model : 'review'}`) : el('span', { class: 'hdr-item muted' }, 'no AI review'),
+    el('span', { class: 'hdr-item muted' }, state.review ? `Checks: ${generatorOf(state.review) || 'deterministic'}` : 'no checks'),
   ]);
 }
 
@@ -147,7 +147,7 @@ function renderOverview(unknownSlug) {
   main.append(el('h1', {}, 'Overview'),
     el('p', {}, `${state.items.length} items: `, Object.entries(counts).map(([s, n]) => [badge('status', s), ` ${n}  `])));
   if (state.review?.summary_markdown) {
-    main.append(el('section', { class: 'card' }, el('h3', {}, 'AI summary'), markdown(state.review.summary_markdown), renderUsage(state.review.usage)));
+    main.append(el('section', { class: 'card' }, el('h3', {}, 'Summary'), markdown(state.review.summary_markdown)));
   }
   const prf = sortFindings(state.review?.pr_findings);
   if (prf.length) {
@@ -166,7 +166,7 @@ function renderOverview(unknownSlug) {
       el('td', { class: 'num' }, it.warnings?.length ? String(it.warnings.length) : ''));
   });
   main.append(el('section', { class: 'card' }, el('div', { class: 'scroll-x' }, el('table', { class: 'grid overview' },
-    el('thead', {}, el('tr', {}, ['Item', 'Library', 'Kind', 'Status', 'AI', 'Errors', 'Warnings', 'Render warnings'].map((t) => el('th', {}, t)))),
+    el('thead', {}, el('tr', {}, ['Item', 'Library', 'Kind', 'Status', 'Verdict', 'Errors', 'Warnings', 'Render warnings'].map((t) => el('th', {}, t)))),
     el('tbody', {}, rows)))));
 }
 

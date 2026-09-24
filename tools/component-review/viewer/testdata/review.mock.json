@@ -1,91 +1,248 @@
 {
   "schema": 1,
-  "model": "claude-opus-5-5 (mock)",
+  "generator": "deterministic checks + KLC",
   "generated_at": "2026-09-24T07:41:12Z",
-  "summary_markdown": "Reviewed **6** library items (4 footprints changed/added, 1 removed, 1 symbol).\n\n- 1 item **fails**: `SW_SPST_Same-Sky_TS32_with-boss` references a 3D model file that is not in the repo.\n- 3 items have warnings, mostly missing datasheet links and silkscreen clearance.\n- The removed `SOP-8_3.76x4.96mm_P1.27mm` footprint may still be used by existing symbols; check before merging.",
+  "summary_markdown": "Reviewed **6** item(s): 1 fail, 3 warn, 2 pass.",
   "items": {
     "footprint:Custom_Package_SO:SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.3mm": {
       "verdict": "warn",
-      "summary": "Exposed pad enlarged from 2.29×3.0 mm to **2.41×3.3 mm**, which matches the NS4168 datasheet thermal pad. `Value` still names the old EP size in some places and no paste reduction is applied to the large EP.",
+      "summary": "Deterministic checks: 0 error(s), 1 warning(s), 2 info.",
       "datasheet_used": "https://www.nsiway.com.cn/product/NS4168.pdf",
       "findings": [
-        {"severity": "warning", "category": "land-pattern", "message": "EP paste aperture is 100% of the pad (2.41×3.3 mm). KLC F6.3 recommends segmenting paste on EPs larger than 2×2 mm to avoid float/voiding.", "path": "lib_fp/Custom_Package_SO.pretty/SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.3mm.kicad_mod", "line": 300, "suggestion": "Add `(solder_paste_margin_ratio -0.2)` or split into 4 paste-only pads."},
-        {"severity": "info", "category": "properties", "message": "Footprint name encodes EP size `EP2.41x3.3mm`; 3D model still points at the `EP2.29x3mm` STEP from the KiCad library.", "path": "lib_fp/Custom_Package_SO.pretty/SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.3mm.kicad_mod", "line": 380, "suggestion": null},
-        {"severity": "info", "category": "klc", "message": "Pin 1 pad changed from `rect` to `roundrect`; other pins are roundrect too, so this is now consistent.", "path": "lib_fp/Custom_Package_SO.pretty/SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.3mm.kicad_mod", "line": null}
+        {
+          "severity": "warning",
+          "category": "land-pattern",
+          "message": "EP paste aperture is 100% of the pad (2.41×3.3 mm). KLC F6.3 recommends segmenting paste on EPs larger than 2×2 mm to avoid float/voiding.",
+          "path": "lib_fp/Custom_Package_SO.pretty/SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.3mm.kicad_mod",
+          "line": 300,
+          "suggestion": "Add `(solder_paste_margin_ratio -0.2)` or split into 4 paste-only pads."
+        },
+        {
+          "severity": "info",
+          "category": "properties",
+          "message": "Footprint name encodes EP size `EP2.41x3.3mm`; 3D model still points at the `EP2.29x3mm` STEP from the KiCad library.",
+          "path": "lib_fp/Custom_Package_SO.pretty/SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.3mm.kicad_mod",
+          "line": 380,
+          "suggestion": null
+        },
+        {
+          "severity": "info",
+          "category": "klc",
+          "message": "Pin 1 pad changed from `rect` to `roundrect`; other pins are roundrect too, so this is now consistent.",
+          "path": "lib_fp/Custom_Package_SO.pretty/SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.3mm.kicad_mod",
+          "line": null
+        }
       ],
       "checks": [
-        {"name": "Pad count matches datasheet (8 + EP)", "result": "pass", "detail": "9 copper pads"},
-        {"name": "Pitch 1.27 mm", "result": "pass", "detail": "measured 1.27 mm"},
-        {"name": "Courtyard encloses all pads + 0.25 mm", "result": "pass", "detail": ""},
-        {"name": "EP size matches datasheet", "result": "pass", "detail": "2.41×3.3 mm vs datasheet 2.41×3.3 mm"},
-        {"name": "Paste reduction on EP", "result": "fail", "detail": "no paste margin set"}
+        {
+          "name": "Courtyard present",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "name": "Courtyard encloses all pads",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "name": "Courtyard clearance >= 0.25 mm",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "name": "Silkscreen does not overlap pads",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "name": "3D model present",
+          "result": "pass",
+          "detail": "1 model"
+        },
+        {
+          "name": "KiCad KLC checker (kicad-library-utils)",
+          "result": "fail",
+          "detail": "1 violation(s)"
+        }
       ]
     },
     "footprint:Custom_Button_Switch_SMD:SW_SPST_Same-Sky_TS32_with-boss": {
       "verdict": "fail",
-      "summary": "Pad 2 moved 0.2 mm. That matches rev B of the Same Sky drawing, but the **3D model path** points at `TS32-7-35-BK-B-260-RA-SMT-TR.STEP`, and the old `_old.STEP` reference in base suggests a rename that did not land in `lib_3d/`.",
+      "summary": "Deterministic checks: 1 error(s), 2 warning(s), 0 info.",
       "datasheet_used": null,
       "findings": [
-        {"severity": "error", "category": "3d-model", "message": "Model path case differs from file on disk on case-sensitive systems: footprint uses `.STEP`, check that CI and users on Linux resolve it.", "path": "lib_fp/Custom_Button_Switch_SMD.pretty/SW_SPST_Same-Sky_TS32_with-boss.kicad_mod", "line": 296, "suggestion": "Rename the file to `.step` or match the case exactly."},
-        {"severity": "warning", "category": "properties", "message": "`Datasheet` property is empty. Add the Same Sky TS32 datasheet URL.", "path": "lib_fp/Custom_Button_Switch_SMD.pretty/SW_SPST_Same-Sky_TS32_with-boss.kicad_mod", "line": 30},
-        {"severity": "warning", "category": "silkscreen", "message": "Silkscreen line at y=-1.6 is 0.08 mm from pad 2 copper (min 0.2 mm recommended).", "path": "lib_fp/Custom_Button_Switch_SMD.pretty/SW_SPST_Same-Sky_TS32_with-boss.kicad_mod", "line": 88}
+        {
+          "severity": "error",
+          "category": "3d-model",
+          "message": "Model path case differs from file on disk on case-sensitive systems: footprint uses `.STEP`, check that CI and users on Linux resolve it.",
+          "path": "lib_fp/Custom_Button_Switch_SMD.pretty/SW_SPST_Same-Sky_TS32_with-boss.kicad_mod",
+          "line": 296,
+          "suggestion": "Rename the file to `.step` or match the case exactly."
+        },
+        {
+          "severity": "warning",
+          "category": "properties",
+          "message": "`Datasheet` property is empty. Add the Same Sky TS32 datasheet URL.",
+          "path": "lib_fp/Custom_Button_Switch_SMD.pretty/SW_SPST_Same-Sky_TS32_with-boss.kicad_mod",
+          "line": 30
+        },
+        {
+          "severity": "warning",
+          "category": "silkscreen",
+          "message": "Silkscreen line at y=-1.6 is 0.08 mm from pad 2 copper (min 0.2 mm recommended).",
+          "path": "lib_fp/Custom_Button_Switch_SMD.pretty/SW_SPST_Same-Sky_TS32_with-boss.kicad_mod",
+          "line": 88
+        }
       ],
       "checks": [
-        {"name": "Pad count matches datasheet", "result": "pass", "detail": "6 pads (4 signal + 2 mounting)"},
-        {"name": "3D model resolves", "result": "fail", "detail": "see finding"},
-        {"name": "Datasheet present", "result": "fail", "detail": "empty"},
-        {"name": "Silk-to-pad clearance ≥ 0.2 mm", "result": "fail", "detail": "0.08 mm at pad 2"}
+        {
+          "name": "Datasheet reference present",
+          "result": "fail",
+          "detail": "empty"
+        },
+        {
+          "name": "Silkscreen does not overlap pads",
+          "result": "fail",
+          "detail": "0.08 mm at pad 2"
+        },
+        {
+          "name": "3D model present",
+          "result": "fail",
+          "detail": "see finding"
+        },
+        {
+          "name": "KiCad KLC checker (kicad-library-utils)",
+          "result": "pass",
+          "detail": "0 violation(s)"
+        }
       ]
     },
     "footprint:Custom_Buzzer_Beeper:MagneticBuzzer_9.6mm_5mm_right-angle": {
       "verdict": "pass",
-      "summary": "New right-angle buzzer footprint. THT pads, 2.5 mm drill spacing and courtyard match the CMT-9605-85T drawing.",
+      "summary": "Deterministic checks: 0 error(s), 0 warning(s), 1 info.",
       "datasheet_used": "https://www.sameskydevices.com/product/resource/cmt-9605-85t.pdf",
       "findings": [
-        {"severity": "info", "category": "properties", "message": "Datasheet URL is only in the description, not in the `Datasheet` property.", "path": "lib_fp/Custom_Buzzer_Beeper.pretty/MagneticBuzzer_9.6mm_5mm_right-angle.kicad_mod", "line": 32, "suggestion": "Copy the URL into the Datasheet property."}
+        {
+          "severity": "info",
+          "category": "properties",
+          "message": "Datasheet URL is only in the description, not in the `Datasheet` property.",
+          "path": "lib_fp/Custom_Buzzer_Beeper.pretty/MagneticBuzzer_9.6mm_5mm_right-angle.kicad_mod",
+          "line": 32,
+          "suggestion": "Copy the URL into the Datasheet property."
+        }
       ],
       "checks": [
-        {"name": "Pad count matches datasheet", "result": "pass", "detail": "2"},
-        {"name": "Polarity marking on silk", "result": "pass", "detail": "'+' text next to pad 1"},
-        {"name": "3D model resolves", "result": "pass", "detail": "lib_3d/Custom_Buzzer_Beeper/CMT-9605-85T.step"}
+        {
+          "name": "Datasheet reference present",
+          "result": "pass",
+          "detail": "in descr"
+        },
+        {
+          "name": "Courtyard encloses all pads",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "name": "3D model present",
+          "result": "pass",
+          "detail": "lib_3d/Custom_Buzzer_Beeper/CMT-9605-85T.step"
+        }
       ]
     },
     "footprint:Custom_Connector_Card:microSD_SHOU-HAN_TF-PUSH": {
       "verdict": "warn",
-      "summary": "New push-push microSD socket. Signal pad pitch (1.1 mm) is correct, but the pad-to-card-edge offset could not be verified: the datasheet drawing is low resolution.",
+      "summary": "Deterministic checks: 0 error(s), 1 warning(s), 1 info.",
       "datasheet_used": null,
       "findings": [
-        {"severity": "warning", "category": "land-pattern", "message": "Could not find a datasheet in `datasheets/` or a URL; checks were done against the STEP model only.", "path": "lib_fp/Custom_Connector_Card.pretty/microSD_SHOU-HAN_TF-PUSH.kicad_mod", "line": null},
-        {"severity": "info", "category": "fab", "message": "F.Fab outline includes the card-ejected position. Good for mechanical review.", "path": "lib_fp/Custom_Connector_Card.pretty/microSD_SHOU-HAN_TF-PUSH.kicad_mod", "line": 140}
+        {
+          "severity": "warning",
+          "category": "land-pattern",
+          "message": "Could not find a datasheet in `datasheets/` or a URL.",
+          "path": "lib_fp/Custom_Connector_Card.pretty/microSD_SHOU-HAN_TF-PUSH.kicad_mod",
+          "line": null
+        },
+        {
+          "severity": "info",
+          "category": "fab",
+          "message": "F.Fab outline includes the card-ejected position.",
+          "path": "lib_fp/Custom_Connector_Card.pretty/microSD_SHOU-HAN_TF-PUSH.kicad_mod",
+          "line": 140
+        }
       ],
       "checks": [
-        {"name": "Pad count", "result": "pass", "detail": "8 signal + 4 shield + 1 CD"},
-        {"name": "Pitch 1.1 mm", "result": "pass", "detail": ""},
-        {"name": "Datasheet available", "result": "unknown", "detail": "none found"}
+        {
+          "name": "Datasheet reference present",
+          "result": "fail",
+          "detail": "none found"
+        },
+        {
+          "name": "Courtyard encloses all pads",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "name": "Fab outline present",
+          "result": "pass",
+          "detail": ""
+        }
       ]
     },
     "footprint:Custom_Package_SO:SOP-8_3.76x4.96mm_P1.27mm": {
       "verdict": "warn",
-      "summary": "Footprint removed. `lib_sch/` still has symbols whose `Footprint` property may reference `Custom_Package_SO:SOP-8_3.76x4.96mm_P1.27mm`.",
+      "summary": "Deleted in this PR; nothing to review.",
       "datasheet_used": null,
       "findings": [
-        {"severity": "warning", "category": "other", "message": "Deleting a footprint breaks any board or symbol that references it. Search the repo for `SOP-8_3.76x4.96mm_P1.27mm` before merging.", "path": "lib_fp/Custom_Package_SO.pretty/SOP-8_3.76x4.96mm_P1.27mm.kicad_mod", "line": null}
+        {
+          "severity": "warning",
+          "category": "other",
+          "message": "Deleting a footprint breaks any board or symbol that references it. Search the repo for `SOP-8_3.76x4.96mm_P1.27mm` before merging.",
+          "path": "lib_fp/Custom_Package_SO.pretty/SOP-8_3.76x4.96mm_P1.27mm.kicad_mod",
+          "line": null
+        }
       ],
       "checks": []
     },
     "symbol:Custom_Audio:NS4168": {
       "verdict": "pass",
-      "summary": "NS4168 I²S class-D amplifier. All 8 pins match the datasheet pinout; pin 2 renamed `WS` → `LRCLK` to match the datasheet naming.",
+      "summary": "Deterministic checks: 0 error(s), 0 warning(s), 2 info.",
       "datasheet_used": "items/symbol__Custom_Audio__NS4168/datasheet.pdf",
       "findings": [
-        {"severity": "info", "category": "pinout", "message": "Pin 2 renamed from `WS` to `LRCLK`. Electrically identical, and it matches the datasheet.", "path": "lib_sch/Custom_Audio.kicad_sym", "line": 122},
-        {"severity": "info", "category": "properties", "message": "Exposed pad (pin 9 on the SOIC-8-1EP package) is not represented as a pin; OK if it is tied to GND in the footprint only.", "path": "lib_sch/Custom_Audio.kicad_sym", "line": null}
+        {
+          "severity": "info",
+          "category": "pinout",
+          "message": "Pin 2 renamed from `WS` to `LRCLK`.",
+          "path": "lib_sch/Custom_Audio.kicad_sym",
+          "line": 122
+        },
+        {
+          "severity": "info",
+          "category": "properties",
+          "message": "Exposed pad (pin 9 on the SOIC-8-1EP package) is not represented as a pin; OK if it is tied to GND in the footprint only.",
+          "path": "lib_sch/Custom_Audio.kicad_sym",
+          "line": null
+        }
       ],
       "checks": [
-        {"name": "Pin count matches datasheet", "result": "pass", "detail": "8"},
-        {"name": "Pin names match datasheet", "result": "pass", "detail": ""},
-        {"name": "Pin electrical types plausible", "result": "pass", "detail": "VDD/GND power_in, VON/VOP output"},
-        {"name": "Footprint property points to existing footprint", "result": "pass", "detail": ""}
+        {
+          "name": "Datasheet property filled",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "name": "Default footprint / footprint filter set",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "name": "Pins on 100 mil grid",
+          "result": "pass",
+          "detail": "8 pins"
+        },
+        {
+          "name": "Pin numbers match footprint pads",
+          "result": "pass",
+          "detail": ""
+        }
       ]
     }
   }

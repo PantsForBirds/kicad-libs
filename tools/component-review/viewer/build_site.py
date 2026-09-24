@@ -4,7 +4,7 @@
     python3 tools/component-review/viewer/build_site.py --out cr-out [--no-offline]
 
 Copies index.html, viewer.css and js/ next to manifest.json / review.json / items/ that the
-render and ai steps wrote. Never modifies those data files. Stdlib only; exits non-zero only
+render and checks steps wrote. Never modifies those data files. Stdlib only; exits non-zero only
 if the build itself fails (a missing manifest.json is reported as a warning, not an error).
 
 Unless --no-offline is given it also makes the site work when opened straight from disk
