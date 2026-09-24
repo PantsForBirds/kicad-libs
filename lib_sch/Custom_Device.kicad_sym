@@ -45,7 +45,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Buzzer"
+		(property "Description" "Buzzer, magnetic (TEMP test change)"
 			(at 0 0 0)
 			(effects
 				(font

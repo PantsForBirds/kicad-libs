@@ -1,4 +1,4 @@
-(footprint "SW-SMD_L3.9-W3.0-P4.45"
+(footprint "SW-SMD_L3.9-W3.0-P4.45_TEMP"
 	(version 20240108)
 	(generator "pcbnew")
 	(generator_version "8.0")
