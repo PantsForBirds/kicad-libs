@@ -1,0 +1,4 @@
+# LLM mode only; --no-llm needs nothing beyond the Python 3.11+ stdlib.
+anthropic>=1.8,<2
+# Optional: trims large datasheet PDFs to the pinout / land-pattern pages.
+pypdf>=4,<7
