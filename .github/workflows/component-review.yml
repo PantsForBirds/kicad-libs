@@ -1,10 +1,16 @@
-# Component review, stage 1 of 2 (unprivileged).
+# Component review (unprivileged, artifacts only).
 #
 # Runs on every PR (including PRs from forks) that touches footprints, symbols or 3D models.
 # It executes code from the PR, so it gets a read-only token and no secrets. It renders the
-# changed components, runs the deterministic (no-LLM) checks, bundles the static viewer and
-# uploads everything as the `component-review` artifact. Publishing (Pages preview, PR comment,
-# inline review, LLM review) happens in component-review-publish.yml, which never runs PR code.
+# changed components, runs the deterministic checks (KLC-style rules + the official KLC
+# checker; no LLM) and uploads the results as artifacts:
+#   component-review.html   one self-contained HTML report, uploaded NON-zipped: click it on the
+#                           run page and it opens in the browser (no JavaScript inside)
+#   component-review-site   the interactive viewer (zip; unzip and open index.html)
+#   component-review-data   manifest.json + review.json + review.md
+# Findings with a file/line also show up as annotations in the PR's "Files changed" tab.
+# The Pages preview + sticky PR comment are posted by component-review-publish.yml (never runs
+# PR code); set the repo variable CR_PUBLISH=false to turn that off.
 name: Component review
 
 on:
@@ -14,12 +20,23 @@ on:
       - "lib_sch/**"
       - "lib_3d/**"
       - "tools/component-review/**"
+  # TEMPORARY: lets us try the workflow on GitHub before a PR exists. Base = merge-base with
+  # origin/main. Remove this trigger once the workflow is merged.
+  push:
+    branches:
+      - "claud/**"
+    paths:
+      - "lib_fp/**"
+      - "lib_sch/**"
+      - "lib_3d/**"
+      - "tools/component-review/**"
+      - ".github/workflows/component-review*.yml"
 
 permissions:
   contents: read
 
 concurrency:
-  group: component-review-${{ github.event.pull_request.number }}
+  group: component-review-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -36,9 +53,9 @@ jobs:
       run:
         shell: bash
     env:
-      PR_NUMBER: ${{ github.event.pull_request.number }}
-      BASE_SHA: ${{ github.event.pull_request.base.sha }}
-      HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+      PR_NUMBER: ${{ github.event.pull_request.number }}   # empty on push
+      BASE_SHA: ${{ github.event.pull_request.base.sha }}  # empty on push: origin/main is used
+      HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
       OUT: cr-out
     steps:
       - name: Prepare tools
@@ -60,7 +77,7 @@ jobs:
 
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
           persist-credentials: false
 
@@ -68,6 +85,9 @@ jobs:
         id: base
         run: |
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          if [ -z "$BASE_SHA" ]; then   # push trigger (temporary): compare with main
+            BASE_SHA=$(git rev-parse origin/main)
+          fi
           mb=$(git merge-base "$BASE_SHA" "$HEAD_SHA")
           echo "merge_base=$mb" >> "$GITHUB_OUTPUT"
           echo "base $BASE_SHA, head $HEAD_SHA, merge-base $mb"
@@ -76,7 +96,6 @@ jobs:
         run: |
           python3 -m venv --system-site-packages "$RUNNER_TEMP/venv"
           echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
-          # (ai/requirements.txt is only needed for the LLM, which runs in the publish workflow)
           req=tools/component-review/render/requirements.txt
           if [ -f "$req" ]; then "$RUNNER_TEMP/venv/bin/pip" install -q -r "$req"; fi
 
@@ -126,7 +145,8 @@ jobs:
             # layout DIR/<tag>/<Lib>.3dshapes/...; https-only from gitlab.com, 25 MB/file, 300 MB total
             extra+=(--fetch-stock-models --stock-models-dir "$CR_STOCK_MODELS_DIR")
           fi
-          python3 "$r" --repo . --base "$MERGE_BASE" --head "$HEAD_SHA" --out "$OUT" --pr "$PR_NUMBER" "${extra[@]}"
+          if [ -n "$PR_NUMBER" ]; then extra+=(--pr "$PR_NUMBER"); fi
+          python3 "$r" --repo . --base "$MERGE_BASE" --head "$HEAD_SHA" --out "$OUT" "${extra[@]}"
 
       # Optional KLC checker: kicad-library-utils at the commit pinned in ci/klc_utils.ref.
       # Repo var CR_KLC=false disables it.
@@ -137,7 +157,7 @@ jobs:
           path: ${{ runner.temp }}/klc-utils
           key: klc-utils-${{ hashFiles('tools/component-review/ci/klc_utils.ref') }}
 
-      - name: Deterministic checks (no LLM)
+      - name: Deterministic checks
         continue-on-error: true
         env:
           CR_KLC: ${{ vars.CR_KLC }}
@@ -157,7 +177,62 @@ jobs:
         continue-on-error: true
         run: python3 tools/component-review/viewer/build_site.py --out "$OUT"
 
+      - name: Build HTML report
+        continue-on-error: true
+        run: |
+          mkdir -p "$RUNNER_TEMP/report"
+          python3 tools/component-review/report/make_report.py --out "$OUT" \
+            --output "$RUNNER_TEMP/report/component-review.html"
+
+      - name: Annotate findings
+        if: always()
+        continue-on-error: true
+        run: |
+          if [ -f "$OUT/manifest.json" ]; then
+            python3 tools/component-review/ci/job_summary.py --out "$OUT" --annotate
+          fi
+
+      - name: Collect review data
+        if: always()
+        run: |
+          mkdir -p "$RUNNER_TEMP/data"
+          for f in manifest.json review.json review.md; do
+            if [ -f "$OUT/$f" ]; then cp "$OUT/$f" "$RUNNER_TEMP/data/"; fi
+          done
+
+      # Opens directly in the browser from the run page (non-zipped artifact).
+      - name: Upload HTML report
+        id: report
+        if: always()
+        continue-on-error: true
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          path: ${{ runner.temp }}/report/component-review.html
+          archive: false
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Upload interactive viewer
+        id: site
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: component-review-site
+          path: ${{ env.OUT }}
+          retention-days: 30
+          if-no-files-found: error
+
+      - name: Upload review data
+        id: data
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: component-review-data
+          path: ${{ runner.temp }}/data
+          retention-days: 30
+          if-no-files-found: warn
+
       - name: Write PR metadata
+        if: github.event_name == 'pull_request'
         env:
           MERGE_BASE: ${{ steps.base.outputs.merge_base }}
         run: |
@@ -169,16 +244,10 @@ jobs:
                     open("pr-meta/pr.json", "w"))
           PY
 
-      - name: Upload review bundle
-        uses: actions/upload-artifact@v4
-        with:
-          name: component-review
-          path: ${{ env.OUT }}
-          retention-days: 30
-          if-no-files-found: error
-
+      # Read by component-review-publish.yml (Pages preview + sticky comment).
       - name: Upload PR metadata
-        uses: actions/upload-artifact@v4
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: pr-meta
           path: pr-meta/pr.json
@@ -186,12 +255,16 @@ jobs:
 
       - name: Job summary
         if: always()
+        env:
+          REPORT_URL: ${{ steps.report.outputs.artifact-url }}
+          SITE_URL: ${{ steps.site.outputs.artifact-url }}
+          DATA_URL: ${{ steps.data.outputs.artifact-url }}
         run: |
-          {
-            echo "### Component review"
-            if [ -f "$OUT/manifest.json" ]; then
-              python3 -c 'import json,sys; m=json.load(open(sys.argv[1])); print(f"{len(m.get(\"items\", []))} changed component(s).")' "$OUT/manifest.json"
-            fi
-            echo "Download the **component-review** artifact and open \`index.html\` for the viewer."
-            echo "The live preview and PR comment are posted by the *Component review (publish)* workflow."
-          } >> "$GITHUB_STEP_SUMMARY"
+          if [ -f "$OUT/manifest.json" ]; then
+            python3 tools/component-review/ci/job_summary.py --out "$OUT" --summary "$GITHUB_STEP_SUMMARY" \
+              --link "component-review.html (report)=$REPORT_URL" \
+              --link "component-review-site (viewer zip)=$SITE_URL" \
+              --link "component-review-data (JSON)=$DATA_URL"
+          else
+            echo "### Component review: rendering failed, see the log." >> "$GITHUB_STEP_SUMMARY"
+          fi
