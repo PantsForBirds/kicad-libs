@@ -1,0 +1,104 @@
+{
+ "units": "mm",
+ "y_axis": "down",
+ "bbox": [
+  -12.0,
+  -5.8,
+  12.0,
+  5.8
+ ],
+ "pads": [
+  {
+   "number": "1",
+   "type": "smd",
+   "shape": "rect",
+   "at": [
+    -2.18,
+    0.0,
+    0.0
+   ],
+   "pos": [
+    -2.18,
+    0.0
+   ],
+   "angle": 0.0,
+   "size": [
+    1.23,
+    1.36
+   ],
+   "drill": null,
+   "layers": [
+    "F.Cu",
+    "F.Paste",
+    "F.Mask"
+   ],
+   "roundrect_rratio": null,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "2",
+   "type": "smd",
+   "shape": "rect",
+   "at": [
+    2.18,
+    0.0,
+    0.0
+   ],
+   "pos": [
+    2.18,
+    0.0
+   ],
+   "angle": 0.0,
+   "size": [
+    1.23,
+    1.36
+   ],
+   "drill": null,
+   "layers": [
+    "F.Cu",
+    "F.Paste",
+    "F.Mask"
+   ],
+   "roundrect_rratio": null,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  }
+ ],
+ "courtyard": {
+  "F": [
+   [
+    [
+     -3.0,
+     -2.0
+    ],
+    [
+     3.0,
+     -2.0
+    ],
+    [
+     3.0,
+     2.0
+    ],
+    [
+     -3.0,
+     2.0
+    ],
+    [
+     -3.0,
+     -2.0
+    ]
+   ]
+  ],
+  "B": []
+ },
+ "edge_cuts": []
+}

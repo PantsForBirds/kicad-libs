@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Report data comes from a pull request: no inline script; scripts only from self + jsDelivr (three.js, occt-import-js WASM).
+       'unsafe-eval' and blob: workers are only for the file:// mode's 3D worker (occt-import-js uses new Function
+       and a blob: worker inherits this policy); over http(s) js/boot.js adds a second policy without them. -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net 'wasm-unsafe-eval' 'unsafe-eval'; worker-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net; img-src 'self' data: blob:; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Component review</title>
+  <link rel="stylesheet" href="viewer.css">
+  <link rel="icon" href="data:,">
+  <script src="js/boot.js" defer></script>
+</head>
+<body>
+  <header id="header"><span class="title">Component review</span></header>
+  <div id="layout">
+    <aside id="sidebar"></aside>
+    <main id="main"><p class="muted pad">Loading…</p></main>
+  </div>
+  <noscript>This viewer needs JavaScript.</noscript>
+</body>
+</html>

@@ -1,0 +1,982 @@
+{
+ "schema": 1,
+ "repo": "PantsForBirds/kicad-libs",
+ "pr": 11,
+ "base_sha": "105282c25c8a23746b7a7c32104f6811daf08eb8",
+ "base_ref_sha": "105282c25c8a23746b7a7c32104f6811daf08eb8",
+ "head_sha": "158993ac26707017776ecb94c99764cb95528cd4",
+ "generated_at": "2026-09-24T22:46:02+00:00",
+ "kicad_version": "8.0",
+ "generator": "kipr library render (built-in SVG renderer)",
+ "changed_3d_files": [],
+ "unreferenced_changed_3d_files": [],
+ "items": [
+  {
+   "id": "footprint:Custom_Button_Switch_SMD:SW-SMD_L3.9-W3.0-P4.45",
+   "slug": "footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45",
+   "kind": "footprint",
+   "library": "Custom_Button_Switch_SMD",
+   "name": "SW-SMD_L3.9-W3.0-P4.45",
+   "status": "modified",
+   "path": "lib_fp/Custom_Button_Switch_SMD.pretty/SW-SMD_L3.9-W3.0-P4.45.kicad_mod",
+   "line_range": {
+    "head": [
+     1,
+     173
+    ],
+    "base": [
+     1,
+     173
+    ]
+   },
+   "properties": {
+    "head": {
+     "Reference": "REF**",
+     "Value": "SW-SMD_L3.9-W3.0-P4.45",
+     "Footprint": "Custom_Button_Switch_SMD:SW-SMD_L3.9-W3.0-P4.45",
+     "Datasheet": "",
+     "Description": "",
+     "descr": "XUNPU TS-1088R-02026"
+    },
+    "base": {
+     "Reference": "REF**",
+     "Value": "SW-SMD_L3.9-W3.0-P4.45",
+     "Footprint": "Custom_Button_Switch_SMD:SW-SMD_L3.9-W3.0-P4.45",
+     "Datasheet": "",
+     "Description": "",
+     "descr": "XUNPU TS-1088R-02026"
+    }
+   },
+   "datasheet": {
+    "url": null,
+    "local": null,
+    "file": null
+   },
+   "model3d": [
+    {
+     "path_raw": "${KICAD_LIBS_DIR}/lib_3d/Custom_Button_Switch_SMD/SW-SMD_L3.9-W2.9-H2.0-LS4.8.step",
+     "resolved": "lib_3d/Custom_Button_Switch_SMD/SW-SMD_L3.9-W2.9-H2.0-LS4.8.step",
+     "exists": true,
+     "changed": false,
+     "offset": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "rotate": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "hide": false,
+     "file": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45/model_1.step",
+     "side": "head"
+    }
+   ],
+   "stats": {
+    "head": {
+     "pad_count": 2,
+     "smd_count": 2,
+     "tht_count": 0,
+     "npth_count": 0,
+     "unique_pad_numbers": [
+      "1",
+      "2"
+     ],
+     "pad_number_count": 2,
+     "pads": [
+      {
+       "number": "1",
+       "type": "smd",
+       "shape": "rect",
+       "size": [
+        1.5,
+        1.6
+       ],
+       "at": [
+        -2.18,
+        0.0,
+        0.0
+       ],
+       "pos": [
+        -2.18,
+        0.0
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Paste",
+        "F.Mask"
+       ],
+       "roundrect_rratio": null
+      },
+      {
+       "number": "2",
+       "type": "smd",
+       "shape": "rect",
+       "size": [
+        1.5,
+        1.6
+       ],
+       "at": [
+        2.18,
+        0.0,
+        0.0
+       ],
+       "pos": [
+        2.18,
+        0.0
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Paste",
+        "F.Mask"
+       ],
+       "roundrect_rratio": null
+      }
+     ],
+     "pad_extent": [
+      -2.93,
+      -0.8,
+      2.93,
+      0.8
+     ],
+     "courtyard_bbox": [
+      -3.025,
+      -2.025,
+      3.025,
+      2.025
+     ],
+     "courtyard_size": [
+      6.05,
+      4.05
+     ],
+     "layers": [
+      "F.Paste",
+      "F.Mask",
+      "F.Cu",
+      "F.SilkS",
+      "F.Fab",
+      "F.CrtYd"
+     ],
+     "has_courtyard": true,
+     "has_fab": true,
+     "has_silk": true,
+     "reference_on_silk": true,
+     "reference_on_fab": true,
+     "attr": [
+      "smd"
+     ],
+     "pin1": {
+      "pad1_exists": true,
+      "pad1_pos": [
+       -2.18,
+       0.0
+      ],
+      "pad1_shape_distinct": false,
+      "silk_marker_near_pad1": true,
+      "fab_marker_near_pad1": false
+     },
+     "models": [
+      "${KICAD_LIBS_DIR}/lib_3d/Custom_Button_Switch_SMD/SW-SMD_L3.9-W2.9-H2.0-LS4.8.step"
+     ],
+     "zones": 0,
+     "texts": [
+      {
+       "text": "REF**",
+       "layer": "F.SilkS",
+       "hidden": false
+      },
+      {
+       "text": "SW-SMD_L3.9-W3.0-P4.45",
+       "layer": "F.Fab",
+       "hidden": false
+      },
+      {
+       "text": "",
+       "layer": "F.Fab",
+       "hidden": true
+      },
+      {
+       "text": "",
+       "layer": "F.Fab",
+       "hidden": true
+      },
+      {
+       "text": "",
+       "layer": "F.Fab",
+       "hidden": true
+      },
+      {
+       "text": "${REFERENCE}",
+       "layer": "F.Fab",
+       "hidden": false
+      }
+     ]
+    },
+    "base": {
+     "pad_count": 2,
+     "smd_count": 2,
+     "tht_count": 0,
+     "npth_count": 0,
+     "unique_pad_numbers": [
+      "1",
+      "2"
+     ],
+     "pad_number_count": 2,
+     "pads": [
+      {
+       "number": "1",
+       "type": "smd",
+       "shape": "rect",
+       "size": [
+        1.23,
+        1.36
+       ],
+       "at": [
+        -2.18,
+        0.0,
+        0.0
+       ],
+       "pos": [
+        -2.18,
+        0.0
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Paste",
+        "F.Mask"
+       ],
+       "roundrect_rratio": null
+      },
+      {
+       "number": "2",
+       "type": "smd",
+       "shape": "rect",
+       "size": [
+        1.23,
+        1.36
+       ],
+       "at": [
+        2.18,
+        0.0,
+        0.0
+       ],
+       "pos": [
+        2.18,
+        0.0
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Paste",
+        "F.Mask"
+       ],
+       "roundrect_rratio": null
+      }
+     ],
+     "pad_extent": [
+      -2.795,
+      -0.68,
+      2.795,
+      0.68
+     ],
+     "courtyard_bbox": [
+      -3.025,
+      -2.025,
+      3.025,
+      2.025
+     ],
+     "courtyard_size": [
+      6.05,
+      4.05
+     ],
+     "layers": [
+      "F.Paste",
+      "F.Mask",
+      "F.Cu",
+      "F.SilkS",
+      "F.Fab",
+      "F.CrtYd"
+     ],
+     "has_courtyard": true,
+     "has_fab": true,
+     "has_silk": true,
+     "reference_on_silk": true,
+     "reference_on_fab": true,
+     "attr": [
+      "smd"
+     ],
+     "pin1": {
+      "pad1_exists": true,
+      "pad1_pos": [
+       -2.18,
+       0.0
+      ],
+      "pad1_shape_distinct": false,
+      "silk_marker_near_pad1": true,
+      "fab_marker_near_pad1": false
+     },
+     "models": [
+      "${KICAD_LIBS_DIR}/lib_3d/Custom_Button_Switch_SMD/SW-SMD_L3.9-W2.9-H2.0-LS4.8.step"
+     ],
+     "zones": 0,
+     "texts": [
+      {
+       "text": "REF**",
+       "layer": "F.SilkS",
+       "hidden": false
+      },
+      {
+       "text": "SW-SMD_L3.9-W3.0-P4.45",
+       "layer": "F.Fab",
+       "hidden": false
+      },
+      {
+       "text": "",
+       "layer": "F.Fab",
+       "hidden": true
+      },
+      {
+       "text": "",
+       "layer": "F.Fab",
+       "hidden": true
+      },
+      {
+       "text": "",
+       "layer": "F.Fab",
+       "hidden": true
+      },
+      {
+       "text": "${REFERENCE}",
+       "layer": "F.Fab",
+       "hidden": false
+      }
+     ]
+    }
+   },
+   "renders": {
+    "head": {
+     "svg": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45/head.svg",
+     "png": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45/head.png",
+     "layers": {
+      "F.Paste": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45/head_F.Paste.svg",
+      "F.Mask": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45/head_F.Mask.svg",
+      "F.Cu": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45/head_F.Cu.svg",
+      "F.SilkS": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45/head_F.SilkS.svg",
+      "F.Fab": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45/head_F.Fab.svg",
+      "F.CrtYd": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45/head_F.CrtYd.svg"
+     }
+    },
+    "base": {
+     "svg": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45/base.svg",
+     "png": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45/base.png",
+     "layers": {
+      "F.Paste": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45/base_F.Paste.svg",
+      "F.Mask": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45/base_F.Mask.svg",
+      "F.Cu": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45/base_F.Cu.svg",
+      "F.SilkS": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45/base_F.SilkS.svg",
+      "F.Fab": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45/base_F.Fab.svg",
+      "F.CrtYd": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45/base_F.CrtYd.svg"
+     }
+    }
+   },
+   "diff_png": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45/diff.png",
+   "glb": {
+    "head": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45/head.glb",
+    "base": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45/base.glb"
+   },
+   "text_diff": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45/diff.patch",
+   "source": {
+    "head": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45/head.kicad_mod",
+    "base": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45/base.kicad_mod"
+   },
+   "warnings": [],
+   "view": {
+    "viewbox": [
+     -12.0,
+     -5.8,
+     12.0,
+     5.8
+    ],
+    "px_per_mm": 66.6667,
+    "units": "mm",
+    "y_axis": "down"
+   },
+   "geom": {
+    "head": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45/head_geom.json",
+    "base": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45/base_geom.json"
+   },
+   "diff_stats": {
+    "added_px": 6208,
+    "removed_px": 0,
+    "changed_px": 1323
+   },
+   "related_symbols": [],
+   "model3d_by_side": {
+    "head": [
+     {
+      "path_raw": "${KICAD_LIBS_DIR}/lib_3d/Custom_Button_Switch_SMD/SW-SMD_L3.9-W2.9-H2.0-LS4.8.step",
+      "resolved": "lib_3d/Custom_Button_Switch_SMD/SW-SMD_L3.9-W2.9-H2.0-LS4.8.step",
+      "exists": true,
+      "changed": false,
+      "offset": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "scale": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "rotate": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "hide": false,
+      "file": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45/model_1.step",
+      "side": "head"
+     }
+    ],
+    "base": [
+     {
+      "path_raw": "${KICAD_LIBS_DIR}/lib_3d/Custom_Button_Switch_SMD/SW-SMD_L3.9-W2.9-H2.0-LS4.8.step",
+      "resolved": "lib_3d/Custom_Button_Switch_SMD/SW-SMD_L3.9-W2.9-H2.0-LS4.8.step",
+      "exists": true,
+      "changed": false,
+      "offset": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "scale": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "rotate": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "hide": false,
+      "file": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45/model_1.step",
+      "side": "base"
+     }
+    ]
+   },
+   "preview_3d": {
+    "head": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45/head_3d.png",
+    "base": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45/base_3d.png"
+   }
+  },
+  {
+   "id": "footprint:Custom_Button_Switch_SMD:SW-SMD_L3.9-W3.0-P4.45_TEMP",
+   "slug": "footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45_TEMP",
+   "kind": "footprint",
+   "library": "Custom_Button_Switch_SMD",
+   "name": "SW-SMD_L3.9-W3.0-P4.45_TEMP",
+   "status": "added",
+   "path": "lib_fp/Custom_Button_Switch_SMD.pretty/SW-SMD_L3.9-W3.0-P4.45_TEMP.kicad_mod",
+   "line_range": {
+    "head": [
+     1,
+     173
+    ],
+    "base": null
+   },
+   "properties": {
+    "head": {
+     "Reference": "REF**",
+     "Value": "SW-SMD_L3.9-W3.0-P4.45",
+     "Footprint": "Custom_Button_Switch_SMD:SW-SMD_L3.9-W3.0-P4.45_TEMP",
+     "Datasheet": "",
+     "Description": "",
+     "descr": "XUNPU TS-1088R-02026"
+    },
+    "base": null
+   },
+   "datasheet": {
+    "url": null,
+    "local": null,
+    "file": null
+   },
+   "model3d": [
+    {
+     "path_raw": "${KICAD_LIBS_DIR}/lib_3d/Custom_Button_Switch_SMD/SW-SMD_L3.9-W2.9-H2.0-LS4.8.step",
+     "resolved": "lib_3d/Custom_Button_Switch_SMD/SW-SMD_L3.9-W2.9-H2.0-LS4.8.step",
+     "exists": true,
+     "changed": false,
+     "offset": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "rotate": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "hide": false,
+     "file": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45_TEMP/model_1.step",
+     "side": "head"
+    }
+   ],
+   "stats": {
+    "head": {
+     "pad_count": 2,
+     "smd_count": 2,
+     "tht_count": 0,
+     "npth_count": 0,
+     "unique_pad_numbers": [
+      "1",
+      "2"
+     ],
+     "pad_number_count": 2,
+     "pads": [
+      {
+       "number": "1",
+       "type": "smd",
+       "shape": "rect",
+       "size": [
+        1.5,
+        1.6
+       ],
+       "at": [
+        -2.18,
+        0.0,
+        0.0
+       ],
+       "pos": [
+        -2.18,
+        0.0
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Paste",
+        "F.Mask"
+       ],
+       "roundrect_rratio": null
+      },
+      {
+       "number": "2",
+       "type": "smd",
+       "shape": "rect",
+       "size": [
+        1.5,
+        1.6
+       ],
+       "at": [
+        2.18,
+        0.0,
+        0.0
+       ],
+       "pos": [
+        2.18,
+        0.0
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Paste",
+        "F.Mask"
+       ],
+       "roundrect_rratio": null
+      }
+     ],
+     "pad_extent": [
+      -2.93,
+      -0.8,
+      2.93,
+      0.8
+     ],
+     "courtyard_bbox": [
+      -3.025,
+      -2.025,
+      3.025,
+      2.025
+     ],
+     "courtyard_size": [
+      6.05,
+      4.05
+     ],
+     "layers": [
+      "F.Paste",
+      "F.Mask",
+      "F.Cu",
+      "F.SilkS",
+      "F.Fab",
+      "F.CrtYd"
+     ],
+     "has_courtyard": true,
+     "has_fab": true,
+     "has_silk": true,
+     "reference_on_silk": true,
+     "reference_on_fab": true,
+     "attr": [
+      "smd"
+     ],
+     "pin1": {
+      "pad1_exists": true,
+      "pad1_pos": [
+       -2.18,
+       0.0
+      ],
+      "pad1_shape_distinct": false,
+      "silk_marker_near_pad1": true,
+      "fab_marker_near_pad1": false
+     },
+     "models": [
+      "${KICAD_LIBS_DIR}/lib_3d/Custom_Button_Switch_SMD/SW-SMD_L3.9-W2.9-H2.0-LS4.8.step"
+     ],
+     "zones": 0,
+     "texts": [
+      {
+       "text": "REF**",
+       "layer": "F.SilkS",
+       "hidden": false
+      },
+      {
+       "text": "SW-SMD_L3.9-W3.0-P4.45",
+       "layer": "F.Fab",
+       "hidden": false
+      },
+      {
+       "text": "",
+       "layer": "F.Fab",
+       "hidden": true
+      },
+      {
+       "text": "",
+       "layer": "F.Fab",
+       "hidden": true
+      },
+      {
+       "text": "",
+       "layer": "F.Fab",
+       "hidden": true
+      },
+      {
+       "text": "${REFERENCE}",
+       "layer": "F.Fab",
+       "hidden": false
+      }
+     ]
+    },
+    "base": null
+   },
+   "renders": {
+    "head": {
+     "svg": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45_TEMP/head.svg",
+     "png": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45_TEMP/head.png",
+     "layers": {
+      "F.Paste": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45_TEMP/head_F.Paste.svg",
+      "F.Mask": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45_TEMP/head_F.Mask.svg",
+      "F.Cu": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45_TEMP/head_F.Cu.svg",
+      "F.SilkS": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45_TEMP/head_F.SilkS.svg",
+      "F.Fab": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45_TEMP/head_F.Fab.svg",
+      "F.CrtYd": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45_TEMP/head_F.CrtYd.svg"
+     }
+    },
+    "base": null
+   },
+   "diff_png": null,
+   "glb": {
+    "head": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45_TEMP/head.glb",
+    "base": null
+   },
+   "text_diff": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45_TEMP/diff.patch",
+   "source": {
+    "head": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45_TEMP/head.kicad_mod",
+    "base": null
+   },
+   "warnings": [],
+   "view": {
+    "viewbox": [
+     -12.0,
+     -5.8,
+     12.0,
+     5.8
+    ],
+    "px_per_mm": 66.6667,
+    "units": "mm",
+    "y_axis": "down"
+   },
+   "geom": {
+    "head": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45_TEMP/head_geom.json",
+    "base": null
+   },
+   "related_symbols": [],
+   "model3d_by_side": {
+    "head": [
+     {
+      "path_raw": "${KICAD_LIBS_DIR}/lib_3d/Custom_Button_Switch_SMD/SW-SMD_L3.9-W2.9-H2.0-LS4.8.step",
+      "resolved": "lib_3d/Custom_Button_Switch_SMD/SW-SMD_L3.9-W2.9-H2.0-LS4.8.step",
+      "exists": true,
+      "changed": false,
+      "offset": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "scale": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "rotate": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "hide": false,
+      "file": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45_TEMP/model_1.step",
+      "side": "head"
+     }
+    ],
+    "base": null
+   },
+   "preview_3d": {
+    "head": "items/footprint__Custom_Button_Switch_SMD__SW-SMD_L3.9-W3.0-P4.45_TEMP/head_3d.png",
+    "base": null
+   }
+  },
+  {
+   "id": "symbol:Custom_Device:Buzzer",
+   "slug": "symbol__Custom_Device__Buzzer",
+   "kind": "symbol",
+   "library": "Custom_Device",
+   "name": "Buzzer",
+   "status": "modified",
+   "path": "lib_sch/Custom_Device.kicad_sym",
+   "line_range": {
+    "head": [
+     5,
+     149
+    ],
+    "base": [
+     5,
+     149
+    ]
+   },
+   "properties": {
+    "head": {
+     "Reference": "BZ",
+     "Value": "Buzzer",
+     "Footprint": "Custom_Buzzer_Beeper:MagneticBuzzer_8530",
+     "Datasheet": "~",
+     "Description": "Buzzer, magnetic (TEMP test change)",
+     "ki_keywords": "buzzer sound"
+    },
+    "base": {
+     "Reference": "BZ",
+     "Value": "Buzzer",
+     "Footprint": "Custom_Buzzer_Beeper:MagneticBuzzer_8530",
+     "Datasheet": "~",
+     "Description": "Buzzer",
+     "ki_keywords": "buzzer sound"
+    }
+   },
+   "datasheet": {
+    "url": null,
+    "local": null,
+    "file": null
+   },
+   "model3d": [],
+   "stats": {
+    "head": {
+     "pin_count": 3,
+     "unique_pin_numbers": 3,
+     "duplicate_pin_numbers": [],
+     "units": 1,
+     "unit_names": {},
+     "has_demorgan": false,
+     "power_symbol": false,
+     "extends": null,
+     "pin_types": {
+      "input": 2,
+      "no_connect": 1
+     },
+     "hidden_pins": 1,
+     "pins": [
+      {
+       "number": "1",
+       "name": "+",
+       "type": "input",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -5.08,
+        0.0
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "2",
+       "name": "-",
+       "type": "input",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -5.08,
+        -2.54
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "3",
+       "name": "MP",
+       "type": "no_connect",
+       "shape": "line",
+       "unit": 1,
+       "hidden": true,
+       "pos": [
+        0.0,
+        -3.81
+       ],
+       "angle": 90.0,
+       "length": 2.54,
+       "alternates": []
+      }
+     ],
+     "pin_names_hidden": false,
+     "pin_numbers_hidden": false
+    },
+    "base": {
+     "pin_count": 3,
+     "unique_pin_numbers": 3,
+     "duplicate_pin_numbers": [],
+     "units": 1,
+     "unit_names": {},
+     "has_demorgan": false,
+     "power_symbol": false,
+     "extends": null,
+     "pin_types": {
+      "input": 2,
+      "no_connect": 1
+     },
+     "hidden_pins": 1,
+     "pins": [
+      {
+       "number": "1",
+       "name": "+",
+       "type": "input",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -5.08,
+        0.0
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "2",
+       "name": "-",
+       "type": "input",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -5.08,
+        -2.54
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "3",
+       "name": "MP",
+       "type": "no_connect",
+       "shape": "line",
+       "unit": 1,
+       "hidden": true,
+       "pos": [
+        0.0,
+        -3.81
+       ],
+       "angle": 90.0,
+       "length": 2.54,
+       "alternates": []
+      }
+     ],
+     "pin_names_hidden": false,
+     "pin_numbers_hidden": false
+    }
+   },
+   "renders": {
+    "head": {
+     "svg": "items/symbol__Custom_Device__Buzzer/head.svg",
+     "png": "items/symbol__Custom_Device__Buzzer/head.png",
+     "layers": {}
+    },
+    "base": {
+     "svg": "items/symbol__Custom_Device__Buzzer/base.svg",
+     "png": "items/symbol__Custom_Device__Buzzer/base.png",
+     "layers": {}
+    }
+   },
+   "diff_png": "items/symbol__Custom_Device__Buzzer/diff.png",
+   "glb": {
+    "head": null,
+    "base": null
+   },
+   "text_diff": "items/symbol__Custom_Device__Buzzer/diff.patch",
+   "source": {
+    "head": "items/symbol__Custom_Device__Buzzer/head.kicad_sym",
+    "base": "items/symbol__Custom_Device__Buzzer/base.kicad_sym"
+   },
+   "warnings": [],
+   "view": {
+    "viewbox": [
+     -7.62,
+     -8.001,
+     4.953,
+     7.747
+    ],
+    "px_per_mm": 80.0,
+    "units": "mm",
+    "y_axis": "down",
+    "unit_offsets": {
+     "1": 0.0
+    }
+   },
+   "diff_stats": {
+    "added_px": 0,
+    "removed_px": 0,
+    "changed_px": 0
+   },
+   "footprint_ref": "Custom_Buzzer_Beeper:MagneticBuzzer_8530"
+  }
+ ]
+}

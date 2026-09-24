@@ -1,0 +1,11 @@
+--- a/lib_sch/Custom_Device.kicad_sym
++++ b/lib_sch/Custom_Device.kicad_sym
+@@ -45,7 +45,7 @@
+ 				(hide yes)
+ 			)
+ 		)
+-		(property "Description" "Buzzer"
++		(property "Description" "Buzzer, magnetic (TEMP test change)"
+ 			(at 0 0 0)
+ 			(effects
+ 				(font
