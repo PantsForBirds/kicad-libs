@@ -138,7 +138,7 @@ def details_block(ctx: Ctx, item: dict, review, inlined: set[str]) -> str:
         lines += ["_No rendered images for this item._", ""]
 
     if ir.get("summary"):
-        lines += [f"**AI review ({VERDICT_TEXT[v]}):** {md_block(ir.get('summary'), 800)}", ""]
+        lines += [f"**Review ({VERDICT_TEXT[v]}):** {md_block(ir.get('summary'), 800)}", ""]
     fs = findings_of(ir)
     for f in fs[:25]:
         sev = f.get("severity") if f.get("severity") in SEVERITY_ICON else "info"
@@ -191,7 +191,7 @@ def build_comment(ctx: Ctx, manifest: dict, review, *, artifact_url: str | None 
         links.append(f"[workflow run]({run_url})")
     head += [" · ".join(links), "",
              f"{n} changed component{'s' if n != 1 else ''} ({what or 'none'}) at {md_code(ctx.head_sha[:10])}. "
-             f"Overall AI verdict: **{VERDICT_TEXT[ov] if ov else 'not reviewed'}**."
+             f"Overall verdict: **{VERDICT_TEXT[ov] if ov else 'not reviewed'}**."
              + (f" {n_inline} finding{'s' if n_inline != 1 else ''} posted as inline review comments." if n_inline else ""),
              ""]
     if note:
@@ -199,7 +199,7 @@ def build_comment(ctx: Ctx, manifest: dict, review, *, artifact_url: str | None 
     if review and review.get("summary_markdown"):
         head += [md_block(review.get("summary_markdown"), 3000), ""]
 
-    table = ["| | Component | Kind | Change | AI | Findings |", "|---|---|---|---|---|---|"]
+    table = ["| | Component | Kind | Change | Verdict | Findings |", "|---|---|---|---|---|---|"]
     table_len = 0
     for n_rows, i in enumerate(items):
         if table_len > MAX_COMMENT // 2:

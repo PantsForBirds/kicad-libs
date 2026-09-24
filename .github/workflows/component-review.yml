@@ -1,0 +1,127 @@
+# Component review, stage 1 of 2 (unprivileged).
+#
+# Runs on every PR (including PRs from forks) that touches footprints, symbols or 3D models.
+# It executes code from the PR, so it gets a read-only token and no secrets. It renders the
+# changed components, runs the deterministic (no-LLM) checks, bundles the static viewer and
+# uploads everything as the `component-review` artifact. Publishing (Pages preview, PR comment,
+# inline review, LLM review) happens in component-review-publish.yml, which never runs PR code.
+name: Component review
+
+on:
+  pull_request:
+    paths:
+      - "lib_fp/**"
+      - "lib_sch/**"
+      - "lib_3d/**"
+      - "tools/component-review/**"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: component-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    # KiCad container for kicad-cli renders. Set the repo variable CR_KICAD_IMAGE to another
+    # image, or to "none" to run directly on the runner (the renderer then uses its
+    # pure-Python fallback, if it has one).
+    # (The image's default user is `kicad`; root is needed for apt and the runner's workspace.
+    # An empty container value makes the job run on the host.)
+    container: ${{ vars.CR_KICAD_IMAGE != 'none' && fromJSON(format('{{"image":"{0}","options":"--user root"}}', vars.CR_KICAD_IMAGE || 'kicad/kicad:10.0')) || '' }}
+    env:
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      BASE_SHA: ${{ github.event.pull_request.base.sha }}
+      HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+      OUT: cr-out
+    steps:
+      - name: Prepare tools
+        run: |
+          # The KiCad image may lack git (needed for a real clone) and venv/pip.
+          need=""
+          command -v git >/dev/null || need="$need git"
+          python3 -c 'import venv, ensurepip' 2>/dev/null || need="$need python3-venv python3-pip"
+          if [ -n "$need" ]; then
+            # shellcheck disable=SC2086  # $need is a word list
+            apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends ca-certificates $need
+          fi
+          git --version; python3 --version; command -v kicad-cli && kicad-cli version || echo "kicad-cli not available"
+
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Find merge base
+        id: base
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          mb=$(git merge-base "$BASE_SHA" "$HEAD_SHA")
+          echo "merge_base=$mb" >> "$GITHUB_OUTPUT"
+          echo "base $BASE_SHA, head $HEAD_SHA, merge-base $mb"
+
+      - name: Install Python dependencies
+        run: |
+          python3 -m venv --system-site-packages "$RUNNER_TEMP/venv"
+          echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
+          for req in tools/component-review/render/requirements.txt tools/component-review/ai/requirements.txt; do
+            if [ -f "$req" ]; then "$RUNNER_TEMP/venv/bin/pip" install -q -r "$req"; fi
+          done
+
+      - name: Render changed components
+        env:
+          MERGE_BASE: ${{ steps.base.outputs.merge_base }}
+        run: |
+          python3 tools/component-review/render/cr_render.py \
+            --repo . --base "$MERGE_BASE" --head "$HEAD_SHA" --out "$OUT" --pr "$PR_NUMBER"
+
+      - name: Deterministic checks (no LLM)
+        continue-on-error: true
+        run: python3 tools/component-review/ai/cr_ai_review.py --out "$OUT" --no-llm
+
+      - name: Bundle viewer
+        continue-on-error: true
+        run: python3 tools/component-review/viewer/build_site.py --out "$OUT"
+
+      - name: Write PR metadata
+        env:
+          MERGE_BASE: ${{ steps.base.outputs.merge_base }}
+        run: |
+          mkdir -p pr-meta
+          python3 - <<'PY'
+          import json, os
+          json.dump({"pr": int(os.environ["PR_NUMBER"]), "head_sha": os.environ["HEAD_SHA"],
+                     "base_sha": os.environ["BASE_SHA"], "merge_base": os.environ["MERGE_BASE"]},
+                    open("pr-meta/pr.json", "w"))
+          PY
+
+      - name: Upload review bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: component-review
+          path: ${{ env.OUT }}
+          retention-days: 30
+          if-no-files-found: error
+
+      - name: Upload PR metadata
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr-meta
+          path: pr-meta/pr.json
+          retention-days: 30
+
+      - name: Job summary
+        if: always()
+        run: |
+          {
+            echo "### Component review"
+            if [ -f "$OUT/manifest.json" ]; then
+              python3 -c 'import json,sys; m=json.load(open(sys.argv[1])); print(f"{len(m.get(\"items\", []))} changed component(s).")' "$OUT/manifest.json"
+            fi
+            echo "Download the **component-review** artifact and open \`index.html\` for the viewer."
+            echo "The live preview and PR comment are posted by the *Component review (publish)* workflow."
+          } >> "$GITHUB_STEP_SUMMARY"
