@@ -1,0 +1,1040 @@
+{
+ "schema": 1,
+ "generator": "deterministic checks + KLC",
+ "generated_at": "2026-09-30T23:03:12+00:00",
+ "summary_markdown": "Reviewed **9** item(s): 0 fail, 8 warn, 1 pass.",
+ "items": {
+  "footprint:Custom_Connector:PA-SOCKET-MSOP-8-0.65": {
+   "verdict": "warn",
+   "summary": "Deterministic checks: 0 error(s), 3 warning(s), 0 info. Cross-checked against `symbol:Custom_RF_Amplifier:PA-SOCKET-MSOP-8-0.65_AD8313`.",
+   "datasheet_used": "https://www.proto-advantage.com/store/datasheets/PA-SOCKET-MSOP-8-0.65.pdf",
+   "findings": [
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC F5.2: Some fabrication layer lines have a width outside allowed range of [0.1mm - 0.15mm]; - Line (-2.45,-1.125) -> (-2.45,-0.825) on layer 'F.Fab' has width '0.05'; - Line (-2.45,-1.125) -> (-1.5,-1.125) on layer 'F.Fab' has width '0.05'; - Line (-1.5,-1.125) -> (-1.5,-0.825) on layer 'F.Fab' has width '0.05'; - Line (-2.45,-0.825) -> (-1.5,-0.825) on layer 'F.Fab' has width '0.05'; - Line (-2.45,-0.475) -> (-2.45,-0.175) on layer 'F.Fab' has width '0.05'; - Line (-2.45,-0.475) -> (-1.5,-0.475) on layer 'F.Fab' has width '0.05'; - Line (-1.5,-0.475) -> (-1.5,-0.175) on layer 'F.Fab' has width '0.05'; - Line (-2.45,-0.175) -> (-1.5,-0.175) on layer 'F.Fab' has width '0.05'; - Line (-2.45,0.175) -> (-2.45,0.475) on layer 'F.Fab' has width '0.05'; - Line (-2.45,0.175) -> (-1.5,0.175) on layer 'F.Fab' has width '0.05'; - Line (-1.5,0.175) -> (-1.5,0.475) on layer 'F.Fab' has width '0.05'; - Line (-2.45,0.475) -> (-1.5,0.475) on layer 'F.Fab' has width '0.05'; - Line (-2.45,0.825) -> (-2.45,1.125) on layer 'F.Fab' has width '0.05'; - Line (-2.45,0.825) -> (-1.5,0.825) on layer 'F.Fab' has width '0.05'; - Line (-1.5,0.825) -> (-1.5,1.125) on layer 'F.Fab' has width '0.05'; - Line (-2.45,1.125) -> (-1.5,1.125) on layer 'F.Fab' has width '0.05'; - Line (1.5,-1.125) -> (1.5,-0.825) on layer 'F.Fab' has width '0.05'; - Line (1.5,-1.125) -> (2.45,-1.125) on layer 'F.Fab' has width '0.05'; - Line (2.45,-1.125) -> (2.45,-0.825) on layer 'F.Fab' has width '0.05'; - Line (1.5,-0.825) -> (2.45,-0.825) on layer 'F.Fab' has width '0.05'; - Line (1.5,-0.475) -> (1.5,-0.175) on layer 'F.Fab' has width '0.05'; - Line (1.5,-0.475) -> (2.45,-0.475) on layer 'F.Fab' has width '0.05'; - Line (2.45,-0.475) -> (2.45,-0.175) on layer 'F.Fab' has width '0.05'; - Line (1.5,-0.175) -> (2.45,-0.175) on layer 'F.Fab' has width '0.05'; - Line (1.5,0.175) -> (1.5,0.475) on layer 'F.Fab' has width '0.05'; - Line (1.5,0.175) -> (2.45,0.175) on layer 'F.Fab' has width '0.05'; - Line (2.45,0.175) -> (2.45,0.475) on layer 'F.Fab' has width '0.05'; - Line (1.5,0.475) -> (2.45,0.475) on layer 'F.Fab' has width '0.05'; - Line (1.5,0.825) -> (1.5,1.125) on layer 'F.Fab' has width '0.05'; - Line (1.5,0.825) -> (2.45,0.825) on layer 'F.Fab' has width '0.05'; - Line (2.45,0.825) -> (2.45,1.125) on layer 'F.Fab' has width '0.05'; - Line (1.5,1.125) -> (2.45,1.125) on layer 'F.Fab' has width '0.05' ([F5.2](https://klc.kicad.org/footprint/f5/f5.2/))",
+     "line": null,
+     "path": "lib_fp/Custom_Connector.pretty/PA-SOCKET-MSOP-8-0.65.kicad_mod"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC F7.2: Pad '1' not located at origin; - Set origin to location of Pad '1' ([F7.2](https://klc.kicad.org/footprint/f7/f7.2/))",
+     "line": null,
+     "path": "lib_fp/Custom_Connector.pretty/PA-SOCKET-MSOP-8-0.65.kicad_mod"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC F9.1: The 'datasheet' field should not be set for a footprint: (have 'https://www.proto-advantage.com/store/datasheets/PA-SOCKET-MSOP-8-0.65.pdf'); The 'description' field should not be set for a footprint: (have 'Proto Advantage PA-SOCKET-MSOP-8-0.65 MSOP-8 test socket, THT') ([F9.1](https://klc.kicad.org/footprint/f9/f9.1/))",
+     "line": null,
+     "path": "lib_fp/Custom_Connector.pretty/PA-SOCKET-MSOP-8-0.65.kicad_mod"
+    }
+   ],
+   "checks": [
+    {
+     "name": "Datasheet reference present",
+     "result": "pass",
+     "detail": "URL found in descr/Datasheet"
+    },
+    {
+     "name": "Fab outline present",
+     "result": "pass",
+     "detail": "75 fab segments"
+    },
+    {
+     "name": "${REFERENCE} text on F.Fab",
+     "result": "pass",
+     "detail": ""
+    },
+    {
+     "name": "Courtyard present",
+     "result": "pass",
+     "detail": "4 courtyard segments"
+    },
+    {
+     "name": "Courtyard clearance >= 0.25 mm",
+     "result": "pass",
+     "detail": "min margin 0.250 mm (pads and fab vs courtyard, bounding boxes)"
+    },
+    {
+     "name": "Silkscreen does not overlap pads",
+     "result": "pass",
+     "detail": ""
+    },
+    {
+     "name": "3D model present",
+     "result": "pass",
+     "detail": ""
+    },
+    {
+     "name": "KiCad KLC checker (kicad-library-utils)",
+     "result": "fail",
+     "detail": "3 violation(s)"
+    },
+    {
+     "name": "Symbol pins match footprint pads (footprint:Custom_Connector:PA-SOCKET-MSOP-8-0.65)",
+     "result": "pass",
+     "detail": "pins without pad: -; pads without pin: -"
+    }
+   ]
+  },
+  "footprint:Custom_Module:RP2040-Zero_Castellated": {
+   "verdict": "warn",
+   "summary": "Deterministic checks: 0 error(s), 6 warning(s), 1 info. Cross-checked against `symbol:Custom_MCU:RP2040-Zero`.",
+   "datasheet_used": "https://www.waveshare.com/wiki/RP2040-Zero",
+   "findings": [
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC F5.2: Value Label Errors; - Value text should match footprint name:; - Value text is 'RP2040-Zero', expected: 'RP2040-Zero_Castellated' ([F5.2](https://klc.kicad.org/footprint/f5/f5.2/))",
+     "line": null,
+     "path": "lib_fp/Custom_Module.pretty/RP2040-Zero_Castellated.kicad_mod"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC F6.1: SMD footprint type not set; - For SMD footprints, footprint type must be set to 'SMD'; - There are 23 soldered SMD pads ([F6.1](https://klc.kicad.org/footprint/f6/f6.1/))",
+     "line": null,
+     "path": "lib_fp/Custom_Module.pretty/RP2040-Zero_Castellated.kicad_mod"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC F7.1: Through hole footprint type is set, but no THT pads found ([F7.1](https://klc.kicad.org/footprint/f7/f7.1/))",
+     "line": null,
+     "path": "lib_fp/Custom_Module.pretty/RP2040-Zero_Castellated.kicad_mod"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC F7.2: Pad '1' not located at origin; - Set origin to location of Pad '1' ([F7.2](https://klc.kicad.org/footprint/f7/f7.2/))",
+     "line": null,
+     "path": "lib_fp/Custom_Module.pretty/RP2040-Zero_Castellated.kicad_mod"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC F9.1: Value label 'RP2040-Zero' does not match filename 'RP2040-Zero_Castellated'; The 'datasheet' field should not be set for a footprint: (have 'https://www.waveshare.com/wiki/RP2040-Zero'); The 'description' field should not be set for a footprint: (have 'Waveshare RP2040-Zero module, outer castellated pins') ([F9.1](https://klc.kicad.org/footprint/f9/f9.1/))",
+     "line": null,
+     "path": "lib_fp/Custom_Module.pretty/RP2040-Zero_Castellated.kicad_mod"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC F9.3: 3D model offset is not {'x': 0, 'y': 0, 'z': 0}. Found {'x': -8.95, 'y': -11.85, 'z': 1.1}; Model is incompatible format (must be STEP file) ([F9.3](https://klc.kicad.org/footprint/f9/f9.3/))",
+     "line": null,
+     "path": "lib_fp/Custom_Module.pretty/RP2040-Zero_Castellated.kicad_mod"
+    },
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "KLC F7.3: Only pad 1 should be rectangular ([F7.3](https://klc.kicad.org/footprint/f7/f7.3/))",
+     "line": null,
+     "path": "lib_fp/Custom_Module.pretty/RP2040-Zero_Castellated.kicad_mod"
+    }
+   ],
+   "checks": [
+    {
+     "name": "Datasheet reference present",
+     "result": "pass",
+     "detail": "URL found in descr/Datasheet"
+    },
+    {
+     "name": "Fab outline present",
+     "result": "pass",
+     "detail": "9 fab segments"
+    },
+    {
+     "name": "${REFERENCE} text on F.Fab",
+     "result": "pass",
+     "detail": ""
+    },
+    {
+     "name": "Courtyard present",
+     "result": "pass",
+     "detail": "4 courtyard segments"
+    },
+    {
+     "name": "Courtyard clearance >= 0.25 mm",
+     "result": "pass",
+     "detail": "min margin 0.250 mm (pads and fab vs courtyard, bounding boxes)"
+    },
+    {
+     "name": "Silkscreen does not overlap pads",
+     "result": "pass",
+     "detail": ""
+    },
+    {
+     "name": "3D model present",
+     "result": "pass",
+     "detail": ""
+    },
+    {
+     "name": "KiCad KLC checker (kicad-library-utils)",
+     "result": "fail",
+     "detail": "7 violation(s)"
+    },
+    {
+     "name": "Symbol pins match footprint pads (footprint:Custom_Module:RP2040-Zero_Castellated)",
+     "result": "pass",
+     "detail": "pins without pad: -; pads without pin: -"
+    }
+   ]
+  },
+  "footprint:Custom_Resistor_SMD:R_0603_1608Metric_Kelvin_NetTie": {
+   "verdict": "warn",
+   "summary": "Deterministic checks: 0 error(s), 1 warning(s), 5 info. ",
+   "datasheet_used": "https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf",
+   "findings": [
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "3D model path `${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step` does not use `${KICAD_LIBS_DIR}/lib_3d/...`.",
+     "line": 171,
+     "suggestion": "Vendor the model into lib_3d/ and reference it via ${KICAD_LIBS_DIR} so it resolves for everyone.",
+     "path": "lib_fp/Custom_Resistor_SMD.pretty/R_0603_1608Metric_Kelvin_NetTie.kicad_mod"
+    },
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "SMD pad 2 has no paste layer and there are no separate paste apertures.",
+     "line": 151,
+     "suggestion": "Intended? Exposed pads usually get a reduced paste pattern (e.g. 50-80% coverage).",
+     "path": "lib_fp/Custom_Resistor_SMD.pretty/R_0603_1608Metric_Kelvin_NetTie.kicad_mod"
+    },
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "SMD pad 3 has no paste layer and there are no separate paste apertures.",
+     "line": 157,
+     "suggestion": "Intended? Exposed pads usually get a reduced paste pattern (e.g. 50-80% coverage).",
+     "path": "lib_fp/Custom_Resistor_SMD.pretty/R_0603_1608Metric_Kelvin_NetTie.kicad_mod"
+    },
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "KLC F5.2: RefDes warnings; - RefDes text size (0.4mm) is outside allowed range [0.5mm - 1.0mm] ([F5.2](https://klc.kicad.org/footprint/f5/f5.2/))",
+     "line": null,
+     "path": "lib_fp/Custom_Resistor_SMD.pretty/R_0603_1608Metric_Kelvin_NetTie.kicad_mod"
+    },
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "KLC F6.3: Rectangular SMD pad; - Pads 2, 3 are rectangular. If possible, change to rounded-rectangle.; Pad(s) potentially missing layers; - Pad '2' missing layer 'Paste'; - Pad '2' missing layer 'Mask'; - Pad '3' missing layer 'Paste'; - Pad '3' missing layer 'Mask' ([F6.3](https://klc.kicad.org/footprint/f6/f6.3/))",
+     "line": null,
+     "path": "lib_fp/Custom_Resistor_SMD.pretty/R_0603_1608Metric_Kelvin_NetTie.kicad_mod"
+    },
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "KLC F9.3: 3D model name is different from footprint name (found 'R_0603_1608Metric', expected 'R_0603_1608Metric_Kelvin_NetTie'), but this might be intentional! ([F9.3](https://klc.kicad.org/footprint/f9/f9.3/))",
+     "line": null,
+     "path": "lib_fp/Custom_Resistor_SMD.pretty/R_0603_1608Metric_Kelvin_NetTie.kicad_mod"
+    }
+   ],
+   "checks": [
+    {
+     "name": "Datasheet reference present",
+     "result": "pass",
+     "detail": "URL found in descr/Datasheet"
+    },
+    {
+     "name": "Fab outline present",
+     "result": "pass",
+     "detail": "4 fab segments"
+    },
+    {
+     "name": "${REFERENCE} text on F.Fab",
+     "result": "pass",
+     "detail": ""
+    },
+    {
+     "name": "Courtyard present",
+     "result": "pass",
+     "detail": "4 courtyard segments"
+    },
+    {
+     "name": "Courtyard clearance >= 0.25 mm",
+     "result": "pass",
+     "detail": "min margin 0.250 mm (pads and fab vs courtyard, bounding boxes)"
+    },
+    {
+     "name": "Silkscreen does not overlap pads",
+     "result": "pass",
+     "detail": ""
+    },
+    {
+     "name": "3D model present",
+     "result": "pass",
+     "detail": ""
+    },
+    {
+     "name": "KiCad KLC checker (kicad-library-utils)",
+     "result": "fail",
+     "detail": "3 violation(s)"
+    }
+   ]
+  },
+  "symbol:Custom_MCU:RP2040-Zero": {
+   "verdict": "warn",
+   "summary": "Deterministic checks: 0 error(s), 22 warning(s), 1 info. Cross-checked against `footprint:Custom_Module:RP2040-Zero_Castellated`.",
+   "datasheet_used": "https://www.waveshare.com/wiki/RP2040-Zero",
+   "findings": [
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 4 (GP29/ADC3) at (12.7, -11.43) is on 50 mil but not 100 mil grid.",
+     "line": 4545,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_MCU.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 5 (GP28/ADC2) at (12.7, -8.89) is on 50 mil but not 100 mil grid.",
+     "line": 4563,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_MCU.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 6 (GP27/ADC1) at (12.7, -6.35) is on 50 mil but not 100 mil grid.",
+     "line": 4581,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_MCU.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 7 (GP26/ADC0) at (12.7, -3.81) is on 50 mil but not 100 mil grid.",
+     "line": 4599,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_MCU.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 8 (GP15) at (12.7, -1.27) is on 50 mil but not 100 mil grid.",
+     "line": 4617,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_MCU.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 9 (GP14) at (12.7, 1.27) is on 50 mil but not 100 mil grid.",
+     "line": 4635,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_MCU.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 10 (GP13) at (12.7, 3.81) is on 50 mil but not 100 mil grid.",
+     "line": 4653,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_MCU.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 11 (GP12) at (12.7, 6.35) is on 50 mil but not 100 mil grid.",
+     "line": 4671,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_MCU.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 12 (GP11) at (12.7, 8.89) is on 50 mil but not 100 mil grid.",
+     "line": 4689,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_MCU.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 13 (GP10) at (12.7, 11.43) is on 50 mil but not 100 mil grid.",
+     "line": 4707,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_MCU.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 14 (GP9) at (-12.7, -11.43) is on 50 mil but not 100 mil grid.",
+     "line": 4725,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_MCU.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 15 (GP8) at (-12.7, -8.89) is on 50 mil but not 100 mil grid.",
+     "line": 4743,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_MCU.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 16 (GP7) at (-12.7, -6.35) is on 50 mil but not 100 mil grid.",
+     "line": 4761,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_MCU.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 17 (GP6) at (-12.7, -3.81) is on 50 mil but not 100 mil grid.",
+     "line": 4779,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_MCU.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 18 (GP5) at (-12.7, -1.27) is on 50 mil but not 100 mil grid.",
+     "line": 4797,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_MCU.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 19 (GP4) at (-12.7, 1.27) is on 50 mil but not 100 mil grid.",
+     "line": 4815,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_MCU.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 20 (GP3) at (-12.7, 3.81) is on 50 mil but not 100 mil grid.",
+     "line": 4833,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_MCU.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 21 (GP2) at (-12.7, 6.35) is on 50 mil but not 100 mil grid.",
+     "line": 4851,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_MCU.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 22 (GP1) at (-12.7, 8.89) is on 50 mil but not 100 mil grid.",
+     "line": 4869,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_MCU.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 23 (GP0) at (-12.7, 11.43) is on 50 mil but not 100 mil grid.",
+     "line": 4887,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_MCU.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC S4.1: Pins not located on 100mil (=2.54mm) grid:; - Pin GP29/ADC3 (4) @ (500,-450); - Pin GP28/ADC2 (5) @ (500,-350); - Pin GP27/ADC1 (6) @ (500,-250); - Pin GP26/ADC0 (7) @ (500,-150); - Pin GP15 (8) @ (500,-50); - Pin GP14 (9) @ (500,50); - Pin GP13 (10) @ (500,150); - Pin GP12 (11) @ (500,250); - Pin GP11 (12) @ (500,350); - Pin GP10 (13) @ (500,450); - Pin GP9 (14) @ (-500,-450); - Pin GP8 (15) @ (-500,-350); - Pin GP7 (16) @ (-500,-250); - Pin GP6 (17) @ (-500,-150); - Pin GP5 (18) @ (-500,-50); - Pin GP4 (19) @ (-500,50); - Pin GP3 (20) @ (-500,150); - Pin GP2 (21) @ (-500,250); - Pin GP1 (22) @ (-500,350); - Pin GP0 (23) @ (-500,450) ([S4.1](https://klc.kicad.org/symbol/s4/s4.1/))",
+     "line": null,
+     "path": "lib_sch/Custom_MCU.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC S4.2: Power output pins should be placed at right of symbol; - Pin 3V3 (3) @ (100,800) ([S4.2](https://klc.kicad.org/symbol/s4/s4.2/))",
+     "line": null,
+     "path": "lib_sch/Custom_MCU.kicad_sym"
+    },
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "KLC S6.2: Symbol name should not be included in description ([S6.2](https://klc.kicad.org/symbol/s6/s6.2/))",
+     "line": null,
+     "path": "lib_sch/Custom_MCU.kicad_sym"
+    }
+   ],
+   "checks": [
+    {
+     "name": "Datasheet property filled",
+     "result": "pass",
+     "detail": "https://www.waveshare.com/wiki/RP2040-Zero"
+    },
+    {
+     "name": "Default footprint / footprint filter set",
+     "result": "pass",
+     "detail": "Custom_Module:RP2040-Zero_Castellated"
+    },
+    {
+     "name": "Symbol has pins",
+     "result": "pass",
+     "detail": "23 pins"
+    },
+    {
+     "name": "Pins on 100 mil grid",
+     "result": "fail",
+     "detail": "4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23"
+    },
+    {
+     "name": "KiCad KLC checker (kicad-library-utils)",
+     "result": "fail",
+     "detail": "3 violation(s)"
+    },
+    {
+     "name": "Symbol pins match footprint pads (footprint:Custom_Module:RP2040-Zero_Castellated)",
+     "result": "pass",
+     "detail": "pins without pad: -; pads without pin: -"
+    }
+   ]
+  },
+  "symbol:Custom_Power_Management:LM73100RPWR": {
+   "verdict": "warn",
+   "summary": "Deterministic checks: 0 error(s), 14 warning(s), 2 info. ",
+   "datasheet_used": "https://www.ti.com/lit/gpn/lm7310",
+   "findings": [
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Symbol `Description` property is empty.",
+     "line": 58,
+     "path": "lib_sch/Custom_Power_Management.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 1 (EN_UVLO) at (-11.43, 1.27) is on 50 mil but not 100 mil grid.",
+     "line": 92,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_Power_Management.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 2 (OVLO) at (-11.43, -1.27) is on 50 mil but not 100 mil grid.",
+     "line": 110,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_Power_Management.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 3 (PG) at (11.43, -1.27) is on 50 mil but not 100 mil grid.",
+     "line": 128,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_Power_Management.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 4 (PGTH) at (11.43, 1.27) is on 50 mil but not 100 mil grid.",
+     "line": 146,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_Power_Management.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 5 (IN) at (-11.43, 3.81) is on 50 mil but not 100 mil grid.",
+     "line": 164,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_Power_Management.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 8 (GND) at (0.0, -8.89) is on 50 mil but not 100 mil grid.",
+     "line": 182,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_Power_Management.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 9 (IMON) at (11.43, -3.81) is on 50 mil but not 100 mil grid.",
+     "line": 200,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_Power_Management.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 6 (OUT) at (11.43, 3.81) is on 50 mil but not 100 mil grid.",
+     "line": 231,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_Power_Management.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 7 (dVdt) at (-11.43, -3.81) is on 50 mil but not 100 mil grid.",
+     "line": 249,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_Power_Management.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 10 (NC) at (-2.54, -8.89) is on 50 mil but not 100 mil grid.",
+     "line": 267,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_Power_Management.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC S3.3: Component outline is thickness 0mil, recommended is 10mil ([S3.3](https://klc.kicad.org/symbol/s3/s3.3/))",
+     "line": null,
+     "path": "lib_sch/Custom_Power_Management.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC S4.1: Pins not located on 100mil (=2.54mm) grid:; - Pin EN_UVLO (1) @ (-450,50); - Pin OVLO (2) @ (-450,-50); - Pin PG (3) @ (450,-50); - Pin PGTH (4) @ (450,50); - Pin IN (5) @ (-450,150); - Pin GND (8) @ (0,-350); - Pin IMON (9) @ (450,-150); - Pin OUT (6) @ (450,150); - Pin dVdt (7) @ (-450,-150) ([S4.1](https://klc.kicad.org/symbol/s4/s4.1/))",
+     "line": null,
+     "path": "lib_sch/Custom_Power_Management.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC S5.2: Footprint filter 'RPW0010A-MFG' not correctly formatted; - Does not contain wildcard ('*') character ([S5.2](https://klc.kicad.org/symbol/s5/s5.2/))",
+     "line": null,
+     "path": "lib_sch/Custom_Power_Management.kicad_sym"
+    },
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "KLC S3.6: Pin offset outside allowed range; - Pin offset (10) should not be below 20mils ([S3.6](https://klc.kicad.org/symbol/s3/s3.6/))",
+     "line": null,
+     "path": "lib_sch/Custom_Power_Management.kicad_sym"
+    },
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "KLC S5.2: Minuses and underscores in footprint filter 'RPW0010A-MFG' should be escaped with '?' or '*'. ([S5.2](https://klc.kicad.org/symbol/s5/s5.2/))",
+     "line": null,
+     "path": "lib_sch/Custom_Power_Management.kicad_sym"
+    }
+   ],
+   "checks": [
+    {
+     "name": "Datasheet property filled",
+     "result": "pass",
+     "detail": "https://www.ti.com/lit/gpn/lm7310"
+    },
+    {
+     "name": "Default footprint / footprint filter set",
+     "result": "pass",
+     "detail": "Custom_Package_DFN_QFN:RPW0010A-MFG"
+    },
+    {
+     "name": "Symbol has pins",
+     "result": "pass",
+     "detail": "10 pins"
+    },
+    {
+     "name": "Pins on 100 mil grid",
+     "result": "fail",
+     "detail": "1, 2, 3, 4, 5, 8, 9, 6, 7, 10"
+    },
+    {
+     "name": "KiCad KLC checker (kicad-library-utils)",
+     "result": "fail",
+     "detail": "5 violation(s)"
+    }
+   ]
+  },
+  "symbol:Custom_Power_Management:TPS22918DBV": {
+   "verdict": "pass",
+   "summary": "Deterministic checks: 0 error(s), 0 warning(s), 1 info. ",
+   "datasheet_used": "https://www.ti.com/lit/ds/symlink/tps22918.pdf",
+   "findings": [
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "KLC S6.2: Found a unexpected property with the name LCSC ([S6.2](https://klc.kicad.org/symbol/s6/s6.2/))",
+     "line": null,
+     "path": "lib_sch/Custom_Power_Management.kicad_sym"
+    }
+   ],
+   "checks": [
+    {
+     "name": "Datasheet property filled",
+     "result": "pass",
+     "detail": "https://www.ti.com/lit/ds/symlink/tps22918.pdf"
+    },
+    {
+     "name": "Default footprint / footprint filter set",
+     "result": "pass",
+     "detail": "Package_TO_SOT_SMD:SOT-23-6"
+    },
+    {
+     "name": "Symbol has pins",
+     "result": "pass",
+     "detail": "6 pins"
+    },
+    {
+     "name": "Pins on 100 mil grid",
+     "result": "pass",
+     "detail": ""
+    },
+    {
+     "name": "KiCad KLC checker (kicad-library-utils)",
+     "result": "fail",
+     "detail": "1 violation(s)"
+    }
+   ]
+  },
+  "symbol:Custom_RF_Amplifier:AD8314": {
+   "verdict": "warn",
+   "summary": "Deterministic checks: 0 error(s), 17 warning(s), 4 info. ",
+   "datasheet_used": null,
+   "findings": [
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Symbol has neither a default `Footprint` nor `ki_fp_filters`.",
+     "line": 5,
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Symbol `Datasheet` property is empty.",
+     "line": 43,
+     "suggestion": "Link the manufacturer datasheet (KLC S6.2).",
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Symbol `Description` property is empty.",
+     "line": 54,
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 1 (RFIN) at (-10.16, -1.27) is on 50 mil but not 100 mil grid.",
+     "line": 79,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 2 (ENBL) at (-10.16, -8.89) is on 50 mil but not 100 mil grid.",
+     "line": 97,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 3 (VSET) at (-10.16, -11.43) is on 50 mil but not 100 mil grid.",
+     "line": 115,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 4 (FLTR) at (10.16, -11.43) is on 50 mil but not 100 mil grid.",
+     "line": 133,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 6 (V_UP) at (10.16, -3.81) is on 50 mil but not 100 mil grid.",
+     "line": 169,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 7 (V_DN) at (10.16, -1.27) is on 50 mil but not 100 mil grid.",
+     "line": 187,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Power pin 9 (GND) is hidden.",
+     "line": 223,
+     "suggestion": "Avoid hidden power pins (KLC S4.4); make it visible or use stacked visible pins.",
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC S3.1: Symbol unit 1 not centered on origin; - Center calculated @ (0, -250) ([S3.1](https://klc.kicad.org/symbol/s3/s3.1/))",
+     "line": null,
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC S3.3: Component outline is thickness 0mil, recommended is 10mil ([S3.3](https://klc.kicad.org/symbol/s3/s3.3/))",
+     "line": null,
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC S4.1: Pins not located on 100mil (=2.54mm) grid:; - Pin RFIN (1) @ (-400,-50); - Pin ENBL (2) @ (-400,-350); - Pin VSET (3) @ (-400,-450); - Pin FLTR (4) @ (400,-450); - Pin V_UP (6) @ (400,-150); - Pin V_DN (7) @ (400,-50) ([S4.1](https://klc.kicad.org/symbol/s4/s4.1/))",
+     "line": null,
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC S4.3: Pin names in the stack have different names; - Pin COMM (5) @ (0,-600); - Pin GND (9) @ (0,-600) ([S4.3](https://klc.kicad.org/symbol/s4/s4.3/))",
+     "line": null,
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC S4.4: Invisible powerpins in stacks should be of type PASSIVE ([S4.4](https://klc.kicad.org/symbol/s4/s4.4/))",
+     "line": null,
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC S4.6: Power input pins must not be invisible unless used in power symbols.; - Pin GND (9) @ (0,-600) is of type power_in and invisible ([S4.6](https://klc.kicad.org/symbol/s4/s4.6/))",
+     "line": null,
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC S6.2: Datasheet field must not be EMPTY ([S6.2](https://klc.kicad.org/symbol/s6/s6.2/))",
+     "line": null,
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    },
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "Symbol has no keywords (`ki_keywords`).",
+     "line": 5,
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    },
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "KLC S4.3: Found legacy pin-stack, please convert it to a native pin-stack Pin COMM (5) @ (0,-600) ([S4.3](https://klc.kicad.org/symbol/s4/s4.3/))",
+     "line": null,
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    },
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "KLC S5.2: No footprint filters defined ([S5.2](https://klc.kicad.org/symbol/s5/s5.2/))",
+     "line": null,
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    },
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "KLC S6.2: Missing or empty Keywords field on 'Properties' tab. If you have nothing to add here, add the manufacturer e.g. 'texas' ([S6.2](https://klc.kicad.org/symbol/s6/s6.2/))",
+     "line": null,
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    }
+   ],
+   "checks": [
+    {
+     "name": "Datasheet property filled",
+     "result": "fail",
+     "detail": ""
+    },
+    {
+     "name": "Default footprint / footprint filter set",
+     "result": "fail",
+     "detail": ""
+    },
+    {
+     "name": "Symbol has pins",
+     "result": "pass",
+     "detail": "9 pins"
+    },
+    {
+     "name": "Pins on 100 mil grid",
+     "result": "fail",
+     "detail": "1, 2, 3, 4, 6, 7"
+    },
+    {
+     "name": "KiCad KLC checker (kicad-library-utils)",
+     "result": "fail",
+     "detail": "10 violation(s)"
+    }
+   ]
+  },
+  "symbol:Custom_RF_Amplifier:BLB01": {
+   "verdict": "warn",
+   "summary": "Deterministic checks: 0 error(s), 5 warning(s), 4 info. ",
+   "datasheet_used": "items/symbol__Custom_RF_Amplifier__BLB01/datasheet.pdf",
+   "findings": [
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 6 () at (-2.54, -1.27) is on 50 mil but not 100 mil grid.",
+     "line": 337,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 3 () at (-2.54, 3.81) is on 50 mil but not 100 mil grid.",
+     "line": 395,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "Pin 5 () at (-2.54, 1.27) is on 50 mil but not 100 mil grid.",
+     "line": 433,
+     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC S3.1: Symbol unit 1 not centered on origin; - Center calculated @ (100, 0) ([S3.1](https://klc.kicad.org/symbol/s3/s3.1/))",
+     "line": null,
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC S5.1: Symbol has a footprint defined in the footprint field, but no footprint filter set. Add a footprint filter that matches the default footprint (+ possibly variants). ([S5.1](https://klc.kicad.org/symbol/s5/s5.1/))",
+     "line": null,
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    },
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "Symbol has no keywords (`ki_keywords`).",
+     "line": 245,
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    },
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "KLC S4.1: Pin Pin  (2) @ (-200,0) does not have a name; Pin Pin  (6) @ (-100,-50) does not have a name; Pin Pin  (8) @ (-100,-100) does not have a name; Pin Pin  (3) @ (-100,150) does not have a name; Pin Pin  (4) @ (-100,100) does not have a name; Pin Pin  (5) @ (-100,50) does not have a name; Pin Pin  (7) @ (400,0) does not have a name ([S4.1](https://klc.kicad.org/symbol/s4/s4.1/))",
+     "line": null,
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    },
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "KLC S5.2: No footprint filters defined ([S5.2](https://klc.kicad.org/symbol/s5/s5.2/))",
+     "line": null,
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    },
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "KLC S6.2: Symbol name should not be included in description; Missing or empty Keywords field on 'Properties' tab. If you have nothing to add here, add the manufacturer e.g. 'texas' ([S6.2](https://klc.kicad.org/symbol/s6/s6.2/))",
+     "line": null,
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    }
+   ],
+   "checks": [
+    {
+     "name": "Datasheet property filled",
+     "result": "pass",
+     "detail": "${KICAD_LIBS_DIR}/datasheets/BLB01-V6.6.pdf"
+    },
+    {
+     "name": "Default footprint / footprint filter set",
+     "result": "pass",
+     "detail": "Package_DFN_QFN:DFN-8-1EP_2x2mm_P0.5mm_EP0.9x1.5mm"
+    },
+    {
+     "name": "Symbol has pins",
+     "result": "pass",
+     "detail": "9 pins"
+    },
+    {
+     "name": "Pins on 100 mil grid",
+     "result": "fail",
+     "detail": "6, 3, 5"
+    },
+    {
+     "name": "KiCad KLC checker (kicad-library-utils)",
+     "result": "fail",
+     "detail": "5 violation(s)"
+    }
+   ]
+  },
+  "symbol:Custom_RF_Amplifier:PA-SOCKET-MSOP-8-0.65_AD8313": {
+   "verdict": "warn",
+   "summary": "Deterministic checks: 0 error(s), 1 warning(s), 1 info. Cross-checked against `footprint:Custom_Connector:PA-SOCKET-MSOP-8-0.65`.",
+   "datasheet_used": "https://www.analog.com/media/en/technical-documentation/data-sheets/AD8313.pdf",
+   "findings": [
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC S6.2: Value AD8313 in PA-SOCKET-MSOP-8-0.65 does not match component name. ([S6.2](https://klc.kicad.org/symbol/s6/s6.2/))",
+     "line": null,
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    },
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "KLC S4.4: Pin types should match pin function; - Pin VOUT (8) @ (500,100) is type output : suggested power_out ([S4.4](https://klc.kicad.org/symbol/s4/s4.4/))",
+     "line": null,
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
+    }
+   ],
+   "checks": [
+    {
+     "name": "Datasheet property filled",
+     "result": "pass",
+     "detail": "https://www.analog.com/media/en/technical-documentation/data-sheets/AD8313.pdf"
+    },
+    {
+     "name": "Default footprint / footprint filter set",
+     "result": "pass",
+     "detail": "Custom_Connector:PA-SOCKET-MSOP-8-0.65"
+    },
+    {
+     "name": "Symbol has pins",
+     "result": "pass",
+     "detail": "8 pins"
+    },
+    {
+     "name": "Pins on 100 mil grid",
+     "result": "pass",
+     "detail": ""
+    },
+    {
+     "name": "KiCad KLC checker (kicad-library-utils)",
+     "result": "fail",
+     "detail": "2 violation(s)"
+    },
+    {
+     "name": "Symbol pins match footprint pads (footprint:Custom_Connector:PA-SOCKET-MSOP-8-0.65)",
+     "result": "pass",
+     "detail": "pins without pad: -; pads without pin: -"
+    }
+   ]
+  }
+ },
+ "pr_findings": []
+}

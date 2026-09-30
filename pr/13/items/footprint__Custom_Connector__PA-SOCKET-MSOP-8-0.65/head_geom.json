@@ -1,0 +1,470 @@
+{
+ "units": "mm",
+ "y_axis": "down",
+ "bbox": [
+  -11.5,
+  -8.05,
+  11.5,
+  10.65
+ ],
+ "pads": [
+  {
+   "number": "",
+   "type": "np_thru_hole",
+   "shape": "circle",
+   "at": [
+    -3.25,
+    4.0,
+    0.0
+   ],
+   "pos": [
+    -3.25,
+    4.0
+   ],
+   "angle": 0.0,
+   "size": [
+    1.3,
+    1.3
+   ],
+   "drill": {
+    "shape": "circle",
+    "size": [
+     1.3,
+     1.3
+    ],
+    "offset": [
+     0.0,
+     0.0
+    ]
+   },
+   "layers": [
+    "F.Cu",
+    "B.Cu",
+    "F.Mask",
+    "B.Mask"
+   ],
+   "roundrect_rratio": null,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "",
+   "type": "np_thru_hole",
+   "shape": "circle",
+   "at": [
+    3.25,
+    -4.0,
+    0.0
+   ],
+   "pos": [
+    3.25,
+    -4.0
+   ],
+   "angle": 0.0,
+   "size": [
+    1.3,
+    1.3
+   ],
+   "drill": {
+    "shape": "circle",
+    "size": [
+     1.3,
+     1.3
+    ],
+    "offset": [
+     0.0,
+     0.0
+    ]
+   },
+   "layers": [
+    "F.Cu",
+    "B.Cu",
+    "F.Mask",
+    "B.Mask"
+   ],
+   "roundrect_rratio": null,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "1",
+   "type": "thru_hole",
+   "shape": "rect",
+   "at": [
+    -8.15,
+    -0.975,
+    0.0
+   ],
+   "pos": [
+    -8.15,
+    -0.975
+   ],
+   "angle": 0.0,
+   "size": [
+    1.5,
+    1.0
+   ],
+   "drill": {
+    "shape": "circle",
+    "size": [
+     0.6,
+     0.6
+    ],
+    "offset": [
+     0.0,
+     0.0
+    ]
+   },
+   "layers": [
+    "F.Cu",
+    "B.Cu",
+    "F.Mask",
+    "B.Mask"
+   ],
+   "roundrect_rratio": null,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "2",
+   "type": "thru_hole",
+   "shape": "oval",
+   "at": [
+    -4.9,
+    -0.325,
+    0.0
+   ],
+   "pos": [
+    -4.9,
+    -0.325
+   ],
+   "angle": 0.0,
+   "size": [
+    1.5,
+    1.0
+   ],
+   "drill": {
+    "shape": "circle",
+    "size": [
+     0.6,
+     0.6
+    ],
+    "offset": [
+     0.0,
+     0.0
+    ]
+   },
+   "layers": [
+    "F.Cu",
+    "B.Cu",
+    "F.Mask",
+    "B.Mask"
+   ],
+   "roundrect_rratio": null,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "3",
+   "type": "thru_hole",
+   "shape": "oval",
+   "at": [
+    -8.15,
+    0.325,
+    0.0
+   ],
+   "pos": [
+    -8.15,
+    0.325
+   ],
+   "angle": 0.0,
+   "size": [
+    1.5,
+    1.0
+   ],
+   "drill": {
+    "shape": "circle",
+    "size": [
+     0.6,
+     0.6
+    ],
+    "offset": [
+     0.0,
+     0.0
+    ]
+   },
+   "layers": [
+    "F.Cu",
+    "B.Cu",
+    "F.Mask",
+    "B.Mask"
+   ],
+   "roundrect_rratio": null,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "4",
+   "type": "thru_hole",
+   "shape": "oval",
+   "at": [
+    -4.9,
+    0.975,
+    0.0
+   ],
+   "pos": [
+    -4.9,
+    0.975
+   ],
+   "angle": 0.0,
+   "size": [
+    1.5,
+    1.0
+   ],
+   "drill": {
+    "shape": "circle",
+    "size": [
+     0.6,
+     0.6
+    ],
+    "offset": [
+     0.0,
+     0.0
+    ]
+   },
+   "layers": [
+    "F.Cu",
+    "B.Cu",
+    "F.Mask",
+    "B.Mask"
+   ],
+   "roundrect_rratio": null,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "5",
+   "type": "thru_hole",
+   "shape": "oval",
+   "at": [
+    4.9,
+    0.975,
+    0.0
+   ],
+   "pos": [
+    4.9,
+    0.975
+   ],
+   "angle": 0.0,
+   "size": [
+    1.5,
+    1.0
+   ],
+   "drill": {
+    "shape": "circle",
+    "size": [
+     0.6,
+     0.6
+    ],
+    "offset": [
+     0.0,
+     0.0
+    ]
+   },
+   "layers": [
+    "F.Cu",
+    "B.Cu",
+    "F.Mask",
+    "B.Mask"
+   ],
+   "roundrect_rratio": null,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "6",
+   "type": "thru_hole",
+   "shape": "oval",
+   "at": [
+    8.15,
+    0.325,
+    0.0
+   ],
+   "pos": [
+    8.15,
+    0.325
+   ],
+   "angle": 0.0,
+   "size": [
+    1.5,
+    1.0
+   ],
+   "drill": {
+    "shape": "circle",
+    "size": [
+     0.6,
+     0.6
+    ],
+    "offset": [
+     0.0,
+     0.0
+    ]
+   },
+   "layers": [
+    "F.Cu",
+    "B.Cu",
+    "F.Mask",
+    "B.Mask"
+   ],
+   "roundrect_rratio": null,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "7",
+   "type": "thru_hole",
+   "shape": "oval",
+   "at": [
+    4.9,
+    -0.325,
+    0.0
+   ],
+   "pos": [
+    4.9,
+    -0.325
+   ],
+   "angle": 0.0,
+   "size": [
+    1.5,
+    1.0
+   ],
+   "drill": {
+    "shape": "circle",
+    "size": [
+     0.6,
+     0.6
+    ],
+    "offset": [
+     0.0,
+     0.0
+    ]
+   },
+   "layers": [
+    "F.Cu",
+    "B.Cu",
+    "F.Mask",
+    "B.Mask"
+   ],
+   "roundrect_rratio": null,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "8",
+   "type": "thru_hole",
+   "shape": "oval",
+   "at": [
+    8.15,
+    -0.975,
+    0.0
+   ],
+   "pos": [
+    8.15,
+    -0.975
+   ],
+   "angle": 0.0,
+   "size": [
+    1.5,
+    1.0
+   ],
+   "drill": {
+    "shape": "circle",
+    "size": [
+     0.6,
+     0.6
+    ],
+    "offset": [
+     0.0,
+     0.0
+    ]
+   },
+   "layers": [
+    "F.Cu",
+    "B.Cu",
+    "F.Mask",
+    "B.Mask"
+   ],
+   "roundrect_rratio": null,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  }
+ ],
+ "courtyard": {
+  "F": [
+   [
+    [
+     -9.75,
+     -5.25
+    ],
+    [
+     9.75,
+     -5.25
+    ],
+    [
+     9.75,
+     5.25
+    ],
+    [
+     -9.75,
+     5.25
+    ],
+    [
+     -9.75,
+     -5.25
+    ]
+   ]
+  ],
+  "B": []
+ },
+ "edge_cuts": []
+}

@@ -1,0 +1,807 @@
+{
+ "units": "mm",
+ "y_axis": "down",
+ "bbox": [
+  -11.93,
+  -16.02,
+  11.045,
+  15.56
+ ],
+ "pads": [
+  {
+   "number": "1",
+   "type": "smd",
+   "shape": "roundrect",
+   "at": [
+    -7.62,
+    -10.16,
+    0.0
+   ],
+   "pos": [
+    -7.62,
+    -10.16
+   ],
+   "angle": 0.0,
+   "size": [
+    3.0,
+    1.7
+   ],
+   "drill": null,
+   "layers": [
+    "F.Cu",
+    "F.Mask",
+    "F.Paste"
+   ],
+   "roundrect_rratio": 0.25,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "2",
+   "type": "smd",
+   "shape": "roundrect",
+   "at": [
+    -7.62,
+    -7.62,
+    0.0
+   ],
+   "pos": [
+    -7.62,
+    -7.62
+   ],
+   "angle": 0.0,
+   "size": [
+    3.0,
+    1.7
+   ],
+   "drill": null,
+   "layers": [
+    "F.Cu",
+    "F.Mask",
+    "F.Paste"
+   ],
+   "roundrect_rratio": 0.25,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "3",
+   "type": "smd",
+   "shape": "roundrect",
+   "at": [
+    -7.62,
+    -5.08,
+    0.0
+   ],
+   "pos": [
+    -7.62,
+    -5.08
+   ],
+   "angle": 0.0,
+   "size": [
+    3.0,
+    1.7
+   ],
+   "drill": null,
+   "layers": [
+    "F.Cu",
+    "F.Mask",
+    "F.Paste"
+   ],
+   "roundrect_rratio": 0.25,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "4",
+   "type": "smd",
+   "shape": "roundrect",
+   "at": [
+    -7.62,
+    -2.54,
+    0.0
+   ],
+   "pos": [
+    -7.62,
+    -2.54
+   ],
+   "angle": 0.0,
+   "size": [
+    3.0,
+    1.7
+   ],
+   "drill": null,
+   "layers": [
+    "F.Cu",
+    "F.Mask",
+    "F.Paste"
+   ],
+   "roundrect_rratio": 0.25,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "5",
+   "type": "smd",
+   "shape": "roundrect",
+   "at": [
+    -7.62,
+    0.0,
+    0.0
+   ],
+   "pos": [
+    -7.62,
+    0.0
+   ],
+   "angle": 0.0,
+   "size": [
+    3.0,
+    1.7
+   ],
+   "drill": null,
+   "layers": [
+    "F.Cu",
+    "F.Mask",
+    "F.Paste"
+   ],
+   "roundrect_rratio": 0.25,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "6",
+   "type": "smd",
+   "shape": "roundrect",
+   "at": [
+    -7.62,
+    2.54,
+    0.0
+   ],
+   "pos": [
+    -7.62,
+    2.54
+   ],
+   "angle": 0.0,
+   "size": [
+    3.0,
+    1.7
+   ],
+   "drill": null,
+   "layers": [
+    "F.Cu",
+    "F.Mask",
+    "F.Paste"
+   ],
+   "roundrect_rratio": 0.25,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "7",
+   "type": "smd",
+   "shape": "roundrect",
+   "at": [
+    -7.62,
+    5.08,
+    0.0
+   ],
+   "pos": [
+    -7.62,
+    5.08
+   ],
+   "angle": 0.0,
+   "size": [
+    3.0,
+    1.7
+   ],
+   "drill": null,
+   "layers": [
+    "F.Cu",
+    "F.Mask",
+    "F.Paste"
+   ],
+   "roundrect_rratio": 0.25,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "8",
+   "type": "smd",
+   "shape": "roundrect",
+   "at": [
+    -7.62,
+    7.62,
+    0.0
+   ],
+   "pos": [
+    -7.62,
+    7.62
+   ],
+   "angle": 0.0,
+   "size": [
+    3.0,
+    1.7
+   ],
+   "drill": null,
+   "layers": [
+    "F.Cu",
+    "F.Mask",
+    "F.Paste"
+   ],
+   "roundrect_rratio": 0.25,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "9",
+   "type": "smd",
+   "shape": "roundrect",
+   "at": [
+    -7.62,
+    10.16,
+    0.0
+   ],
+   "pos": [
+    -7.62,
+    10.16
+   ],
+   "angle": 0.0,
+   "size": [
+    3.0,
+    1.7
+   ],
+   "drill": null,
+   "layers": [
+    "F.Cu",
+    "F.Mask",
+    "F.Paste"
+   ],
+   "roundrect_rratio": 0.25,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "10",
+   "type": "smd",
+   "shape": "roundrect",
+   "at": [
+    -5.08,
+    10.16,
+    0.0
+   ],
+   "pos": [
+    -5.08,
+    10.16
+   ],
+   "angle": 0.0,
+   "size": [
+    1.7,
+    3.2
+   ],
+   "drill": null,
+   "layers": [
+    "F.Cu",
+    "F.Mask",
+    "F.Paste"
+   ],
+   "roundrect_rratio": 0.25,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "11",
+   "type": "smd",
+   "shape": "roundrect",
+   "at": [
+    -2.54,
+    10.16,
+    0.0
+   ],
+   "pos": [
+    -2.54,
+    10.16
+   ],
+   "angle": 0.0,
+   "size": [
+    1.7,
+    3.2
+   ],
+   "drill": null,
+   "layers": [
+    "F.Cu",
+    "F.Mask",
+    "F.Paste"
+   ],
+   "roundrect_rratio": 0.25,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "12",
+   "type": "smd",
+   "shape": "roundrect",
+   "at": [
+    0.0,
+    10.16,
+    0.0
+   ],
+   "pos": [
+    0.0,
+    10.16
+   ],
+   "angle": 0.0,
+   "size": [
+    1.7,
+    3.2
+   ],
+   "drill": null,
+   "layers": [
+    "F.Cu",
+    "F.Mask",
+    "F.Paste"
+   ],
+   "roundrect_rratio": 0.25,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "13",
+   "type": "smd",
+   "shape": "roundrect",
+   "at": [
+    2.54,
+    10.16,
+    0.0
+   ],
+   "pos": [
+    2.54,
+    10.16
+   ],
+   "angle": 0.0,
+   "size": [
+    1.7,
+    3.2
+   ],
+   "drill": null,
+   "layers": [
+    "F.Cu",
+    "F.Mask",
+    "F.Paste"
+   ],
+   "roundrect_rratio": 0.25,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "14",
+   "type": "smd",
+   "shape": "roundrect",
+   "at": [
+    5.08,
+    10.16,
+    0.0
+   ],
+   "pos": [
+    5.08,
+    10.16
+   ],
+   "angle": 0.0,
+   "size": [
+    1.7,
+    3.2
+   ],
+   "drill": null,
+   "layers": [
+    "F.Cu",
+    "F.Mask",
+    "F.Paste"
+   ],
+   "roundrect_rratio": 0.25,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "15",
+   "type": "smd",
+   "shape": "roundrect",
+   "at": [
+    7.62,
+    10.16,
+    0.0
+   ],
+   "pos": [
+    7.62,
+    10.16
+   ],
+   "angle": 0.0,
+   "size": [
+    3.0,
+    1.7
+   ],
+   "drill": null,
+   "layers": [
+    "F.Cu",
+    "F.Mask",
+    "F.Paste"
+   ],
+   "roundrect_rratio": 0.25,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "16",
+   "type": "smd",
+   "shape": "roundrect",
+   "at": [
+    7.62,
+    7.62,
+    0.0
+   ],
+   "pos": [
+    7.62,
+    7.62
+   ],
+   "angle": 0.0,
+   "size": [
+    3.0,
+    1.7
+   ],
+   "drill": null,
+   "layers": [
+    "F.Cu",
+    "F.Mask",
+    "F.Paste"
+   ],
+   "roundrect_rratio": 0.25,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "17",
+   "type": "smd",
+   "shape": "roundrect",
+   "at": [
+    7.62,
+    5.08,
+    0.0
+   ],
+   "pos": [
+    7.62,
+    5.08
+   ],
+   "angle": 0.0,
+   "size": [
+    3.0,
+    1.7
+   ],
+   "drill": null,
+   "layers": [
+    "F.Cu",
+    "F.Mask",
+    "F.Paste"
+   ],
+   "roundrect_rratio": 0.25,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "18",
+   "type": "smd",
+   "shape": "roundrect",
+   "at": [
+    7.62,
+    2.54,
+    0.0
+   ],
+   "pos": [
+    7.62,
+    2.54
+   ],
+   "angle": 0.0,
+   "size": [
+    3.0,
+    1.7
+   ],
+   "drill": null,
+   "layers": [
+    "F.Cu",
+    "F.Mask",
+    "F.Paste"
+   ],
+   "roundrect_rratio": 0.25,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "19",
+   "type": "smd",
+   "shape": "roundrect",
+   "at": [
+    7.62,
+    0.0,
+    0.0
+   ],
+   "pos": [
+    7.62,
+    0.0
+   ],
+   "angle": 0.0,
+   "size": [
+    3.0,
+    1.7
+   ],
+   "drill": null,
+   "layers": [
+    "F.Cu",
+    "F.Mask",
+    "F.Paste"
+   ],
+   "roundrect_rratio": 0.25,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "20",
+   "type": "smd",
+   "shape": "roundrect",
+   "at": [
+    7.62,
+    -2.54,
+    0.0
+   ],
+   "pos": [
+    7.62,
+    -2.54
+   ],
+   "angle": 0.0,
+   "size": [
+    3.0,
+    1.7
+   ],
+   "drill": null,
+   "layers": [
+    "F.Cu",
+    "F.Mask",
+    "F.Paste"
+   ],
+   "roundrect_rratio": 0.25,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "21",
+   "type": "smd",
+   "shape": "roundrect",
+   "at": [
+    7.62,
+    -5.08,
+    0.0
+   ],
+   "pos": [
+    7.62,
+    -5.08
+   ],
+   "angle": 0.0,
+   "size": [
+    3.0,
+    1.7
+   ],
+   "drill": null,
+   "layers": [
+    "F.Cu",
+    "F.Mask",
+    "F.Paste"
+   ],
+   "roundrect_rratio": 0.25,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "22",
+   "type": "smd",
+   "shape": "roundrect",
+   "at": [
+    7.62,
+    -7.62,
+    0.0
+   ],
+   "pos": [
+    7.62,
+    -7.62
+   ],
+   "angle": 0.0,
+   "size": [
+    3.0,
+    1.7
+   ],
+   "drill": null,
+   "layers": [
+    "F.Cu",
+    "F.Mask",
+    "F.Paste"
+   ],
+   "roundrect_rratio": 0.25,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  },
+  {
+   "number": "23",
+   "type": "smd",
+   "shape": "roundrect",
+   "at": [
+    7.62,
+    -10.16,
+    0.0
+   ],
+   "pos": [
+    7.62,
+    -10.16
+   ],
+   "angle": 0.0,
+   "size": [
+    3.0,
+    1.7
+   ],
+   "drill": null,
+   "layers": [
+    "F.Cu",
+    "F.Mask",
+    "F.Paste"
+   ],
+   "roundrect_rratio": 0.25,
+   "chamfer_ratio": null,
+   "chamfer": null,
+   "rect_delta": null,
+   "anchor": null,
+   "primitives": [],
+   "solder_mask_margin": null
+  }
+ ],
+ "courtyard": {
+  "F": [
+   [
+    [
+     -10.02,
+     -13.22
+    ],
+    [
+     10.02,
+     -13.22
+    ],
+    [
+     10.02,
+     12.76
+    ],
+    [
+     -10.02,
+     12.76
+    ],
+    [
+     -10.02,
+     -13.22
+    ]
+   ]
+  ],
+  "B": []
+ },
+ "edge_cuts": [
+  [
+   [
+    -5.62,
+    8.94
+   ],
+   [
+    -5.62,
+    -12.0
+   ]
+  ],
+  [
+   [
+    5.78,
+    -12.0
+   ],
+   [
+    5.78,
+    8.94
+   ]
+  ],
+  [
+   [
+    5.78,
+    8.94
+   ],
+   [
+    -5.62,
+    8.94
+   ]
+  ]
+ ]
+}

@@ -1,0 +1,4020 @@
+{
+ "schema": 1,
+ "repo": "PantsForBirds/kicad-libs",
+ "pr": 13,
+ "base_sha": "0dc129fe8d8ed89ed9fca23193c38e6f6710d9bc",
+ "base_ref_sha": "0dc129fe8d8ed89ed9fca23193c38e6f6710d9bc",
+ "head_sha": "2b42bac2b7569e854d6696d15c380d8dd9be945f",
+ "generated_at": "2026-09-30T23:02:20+00:00",
+ "kicad_version": "10.0",
+ "generator": "kipr library render (built-in SVG renderer)",
+ "changed_3d_files": [
+  "lib_3d/Custom_Connector/PA-SOCKET-MSOP-8-0.65.step",
+  "lib_3d/Custom_Module/RP2040_Zero.stp"
+ ],
+ "unreferenced_changed_3d_files": [],
+ "items": [
+  {
+   "id": "footprint:Custom_Connector:PA-SOCKET-MSOP-8-0.65",
+   "slug": "footprint__Custom_Connector__PA-SOCKET-MSOP-8-0.65",
+   "kind": "footprint",
+   "library": "Custom_Connector",
+   "name": "PA-SOCKET-MSOP-8-0.65",
+   "status": "added",
+   "path": "lib_fp/Custom_Connector.pretty/PA-SOCKET-MSOP-8-0.65.kicad_mod",
+   "line_range": {
+    "head": [
+     1,
+     461
+    ],
+    "base": null
+   },
+   "properties": {
+    "head": {
+     "Reference": "REF**",
+     "Value": "PA-SOCKET-MSOP-8-0.65",
+     "Datasheet": "https://www.proto-advantage.com/store/datasheets/PA-SOCKET-MSOP-8-0.65.pdf",
+     "Description": "Proto Advantage PA-SOCKET-MSOP-8-0.65 MSOP-8 test socket, THT",
+     "Footprint": "Custom_Connector:PA-SOCKET-MSOP-8-0.65",
+     "descr": "Proto Advantage / Chip Quik PA-SOCKET-MSOP-8-0.65 open-top test socket for MSOP-8 (3x3mm body, 0.65mm pitch), through-hole, 19.0x10.0mm body, 13.5mm tall, 2 alignment pegs, socket pin N = IC pin N, https://www.proto-advantage.com/store/datasheets/PA-SOCKET-MSOP-8-0.65.pdf",
+     "tags": "MSOP-8 MSOP8 test socket burn-in Proto Advantage Chip Quik THT"
+    },
+    "base": null
+   },
+   "datasheet": {
+    "url": "https://www.proto-advantage.com/store/datasheets/PA-SOCKET-MSOP-8-0.65.pdf",
+    "local": null,
+    "file": null
+   },
+   "model3d": [
+    {
+     "path_raw": "${KICAD_LIBS_DIR}/lib_3d/Custom_Connector/PA-SOCKET-MSOP-8-0.65.step",
+     "resolved": "lib_3d/Custom_Connector/PA-SOCKET-MSOP-8-0.65.step",
+     "exists": true,
+     "changed": true,
+     "offset": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "rotate": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "hide": false,
+     "file": "items/footprint__Custom_Connector__PA-SOCKET-MSOP-8-0.65/model_1.step",
+     "side": "head"
+    }
+   ],
+   "stats": {
+    "head": {
+     "pad_count": 10,
+     "smd_count": 0,
+     "tht_count": 8,
+     "npth_count": 2,
+     "unique_pad_numbers": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8"
+     ],
+     "pad_number_count": 8,
+     "pads": [
+      {
+       "number": "",
+       "type": "np_thru_hole",
+       "shape": "circle",
+       "size": [
+        1.3,
+        1.3
+       ],
+       "at": [
+        -3.25,
+        4.0,
+        0.0
+       ],
+       "pos": [
+        -3.25,
+        4.0
+       ],
+       "angle": 0.0,
+       "drill": [
+        1.3,
+        1.3
+       ],
+       "layers": [
+        "F.Cu",
+        "B.Cu",
+        "F.Mask",
+        "B.Mask"
+       ],
+       "roundrect_rratio": null
+      },
+      {
+       "number": "",
+       "type": "np_thru_hole",
+       "shape": "circle",
+       "size": [
+        1.3,
+        1.3
+       ],
+       "at": [
+        3.25,
+        -4.0,
+        0.0
+       ],
+       "pos": [
+        3.25,
+        -4.0
+       ],
+       "angle": 0.0,
+       "drill": [
+        1.3,
+        1.3
+       ],
+       "layers": [
+        "F.Cu",
+        "B.Cu",
+        "F.Mask",
+        "B.Mask"
+       ],
+       "roundrect_rratio": null
+      },
+      {
+       "number": "1",
+       "type": "thru_hole",
+       "shape": "rect",
+       "size": [
+        1.5,
+        1.0
+       ],
+       "at": [
+        -8.15,
+        -0.975,
+        0.0
+       ],
+       "pos": [
+        -8.15,
+        -0.975
+       ],
+       "angle": 0.0,
+       "drill": [
+        0.6,
+        0.6
+       ],
+       "layers": [
+        "F.Cu",
+        "B.Cu",
+        "F.Mask",
+        "B.Mask"
+       ],
+       "roundrect_rratio": null
+      },
+      {
+       "number": "2",
+       "type": "thru_hole",
+       "shape": "oval",
+       "size": [
+        1.5,
+        1.0
+       ],
+       "at": [
+        -4.9,
+        -0.325,
+        0.0
+       ],
+       "pos": [
+        -4.9,
+        -0.325
+       ],
+       "angle": 0.0,
+       "drill": [
+        0.6,
+        0.6
+       ],
+       "layers": [
+        "F.Cu",
+        "B.Cu",
+        "F.Mask",
+        "B.Mask"
+       ],
+       "roundrect_rratio": null
+      },
+      {
+       "number": "3",
+       "type": "thru_hole",
+       "shape": "oval",
+       "size": [
+        1.5,
+        1.0
+       ],
+       "at": [
+        -8.15,
+        0.325,
+        0.0
+       ],
+       "pos": [
+        -8.15,
+        0.325
+       ],
+       "angle": 0.0,
+       "drill": [
+        0.6,
+        0.6
+       ],
+       "layers": [
+        "F.Cu",
+        "B.Cu",
+        "F.Mask",
+        "B.Mask"
+       ],
+       "roundrect_rratio": null
+      },
+      {
+       "number": "4",
+       "type": "thru_hole",
+       "shape": "oval",
+       "size": [
+        1.5,
+        1.0
+       ],
+       "at": [
+        -4.9,
+        0.975,
+        0.0
+       ],
+       "pos": [
+        -4.9,
+        0.975
+       ],
+       "angle": 0.0,
+       "drill": [
+        0.6,
+        0.6
+       ],
+       "layers": [
+        "F.Cu",
+        "B.Cu",
+        "F.Mask",
+        "B.Mask"
+       ],
+       "roundrect_rratio": null
+      },
+      {
+       "number": "5",
+       "type": "thru_hole",
+       "shape": "oval",
+       "size": [
+        1.5,
+        1.0
+       ],
+       "at": [
+        4.9,
+        0.975,
+        0.0
+       ],
+       "pos": [
+        4.9,
+        0.975
+       ],
+       "angle": 0.0,
+       "drill": [
+        0.6,
+        0.6
+       ],
+       "layers": [
+        "F.Cu",
+        "B.Cu",
+        "F.Mask",
+        "B.Mask"
+       ],
+       "roundrect_rratio": null
+      },
+      {
+       "number": "6",
+       "type": "thru_hole",
+       "shape": "oval",
+       "size": [
+        1.5,
+        1.0
+       ],
+       "at": [
+        8.15,
+        0.325,
+        0.0
+       ],
+       "pos": [
+        8.15,
+        0.325
+       ],
+       "angle": 0.0,
+       "drill": [
+        0.6,
+        0.6
+       ],
+       "layers": [
+        "F.Cu",
+        "B.Cu",
+        "F.Mask",
+        "B.Mask"
+       ],
+       "roundrect_rratio": null
+      },
+      {
+       "number": "7",
+       "type": "thru_hole",
+       "shape": "oval",
+       "size": [
+        1.5,
+        1.0
+       ],
+       "at": [
+        4.9,
+        -0.325,
+        0.0
+       ],
+       "pos": [
+        4.9,
+        -0.325
+       ],
+       "angle": 0.0,
+       "drill": [
+        0.6,
+        0.6
+       ],
+       "layers": [
+        "F.Cu",
+        "B.Cu",
+        "F.Mask",
+        "B.Mask"
+       ],
+       "roundrect_rratio": null
+      },
+      {
+       "number": "8",
+       "type": "thru_hole",
+       "shape": "oval",
+       "size": [
+        1.5,
+        1.0
+       ],
+       "at": [
+        8.15,
+        -0.975,
+        0.0
+       ],
+       "pos": [
+        8.15,
+        -0.975
+       ],
+       "angle": 0.0,
+       "drill": [
+        0.6,
+        0.6
+       ],
+       "layers": [
+        "F.Cu",
+        "B.Cu",
+        "F.Mask",
+        "B.Mask"
+       ],
+       "roundrect_rratio": null
+      }
+     ],
+     "pad_extent": [
+      -8.9,
+      -4.65,
+      8.9,
+      4.65
+     ],
+     "courtyard_bbox": [
+      -9.775,
+      -5.275,
+      9.775,
+      5.275
+     ],
+     "courtyard_size": [
+      19.55,
+      10.55
+     ],
+     "layers": [
+      "B.Mask",
+      "B.Cu",
+      "F.Mask",
+      "F.Cu",
+      "F.SilkS",
+      "F.Fab",
+      "F.CrtYd",
+      "Cmts.User"
+     ],
+     "has_courtyard": true,
+     "has_fab": true,
+     "has_silk": true,
+     "reference_on_silk": true,
+     "reference_on_fab": true,
+     "attr": [
+      "through_hole"
+     ],
+     "pin1": {
+      "pad1_exists": true,
+      "pad1_pos": [
+       -8.15,
+       -0.975
+      ],
+      "pad1_shape_distinct": true,
+      "silk_marker_near_pad1": true,
+      "fab_marker_near_pad1": false
+     },
+     "models": [
+      "${KICAD_LIBS_DIR}/lib_3d/Custom_Connector/PA-SOCKET-MSOP-8-0.65.step"
+     ],
+     "zones": 0,
+     "texts": [
+      {
+       "text": "REF**",
+       "layer": "F.SilkS",
+       "hidden": false
+      },
+      {
+       "text": "PA-SOCKET-MSOP-8-0.65",
+       "layer": "F.Fab",
+       "hidden": false
+      },
+      {
+       "text": "https://www.proto-advantage.com/store/datasheets/PA-SOCKET-MSOP-8-0.65.pdf",
+       "layer": "F.Fab",
+       "hidden": true
+      },
+      {
+       "text": "Proto Advantage PA-SOCKET-MSOP-8-0.65 MSOP-8 test socket, THT",
+       "layer": "F.Fab",
+       "hidden": true
+      },
+      {
+       "text": "Socket H 13.5, 11.5 pressed (2.0 travel)",
+       "layer": "Cmts.User",
+       "hidden": false
+      },
+      {
+       "text": "Pegs d1.2 x 1.5 long, tails 3.2",
+       "layer": "Cmts.User",
+       "hidden": false
+      },
+      {
+       "text": "RF: pins 2,3 = INHI/INLO (AD8313)",
+       "layer": "Cmts.User",
+       "hidden": false
+      },
+      {
+       "text": "IC pin 1",
+       "layer": "F.Fab",
+       "hidden": false
+      },
+      {
+       "text": "${REFERENCE}",
+       "layer": "F.Fab",
+       "hidden": false
+      }
+     ]
+    },
+    "base": null
+   },
+   "renders": {
+    "head": {
+     "svg": "items/footprint__Custom_Connector__PA-SOCKET-MSOP-8-0.65/head.svg",
+     "png": "items/footprint__Custom_Connector__PA-SOCKET-MSOP-8-0.65/head.png",
+     "layers": {
+      "B.Mask": "items/footprint__Custom_Connector__PA-SOCKET-MSOP-8-0.65/head_B.Mask.svg",
+      "B.Cu": "items/footprint__Custom_Connector__PA-SOCKET-MSOP-8-0.65/head_B.Cu.svg",
+      "F.Mask": "items/footprint__Custom_Connector__PA-SOCKET-MSOP-8-0.65/head_F.Mask.svg",
+      "F.Cu": "items/footprint__Custom_Connector__PA-SOCKET-MSOP-8-0.65/head_F.Cu.svg",
+      "F.SilkS": "items/footprint__Custom_Connector__PA-SOCKET-MSOP-8-0.65/head_F.SilkS.svg",
+      "F.Fab": "items/footprint__Custom_Connector__PA-SOCKET-MSOP-8-0.65/head_F.Fab.svg",
+      "F.CrtYd": "items/footprint__Custom_Connector__PA-SOCKET-MSOP-8-0.65/head_F.CrtYd.svg",
+      "Cmts.User": "items/footprint__Custom_Connector__PA-SOCKET-MSOP-8-0.65/head_Cmts.User.svg"
+     }
+    },
+    "base": null
+   },
+   "diff_png": null,
+   "glb": {
+    "head": "items/footprint__Custom_Connector__PA-SOCKET-MSOP-8-0.65/head.glb",
+    "base": null
+   },
+   "text_diff": "items/footprint__Custom_Connector__PA-SOCKET-MSOP-8-0.65/diff.patch",
+   "source": {
+    "head": "items/footprint__Custom_Connector__PA-SOCKET-MSOP-8-0.65/head.kicad_mod",
+    "base": null
+   },
+   "warnings": [],
+   "view": {
+    "viewbox": [
+     -11.5,
+     -8.05,
+     11.5,
+     10.65
+    ],
+    "px_per_mm": 69.5652,
+    "units": "mm",
+    "y_axis": "down"
+   },
+   "geom": {
+    "head": "items/footprint__Custom_Connector__PA-SOCKET-MSOP-8-0.65/head_geom.json",
+    "base": null
+   },
+   "related_symbols": [
+    {
+     "id": "symbol:Custom_RF_Amplifier:PA-SOCKET-MSOP-8-0.65_AD8313",
+     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym",
+     "source": "items/footprint__Custom_Connector__PA-SOCKET-MSOP-8-0.65/related/Custom_RF_Amplifier__PA-SOCKET-MSOP-8-0.65_AD8313.kicad_sym",
+     "pin_count": 8,
+     "pins": [
+      {
+       "number": "1",
+       "name": "VPOS",
+       "type": "power_in"
+      },
+      {
+       "number": "2",
+       "name": "INHI",
+       "type": "input"
+      },
+      {
+       "number": "3",
+       "name": "INLO",
+       "type": "input"
+      },
+      {
+       "number": "4",
+       "name": "VPOS",
+       "type": "power_in"
+      },
+      {
+       "number": "5",
+       "name": "PWDN",
+       "type": "input"
+      },
+      {
+       "number": "6",
+       "name": "COMM",
+       "type": "power_in"
+      },
+      {
+       "number": "7",
+       "name": "VSET",
+       "type": "input"
+      },
+      {
+       "number": "8",
+       "name": "VOUT",
+       "type": "output"
+      }
+     ]
+    }
+   ],
+   "model3d_by_side": {
+    "head": [
+     {
+      "path_raw": "${KICAD_LIBS_DIR}/lib_3d/Custom_Connector/PA-SOCKET-MSOP-8-0.65.step",
+      "resolved": "lib_3d/Custom_Connector/PA-SOCKET-MSOP-8-0.65.step",
+      "exists": true,
+      "changed": true,
+      "offset": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "scale": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "rotate": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "hide": false,
+      "file": "items/footprint__Custom_Connector__PA-SOCKET-MSOP-8-0.65/model_1.step",
+      "side": "head"
+     }
+    ],
+    "base": null
+   },
+   "preview_3d": {
+    "head": "items/footprint__Custom_Connector__PA-SOCKET-MSOP-8-0.65/head_3d.png",
+    "base": null
+   }
+  },
+  {
+   "id": "footprint:Custom_Module:RP2040-Zero_Castellated",
+   "slug": "footprint__Custom_Module__RP2040-Zero_Castellated",
+   "kind": "footprint",
+   "library": "Custom_Module",
+   "name": "RP2040-Zero_Castellated",
+   "status": "added",
+   "path": "lib_fp/Custom_Module.pretty/RP2040-Zero_Castellated.kicad_mod",
+   "line_range": {
+    "head": [
+     1,
+     762
+    ],
+    "base": null
+   },
+   "properties": {
+    "head": {
+     "Reference": "REF**",
+     "Value": "RP2040-Zero",
+     "Datasheet": "https://www.waveshare.com/wiki/RP2040-Zero",
+     "Description": "Waveshare RP2040-Zero module, outer castellated pins",
+     "Footprint": "Custom_Module:RP2040-Zero_Castellated",
+     "descr": "Waveshare RP2040-Zero module, 23 outer castellated edge pins only (no bottom SMD pads GP17-GP25), 2.54mm pitch, 18.0x23.5mm, host PCB footprint with PTH pads for castellated solder or pin headers, https://www.waveshare.com/wiki/RP2040-Zero",
+     "tags": "RP2040 Zero Waveshare castellated module THT"
+    },
+    "base": null
+   },
+   "datasheet": {
+    "url": "https://www.waveshare.com/wiki/RP2040-Zero",
+    "local": null,
+    "file": null
+   },
+   "model3d": [
+    {
+     "path_raw": "${KICAD_LIBS_DIR}/lib_3d/Custom_Module/RP2040_Zero.stp",
+     "resolved": "lib_3d/Custom_Module/RP2040_Zero.stp",
+     "exists": true,
+     "changed": true,
+     "offset": [
+      -8.95,
+      -11.85,
+      1.1
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "rotate": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "hide": false,
+     "file": "items/footprint__Custom_Module__RP2040-Zero_Castellated/model_1.stp",
+     "side": "head"
+    }
+   ],
+   "stats": {
+    "head": {
+     "pad_count": 23,
+     "smd_count": 23,
+     "tht_count": 0,
+     "npth_count": 0,
+     "unique_pad_numbers": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23"
+     ],
+     "pad_number_count": 23,
+     "pads": [
+      {
+       "number": "1",
+       "type": "smd",
+       "shape": "roundrect",
+       "size": [
+        3.0,
+        1.7
+       ],
+       "at": [
+        -7.62,
+        -10.16,
+        0.0
+       ],
+       "pos": [
+        -7.62,
+        -10.16
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Mask",
+        "F.Paste"
+       ],
+       "roundrect_rratio": 0.25
+      },
+      {
+       "number": "2",
+       "type": "smd",
+       "shape": "roundrect",
+       "size": [
+        3.0,
+        1.7
+       ],
+       "at": [
+        -7.62,
+        -7.62,
+        0.0
+       ],
+       "pos": [
+        -7.62,
+        -7.62
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Mask",
+        "F.Paste"
+       ],
+       "roundrect_rratio": 0.25
+      },
+      {
+       "number": "3",
+       "type": "smd",
+       "shape": "roundrect",
+       "size": [
+        3.0,
+        1.7
+       ],
+       "at": [
+        -7.62,
+        -5.08,
+        0.0
+       ],
+       "pos": [
+        -7.62,
+        -5.08
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Mask",
+        "F.Paste"
+       ],
+       "roundrect_rratio": 0.25
+      },
+      {
+       "number": "4",
+       "type": "smd",
+       "shape": "roundrect",
+       "size": [
+        3.0,
+        1.7
+       ],
+       "at": [
+        -7.62,
+        -2.54,
+        0.0
+       ],
+       "pos": [
+        -7.62,
+        -2.54
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Mask",
+        "F.Paste"
+       ],
+       "roundrect_rratio": 0.25
+      },
+      {
+       "number": "5",
+       "type": "smd",
+       "shape": "roundrect",
+       "size": [
+        3.0,
+        1.7
+       ],
+       "at": [
+        -7.62,
+        0.0,
+        0.0
+       ],
+       "pos": [
+        -7.62,
+        0.0
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Mask",
+        "F.Paste"
+       ],
+       "roundrect_rratio": 0.25
+      },
+      {
+       "number": "6",
+       "type": "smd",
+       "shape": "roundrect",
+       "size": [
+        3.0,
+        1.7
+       ],
+       "at": [
+        -7.62,
+        2.54,
+        0.0
+       ],
+       "pos": [
+        -7.62,
+        2.54
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Mask",
+        "F.Paste"
+       ],
+       "roundrect_rratio": 0.25
+      },
+      {
+       "number": "7",
+       "type": "smd",
+       "shape": "roundrect",
+       "size": [
+        3.0,
+        1.7
+       ],
+       "at": [
+        -7.62,
+        5.08,
+        0.0
+       ],
+       "pos": [
+        -7.62,
+        5.08
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Mask",
+        "F.Paste"
+       ],
+       "roundrect_rratio": 0.25
+      },
+      {
+       "number": "8",
+       "type": "smd",
+       "shape": "roundrect",
+       "size": [
+        3.0,
+        1.7
+       ],
+       "at": [
+        -7.62,
+        7.62,
+        0.0
+       ],
+       "pos": [
+        -7.62,
+        7.62
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Mask",
+        "F.Paste"
+       ],
+       "roundrect_rratio": 0.25
+      },
+      {
+       "number": "9",
+       "type": "smd",
+       "shape": "roundrect",
+       "size": [
+        3.0,
+        1.7
+       ],
+       "at": [
+        -7.62,
+        10.16,
+        0.0
+       ],
+       "pos": [
+        -7.62,
+        10.16
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Mask",
+        "F.Paste"
+       ],
+       "roundrect_rratio": 0.25
+      },
+      {
+       "number": "10",
+       "type": "smd",
+       "shape": "roundrect",
+       "size": [
+        1.7,
+        3.2
+       ],
+       "at": [
+        -5.08,
+        10.16,
+        0.0
+       ],
+       "pos": [
+        -5.08,
+        10.16
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Mask",
+        "F.Paste"
+       ],
+       "roundrect_rratio": 0.25
+      },
+      {
+       "number": "11",
+       "type": "smd",
+       "shape": "roundrect",
+       "size": [
+        1.7,
+        3.2
+       ],
+       "at": [
+        -2.54,
+        10.16,
+        0.0
+       ],
+       "pos": [
+        -2.54,
+        10.16
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Mask",
+        "F.Paste"
+       ],
+       "roundrect_rratio": 0.25
+      },
+      {
+       "number": "12",
+       "type": "smd",
+       "shape": "roundrect",
+       "size": [
+        1.7,
+        3.2
+       ],
+       "at": [
+        0.0,
+        10.16,
+        0.0
+       ],
+       "pos": [
+        0.0,
+        10.16
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Mask",
+        "F.Paste"
+       ],
+       "roundrect_rratio": 0.25
+      },
+      {
+       "number": "13",
+       "type": "smd",
+       "shape": "roundrect",
+       "size": [
+        1.7,
+        3.2
+       ],
+       "at": [
+        2.54,
+        10.16,
+        0.0
+       ],
+       "pos": [
+        2.54,
+        10.16
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Mask",
+        "F.Paste"
+       ],
+       "roundrect_rratio": 0.25
+      },
+      {
+       "number": "14",
+       "type": "smd",
+       "shape": "roundrect",
+       "size": [
+        1.7,
+        3.2
+       ],
+       "at": [
+        5.08,
+        10.16,
+        0.0
+       ],
+       "pos": [
+        5.08,
+        10.16
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Mask",
+        "F.Paste"
+       ],
+       "roundrect_rratio": 0.25
+      },
+      {
+       "number": "15",
+       "type": "smd",
+       "shape": "roundrect",
+       "size": [
+        3.0,
+        1.7
+       ],
+       "at": [
+        7.62,
+        10.16,
+        0.0
+       ],
+       "pos": [
+        7.62,
+        10.16
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Mask",
+        "F.Paste"
+       ],
+       "roundrect_rratio": 0.25
+      },
+      {
+       "number": "16",
+       "type": "smd",
+       "shape": "roundrect",
+       "size": [
+        3.0,
+        1.7
+       ],
+       "at": [
+        7.62,
+        7.62,
+        0.0
+       ],
+       "pos": [
+        7.62,
+        7.62
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Mask",
+        "F.Paste"
+       ],
+       "roundrect_rratio": 0.25
+      },
+      {
+       "number": "17",
+       "type": "smd",
+       "shape": "roundrect",
+       "size": [
+        3.0,
+        1.7
+       ],
+       "at": [
+        7.62,
+        5.08,
+        0.0
+       ],
+       "pos": [
+        7.62,
+        5.08
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Mask",
+        "F.Paste"
+       ],
+       "roundrect_rratio": 0.25
+      },
+      {
+       "number": "18",
+       "type": "smd",
+       "shape": "roundrect",
+       "size": [
+        3.0,
+        1.7
+       ],
+       "at": [
+        7.62,
+        2.54,
+        0.0
+       ],
+       "pos": [
+        7.62,
+        2.54
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Mask",
+        "F.Paste"
+       ],
+       "roundrect_rratio": 0.25
+      },
+      {
+       "number": "19",
+       "type": "smd",
+       "shape": "roundrect",
+       "size": [
+        3.0,
+        1.7
+       ],
+       "at": [
+        7.62,
+        0.0,
+        0.0
+       ],
+       "pos": [
+        7.62,
+        0.0
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Mask",
+        "F.Paste"
+       ],
+       "roundrect_rratio": 0.25
+      },
+      {
+       "number": "20",
+       "type": "smd",
+       "shape": "roundrect",
+       "size": [
+        3.0,
+        1.7
+       ],
+       "at": [
+        7.62,
+        -2.54,
+        0.0
+       ],
+       "pos": [
+        7.62,
+        -2.54
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Mask",
+        "F.Paste"
+       ],
+       "roundrect_rratio": 0.25
+      },
+      {
+       "number": "21",
+       "type": "smd",
+       "shape": "roundrect",
+       "size": [
+        3.0,
+        1.7
+       ],
+       "at": [
+        7.62,
+        -5.08,
+        0.0
+       ],
+       "pos": [
+        7.62,
+        -5.08
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Mask",
+        "F.Paste"
+       ],
+       "roundrect_rratio": 0.25
+      },
+      {
+       "number": "22",
+       "type": "smd",
+       "shape": "roundrect",
+       "size": [
+        3.0,
+        1.7
+       ],
+       "at": [
+        7.62,
+        -7.62,
+        0.0
+       ],
+       "pos": [
+        7.62,
+        -7.62
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Mask",
+        "F.Paste"
+       ],
+       "roundrect_rratio": 0.25
+      },
+      {
+       "number": "23",
+       "type": "smd",
+       "shape": "roundrect",
+       "size": [
+        3.0,
+        1.7
+       ],
+       "at": [
+        7.62,
+        -10.16,
+        0.0
+       ],
+       "pos": [
+        7.62,
+        -10.16
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Mask",
+        "F.Paste"
+       ],
+       "roundrect_rratio": 0.25
+      }
+     ],
+     "pad_extent": [
+      -9.12,
+      -11.01,
+      9.12,
+      11.76
+     ],
+     "courtyard_bbox": [
+      -10.045,
+      -13.245,
+      10.045,
+      12.785
+     ],
+     "courtyard_size": [
+      20.09,
+      26.03
+     ],
+     "layers": [
+      "F.Paste",
+      "F.Mask",
+      "F.Cu",
+      "F.SilkS",
+      "F.Fab",
+      "F.CrtYd",
+      "Edge.Cuts",
+      "Cmts.User"
+     ],
+     "has_courtyard": true,
+     "has_fab": true,
+     "has_silk": true,
+     "reference_on_silk": true,
+     "reference_on_fab": true,
+     "attr": [
+      "through_hole"
+     ],
+     "pin1": {
+      "pad1_exists": true,
+      "pad1_pos": [
+       -7.62,
+       -10.16
+      ],
+      "pad1_shape_distinct": false,
+      "silk_marker_near_pad1": true,
+      "fab_marker_near_pad1": true
+     },
+     "models": [
+      "${KICAD_LIBS_DIR}/lib_3d/Custom_Module/RP2040_Zero.stp"
+     ],
+     "zones": 0,
+     "texts": [
+      {
+       "text": "REF**",
+       "layer": "F.SilkS",
+       "hidden": false
+      },
+      {
+       "text": "RP2040-Zero",
+       "layer": "F.Fab",
+       "hidden": false
+      },
+      {
+       "text": "https://www.waveshare.com/wiki/RP2040-Zero",
+       "layer": "F.Fab",
+       "hidden": true
+      },
+      {
+       "text": "Waveshare RP2040-Zero module, outer castellated pins",
+       "layer": "F.Fab",
+       "hidden": true
+      },
+      {
+       "text": "USB-C overhang 1.2mm",
+       "layer": "Cmts.User",
+       "hidden": false
+      },
+      {
+       "text": "Module underside parts",
+       "layer": "Cmts.User",
+       "hidden": false
+      },
+      {
+       "text": "(up to 1.0mm): cut out",
+       "layer": "Cmts.User",
+       "hidden": false
+      },
+      {
+       "text": "host PCB for flush SMT",
+       "layer": "Cmts.User",
+       "hidden": false
+      },
+      {
+       "text": "USB-C",
+       "layer": "F.Fab",
+       "hidden": false
+      },
+      {
+       "text": "${REFERENCE}",
+       "layer": "F.Fab",
+       "hidden": false
+      }
+     ]
+    },
+    "base": null
+   },
+   "renders": {
+    "head": {
+     "svg": "items/footprint__Custom_Module__RP2040-Zero_Castellated/head.svg",
+     "png": "items/footprint__Custom_Module__RP2040-Zero_Castellated/head.png",
+     "layers": {
+      "F.Paste": "items/footprint__Custom_Module__RP2040-Zero_Castellated/head_F.Paste.svg",
+      "F.Mask": "items/footprint__Custom_Module__RP2040-Zero_Castellated/head_F.Mask.svg",
+      "F.Cu": "items/footprint__Custom_Module__RP2040-Zero_Castellated/head_F.Cu.svg",
+      "F.SilkS": "items/footprint__Custom_Module__RP2040-Zero_Castellated/head_F.SilkS.svg",
+      "F.Fab": "items/footprint__Custom_Module__RP2040-Zero_Castellated/head_F.Fab.svg",
+      "F.CrtYd": "items/footprint__Custom_Module__RP2040-Zero_Castellated/head_F.CrtYd.svg",
+      "Edge.Cuts": "items/footprint__Custom_Module__RP2040-Zero_Castellated/head_Edge.Cuts.svg",
+      "Cmts.User": "items/footprint__Custom_Module__RP2040-Zero_Castellated/head_Cmts.User.svg"
+     }
+    },
+    "base": null
+   },
+   "diff_png": null,
+   "glb": {
+    "head": "items/footprint__Custom_Module__RP2040-Zero_Castellated/head.glb",
+    "base": null
+   },
+   "text_diff": "items/footprint__Custom_Module__RP2040-Zero_Castellated/diff.patch",
+   "source": {
+    "head": "items/footprint__Custom_Module__RP2040-Zero_Castellated/head.kicad_mod",
+    "base": null
+   },
+   "warnings": [],
+   "view": {
+    "viewbox": [
+     -11.93,
+     -16.02,
+     11.045,
+     15.56
+    ],
+    "px_per_mm": 50.665,
+    "units": "mm",
+    "y_axis": "down"
+   },
+   "geom": {
+    "head": "items/footprint__Custom_Module__RP2040-Zero_Castellated/head_geom.json",
+    "base": null
+   },
+   "related_symbols": [
+    {
+     "id": "symbol:Custom_MCU:RP2040-Zero",
+     "path": "lib_sch/Custom_MCU.kicad_sym",
+     "source": "items/footprint__Custom_Module__RP2040-Zero_Castellated/related/Custom_MCU__RP2040-Zero.kicad_sym",
+     "pin_count": 23,
+     "pins": [
+      {
+       "number": "1",
+       "name": "5V",
+       "type": "power_in"
+      },
+      {
+       "number": "2",
+       "name": "GND",
+       "type": "power_in"
+      },
+      {
+       "number": "3",
+       "name": "3V3",
+       "type": "power_out"
+      },
+      {
+       "number": "4",
+       "name": "GP29/ADC3",
+       "type": "bidirectional"
+      },
+      {
+       "number": "5",
+       "name": "GP28/ADC2",
+       "type": "bidirectional"
+      },
+      {
+       "number": "6",
+       "name": "GP27/ADC1",
+       "type": "bidirectional"
+      },
+      {
+       "number": "7",
+       "name": "GP26/ADC0",
+       "type": "bidirectional"
+      },
+      {
+       "number": "8",
+       "name": "GP15",
+       "type": "bidirectional"
+      },
+      {
+       "number": "9",
+       "name": "GP14",
+       "type": "bidirectional"
+      },
+      {
+       "number": "10",
+       "name": "GP13",
+       "type": "bidirectional"
+      },
+      {
+       "number": "11",
+       "name": "GP12",
+       "type": "bidirectional"
+      },
+      {
+       "number": "12",
+       "name": "GP11",
+       "type": "bidirectional"
+      },
+      {
+       "number": "13",
+       "name": "GP10",
+       "type": "bidirectional"
+      },
+      {
+       "number": "14",
+       "name": "GP9",
+       "type": "bidirectional"
+      },
+      {
+       "number": "15",
+       "name": "GP8",
+       "type": "bidirectional"
+      },
+      {
+       "number": "16",
+       "name": "GP7",
+       "type": "bidirectional"
+      },
+      {
+       "number": "17",
+       "name": "GP6",
+       "type": "bidirectional"
+      },
+      {
+       "number": "18",
+       "name": "GP5",
+       "type": "bidirectional"
+      },
+      {
+       "number": "19",
+       "name": "GP4",
+       "type": "bidirectional"
+      },
+      {
+       "number": "20",
+       "name": "GP3",
+       "type": "bidirectional"
+      },
+      {
+       "number": "21",
+       "name": "GP2",
+       "type": "bidirectional"
+      },
+      {
+       "number": "22",
+       "name": "GP1",
+       "type": "bidirectional"
+      },
+      {
+       "number": "23",
+       "name": "GP0",
+       "type": "bidirectional"
+      }
+     ]
+    }
+   ],
+   "model3d_by_side": {
+    "head": [
+     {
+      "path_raw": "${KICAD_LIBS_DIR}/lib_3d/Custom_Module/RP2040_Zero.stp",
+      "resolved": "lib_3d/Custom_Module/RP2040_Zero.stp",
+      "exists": true,
+      "changed": true,
+      "offset": [
+       -8.95,
+       -11.85,
+       1.1
+      ],
+      "scale": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "rotate": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "hide": false,
+      "file": "items/footprint__Custom_Module__RP2040-Zero_Castellated/model_1.stp",
+      "side": "head"
+     }
+    ],
+    "base": null
+   },
+   "preview_3d": {
+    "head": "items/footprint__Custom_Module__RP2040-Zero_Castellated/head_3d.png",
+    "base": null
+   }
+  },
+  {
+   "id": "footprint:Custom_Resistor_SMD:R_0603_1608Metric_Kelvin_NetTie",
+   "slug": "footprint__Custom_Resistor_SMD__R_0603_1608Metric_Kelvin_NetTie",
+   "kind": "footprint",
+   "library": "Custom_Resistor_SMD",
+   "name": "R_0603_1608Metric_Kelvin_NetTie",
+   "status": "added",
+   "path": "lib_fp/Custom_Resistor_SMD.pretty/R_0603_1608Metric_Kelvin_NetTie.kicad_mod",
+   "line_range": {
+    "head": [
+     1,
+     182
+    ],
+    "base": null
+   },
+   "properties": {
+    "head": {
+     "Reference": "REF**",
+     "Value": "R_0603_1608Metric_Kelvin_NetTie",
+     "Datasheet": "",
+     "Description": "",
+     "KiLib_Generator": "SMD_2terminal_chip_molded",
+     "Footprint": "Custom_Resistor_SMD:R_0603_1608Metric_Kelvin_NetTie",
+     "descr": "Kelvin (4-terminal) sense version of R_0603_1608Metric for a 2-terminal 0603 current shunt, net tie: pads 1/4 force (stock pads), pads 2/3 sense taps at the inner pad edges, net_tie_pad_groups 1-2 and 3-4. Made for Yageo RT0603BRE072RL with Device:R_Shunt_US. Base: Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)",
+     "tags": "resistor shunt kelvin 4-terminal net tie"
+    },
+    "base": null
+   },
+   "datasheet": {
+    "url": "https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf",
+    "local": null,
+    "file": null
+   },
+   "model3d": [
+    {
+     "path_raw": "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step",
+     "resolved": "kicad-packages3D@10.0.6/Resistor_SMD.3dshapes/R_0603_1608Metric.step",
+     "exists": true,
+     "changed": true,
+     "offset": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "rotate": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "hide": false,
+     "file": "items/footprint__Custom_Resistor_SMD__R_0603_1608Metric_Kelvin_NetTie/model_1.step",
+     "side": "head",
+     "not_local": true,
+     "stock": {
+      "tag": "10.0.6",
+      "path": "Resistor_SMD.3dshapes/R_0603_1608Metric.step",
+      "url": "https://gitlab.com/kicad/libraries/kicad-packages3D/-/raw/10.0.6/Resistor_SMD.3dshapes/R_0603_1608Metric.step",
+      "cached": false
+     }
+    }
+   ],
+   "stats": {
+    "head": {
+     "pad_count": 4,
+     "smd_count": 4,
+     "tht_count": 0,
+     "npth_count": 0,
+     "unique_pad_numbers": [
+      "1",
+      "2",
+      "3",
+      "4"
+     ],
+     "pad_number_count": 4,
+     "pads": [
+      {
+       "number": "1",
+       "type": "smd",
+       "shape": "roundrect",
+       "size": [
+        0.8,
+        0.95
+       ],
+       "at": [
+        -0.825,
+        0.0,
+        0.0
+       ],
+       "pos": [
+        -0.825,
+        0.0
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Mask",
+        "F.Paste"
+       ],
+       "roundrect_rratio": 0.25
+      },
+      {
+       "number": "2",
+       "type": "smd",
+       "shape": "rect",
+       "size": [
+        0.25,
+        0.3
+       ],
+       "at": [
+        -0.55,
+        -0.85,
+        0.0
+       ],
+       "pos": [
+        -0.55,
+        -0.85
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu"
+       ],
+       "roundrect_rratio": null
+      },
+      {
+       "number": "3",
+       "type": "smd",
+       "shape": "rect",
+       "size": [
+        0.25,
+        0.3
+       ],
+       "at": [
+        0.55,
+        -0.85,
+        0.0
+       ],
+       "pos": [
+        0.55,
+        -0.85
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu"
+       ],
+       "roundrect_rratio": null
+      },
+      {
+       "number": "4",
+       "type": "smd",
+       "shape": "roundrect",
+       "size": [
+        0.8,
+        0.95
+       ],
+       "at": [
+        0.825,
+        0.0,
+        0.0
+       ],
+       "pos": [
+        0.825,
+        0.0
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Mask",
+        "F.Paste"
+       ],
+       "roundrect_rratio": 0.25
+      }
+     ],
+     "pad_extent": [
+      -1.225,
+      -1.0,
+      1.225,
+      0.475
+     ],
+     "courtyard_bbox": [
+      -1.505,
+      -1.275,
+      1.505,
+      0.755
+     ],
+     "courtyard_size": [
+      3.01,
+      2.03
+     ],
+     "layers": [
+      "F.Paste",
+      "F.Mask",
+      "F.Cu",
+      "F.SilkS",
+      "F.Fab",
+      "F.CrtYd"
+     ],
+     "has_courtyard": true,
+     "has_fab": true,
+     "has_silk": true,
+     "reference_on_silk": true,
+     "reference_on_fab": true,
+     "attr": [
+      "smd"
+     ],
+     "pin1": {
+      "pad1_exists": true,
+      "pad1_pos": [
+       -0.825,
+       0.0
+      ],
+      "pad1_shape_distinct": false,
+      "silk_marker_near_pad1": false,
+      "fab_marker_near_pad1": false
+     },
+     "models": [
+      "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
+     ],
+     "zones": 0,
+     "texts": [
+      {
+       "text": "REF**",
+       "layer": "F.SilkS",
+       "hidden": false
+      },
+      {
+       "text": "R_0603_1608Metric_Kelvin_NetTie",
+       "layer": "F.Fab",
+       "hidden": false
+      },
+      {
+       "text": "",
+       "layer": "F.Fab",
+       "hidden": true
+      },
+      {
+       "text": "",
+       "layer": "F.Fab",
+       "hidden": true
+      },
+      {
+       "text": "SMD_2terminal_chip_molded",
+       "layer": "F.SilkS",
+       "hidden": true
+      },
+      {
+       "text": "${REFERENCE}",
+       "layer": "F.Fab",
+       "hidden": false
+      }
+     ]
+    },
+    "base": null
+   },
+   "renders": {
+    "head": {
+     "svg": "items/footprint__Custom_Resistor_SMD__R_0603_1608Metric_Kelvin_NetTie/head.svg",
+     "png": "items/footprint__Custom_Resistor_SMD__R_0603_1608Metric_Kelvin_NetTie/head.png",
+     "layers": {
+      "F.Paste": "items/footprint__Custom_Resistor_SMD__R_0603_1608Metric_Kelvin_NetTie/head_F.Paste.svg",
+      "F.Mask": "items/footprint__Custom_Resistor_SMD__R_0603_1608Metric_Kelvin_NetTie/head_F.Mask.svg",
+      "F.Cu": "items/footprint__Custom_Resistor_SMD__R_0603_1608Metric_Kelvin_NetTie/head_F.Cu.svg",
+      "F.SilkS": "items/footprint__Custom_Resistor_SMD__R_0603_1608Metric_Kelvin_NetTie/head_F.SilkS.svg",
+      "F.Fab": "items/footprint__Custom_Resistor_SMD__R_0603_1608Metric_Kelvin_NetTie/head_F.Fab.svg",
+      "F.CrtYd": "items/footprint__Custom_Resistor_SMD__R_0603_1608Metric_Kelvin_NetTie/head_F.CrtYd.svg"
+     }
+    },
+    "base": null
+   },
+   "diff_png": null,
+   "glb": {
+    "head": "items/footprint__Custom_Resistor_SMD__R_0603_1608Metric_Kelvin_NetTie/head.glb",
+    "base": null
+   },
+   "text_diff": "items/footprint__Custom_Resistor_SMD__R_0603_1608Metric_Kelvin_NetTie/diff.patch",
+   "source": {
+    "head": "items/footprint__Custom_Resistor_SMD__R_0603_1608Metric_Kelvin_NetTie/head.kicad_mod",
+    "base": null
+   },
+   "warnings": [],
+   "view": {
+    "viewbox": [
+     -16.5,
+     -3.75,
+     16.5,
+     3.23
+    ],
+    "px_per_mm": 48.4848,
+    "units": "mm",
+    "y_axis": "down"
+   },
+   "geom": {
+    "head": "items/footprint__Custom_Resistor_SMD__R_0603_1608Metric_Kelvin_NetTie/head_geom.json",
+    "base": null
+   },
+   "related_symbols": [],
+   "model3d_by_side": {
+    "head": [
+     {
+      "path_raw": "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step",
+      "resolved": "kicad-packages3D@10.0.6/Resistor_SMD.3dshapes/R_0603_1608Metric.step",
+      "exists": true,
+      "changed": true,
+      "offset": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "scale": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "rotate": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "hide": false,
+      "file": "items/footprint__Custom_Resistor_SMD__R_0603_1608Metric_Kelvin_NetTie/model_1.step",
+      "side": "head",
+      "not_local": true,
+      "stock": {
+       "tag": "10.0.6",
+       "path": "Resistor_SMD.3dshapes/R_0603_1608Metric.step",
+       "url": "https://gitlab.com/kicad/libraries/kicad-packages3D/-/raw/10.0.6/Resistor_SMD.3dshapes/R_0603_1608Metric.step",
+       "cached": false
+      }
+     }
+    ],
+    "base": null
+   },
+   "preview_3d": {
+    "head": "items/footprint__Custom_Resistor_SMD__R_0603_1608Metric_Kelvin_NetTie/head_3d.png",
+    "base": null
+   }
+  },
+  {
+   "id": "symbol:Custom_MCU:RP2040-Zero",
+   "slug": "symbol__Custom_MCU__RP2040-Zero",
+   "kind": "symbol",
+   "library": "Custom_MCU",
+   "name": "RP2040-Zero",
+   "status": "added",
+   "path": "lib_sch/Custom_MCU.kicad_sym",
+   "line_range": {
+    "head": [
+     4394,
+     4907
+    ],
+    "base": null
+   },
+   "properties": {
+    "head": {
+     "Reference": "U",
+     "Value": "RP2040-Zero",
+     "Footprint": "Custom_Module:RP2040-Zero_Castellated",
+     "Datasheet": "https://www.waveshare.com/wiki/RP2040-Zero",
+     "Description": "Waveshare RP2040-Zero module (RP2040, USB-C), 23 outer castellated pins only",
+     "ki_keywords": "RP2040 Raspberry Pi Waveshare module castellated",
+     "ki_fp_filters": "RP2040?Zero*"
+    },
+    "base": null
+   },
+   "datasheet": {
+    "url": "https://www.waveshare.com/wiki/RP2040-Zero",
+    "local": null,
+    "file": null
+   },
+   "model3d": [],
+   "stats": {
+    "head": {
+     "pin_count": 23,
+     "unique_pin_numbers": 23,
+     "duplicate_pin_numbers": [],
+     "units": 1,
+     "unit_names": {},
+     "has_demorgan": false,
+     "power_symbol": false,
+     "extends": null,
+     "pin_types": {
+      "power_in": 2,
+      "power_out": 1,
+      "bidirectional": 20
+     },
+     "hidden_pins": 0,
+     "pins": [
+      {
+       "number": "1",
+       "name": "5V",
+       "type": "power_in",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -2.54,
+        20.32
+       ],
+       "angle": 270.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "2",
+       "name": "GND",
+       "type": "power_in",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        0.0,
+        -20.32
+       ],
+       "angle": 90.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "3",
+       "name": "3V3",
+       "type": "power_out",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        2.54,
+        20.32
+       ],
+       "angle": 270.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "4",
+       "name": "GP29/ADC3",
+       "type": "bidirectional",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        12.7,
+        -11.43
+       ],
+       "angle": 180.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "5",
+       "name": "GP28/ADC2",
+       "type": "bidirectional",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        12.7,
+        -8.89
+       ],
+       "angle": 180.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "6",
+       "name": "GP27/ADC1",
+       "type": "bidirectional",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        12.7,
+        -6.35
+       ],
+       "angle": 180.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "7",
+       "name": "GP26/ADC0",
+       "type": "bidirectional",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        12.7,
+        -3.81
+       ],
+       "angle": 180.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "8",
+       "name": "GP15",
+       "type": "bidirectional",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        12.7,
+        -1.27
+       ],
+       "angle": 180.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "9",
+       "name": "GP14",
+       "type": "bidirectional",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        12.7,
+        1.27
+       ],
+       "angle": 180.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "10",
+       "name": "GP13",
+       "type": "bidirectional",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        12.7,
+        3.81
+       ],
+       "angle": 180.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "11",
+       "name": "GP12",
+       "type": "bidirectional",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        12.7,
+        6.35
+       ],
+       "angle": 180.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "12",
+       "name": "GP11",
+       "type": "bidirectional",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        12.7,
+        8.89
+       ],
+       "angle": 180.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "13",
+       "name": "GP10",
+       "type": "bidirectional",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        12.7,
+        11.43
+       ],
+       "angle": 180.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "14",
+       "name": "GP9",
+       "type": "bidirectional",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -12.7,
+        -11.43
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "15",
+       "name": "GP8",
+       "type": "bidirectional",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -12.7,
+        -8.89
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "16",
+       "name": "GP7",
+       "type": "bidirectional",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -12.7,
+        -6.35
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "17",
+       "name": "GP6",
+       "type": "bidirectional",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -12.7,
+        -3.81
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "18",
+       "name": "GP5",
+       "type": "bidirectional",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -12.7,
+        -1.27
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "19",
+       "name": "GP4",
+       "type": "bidirectional",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -12.7,
+        1.27
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "20",
+       "name": "GP3",
+       "type": "bidirectional",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -12.7,
+        3.81
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "21",
+       "name": "GP2",
+       "type": "bidirectional",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -12.7,
+        6.35
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "22",
+       "name": "GP1",
+       "type": "bidirectional",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -12.7,
+        8.89
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "23",
+       "name": "GP0",
+       "type": "bidirectional",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -12.7,
+        11.43
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      }
+     ],
+     "pin_names_hidden": false,
+     "pin_numbers_hidden": false
+    },
+    "base": null
+   },
+   "renders": {
+    "head": {
+     "svg": "items/symbol__Custom_MCU__RP2040-Zero/head.svg",
+     "png": "items/symbol__Custom_MCU__RP2040-Zero/head.png",
+     "layers": {}
+    },
+    "base": null
+   },
+   "diff_png": null,
+   "glb": {
+    "head": null,
+    "base": null
+   },
+   "text_diff": "items/symbol__Custom_MCU__RP2040-Zero/diff.patch",
+   "source": {
+    "head": "items/symbol__Custom_MCU__RP2040-Zero/head.kicad_sym",
+    "base": null
+   },
+   "warnings": [],
+   "view": {
+    "viewbox": [
+     -15.3876,
+     -26.2636,
+     15.3876,
+     26.2636
+    ],
+    "px_per_mm": 30.4604,
+    "units": "mm",
+    "y_axis": "down",
+    "unit_offsets": {
+     "1": 0.0
+    }
+   },
+   "footprint_ref": "Custom_Module:RP2040-Zero_Castellated"
+  },
+  {
+   "id": "symbol:Custom_Power_Management:LM73100RPWR",
+   "slug": "symbol__Custom_Power_Management__LM73100RPWR",
+   "kind": "symbol",
+   "library": "Custom_Power_Management",
+   "name": "LM73100RPWR",
+   "status": "modified",
+   "path": "lib_sch/Custom_Power_Management.kicad_sym",
+   "line_range": {
+    "head": [
+     5,
+     288
+    ],
+    "base": [
+     5,
+     272
+    ]
+   },
+   "properties": {
+    "head": {
+     "Reference": "U",
+     "Value": "LM73100RPWR",
+     "Footprint": "Custom_Package_DFN_QFN:RPW0010A-MFG",
+     "Datasheet": "https://www.ti.com/lit/gpn/lm7310",
+     "Description": "",
+     "ki_keywords": "LM73100RPWR",
+     "ki_fp_filters": "RPW0010A-MFG"
+    },
+    "base": {
+     "Reference": "U",
+     "Value": "LM73100RPWR",
+     "Footprint": "Custom_Package_DFN_QFN:RPW0010A-MFG",
+     "Datasheet": "https://www.ti.com/lit/gpn/lm7310",
+     "Description": "",
+     "ki_keywords": "LM73100RPWR",
+     "ki_fp_filters": "RPW0010A-MFG"
+    }
+   },
+   "datasheet": {
+    "url": "https://www.ti.com/lit/gpn/lm7310",
+    "local": null,
+    "file": null
+   },
+   "model3d": [],
+   "stats": {
+    "head": {
+     "pin_count": 10,
+     "unique_pin_numbers": 10,
+     "duplicate_pin_numbers": [],
+     "units": 1,
+     "unit_names": {},
+     "has_demorgan": false,
+     "power_symbol": false,
+     "extends": null,
+     "pin_types": {
+      "input": 3,
+      "output": 2,
+      "power_in": 2,
+      "power_out": 1,
+      "passive": 1,
+      "no_connect": 1
+     },
+     "hidden_pins": 1,
+     "pins": [
+      {
+       "number": "1",
+       "name": "EN_UVLO",
+       "type": "input",
+       "shape": "line",
+       "unit": 0,
+       "hidden": false,
+       "pos": [
+        -11.43,
+        1.27
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "2",
+       "name": "OVLO",
+       "type": "input",
+       "shape": "line",
+       "unit": 0,
+       "hidden": false,
+       "pos": [
+        -11.43,
+        -1.27
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "3",
+       "name": "PG",
+       "type": "output",
+       "shape": "line",
+       "unit": 0,
+       "hidden": false,
+       "pos": [
+        11.43,
+        -1.27
+       ],
+       "angle": 180.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "4",
+       "name": "PGTH",
+       "type": "input",
+       "shape": "line",
+       "unit": 0,
+       "hidden": false,
+       "pos": [
+        11.43,
+        1.27
+       ],
+       "angle": 180.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "5",
+       "name": "IN",
+       "type": "power_in",
+       "shape": "line",
+       "unit": 0,
+       "hidden": false,
+       "pos": [
+        -11.43,
+        3.81
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "8",
+       "name": "GND",
+       "type": "power_in",
+       "shape": "line",
+       "unit": 0,
+       "hidden": false,
+       "pos": [
+        0.0,
+        -8.89
+       ],
+       "angle": 90.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "9",
+       "name": "IMON",
+       "type": "output",
+       "shape": "line",
+       "unit": 0,
+       "hidden": false,
+       "pos": [
+        11.43,
+        -3.81
+       ],
+       "angle": 180.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "6",
+       "name": "OUT",
+       "type": "power_out",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        11.43,
+        3.81
+       ],
+       "angle": 180.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "7",
+       "name": "dVdt",
+       "type": "passive",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -11.43,
+        -3.81
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "10",
+       "name": "NC",
+       "type": "no_connect",
+       "shape": "line",
+       "unit": 1,
+       "hidden": true,
+       "pos": [
+        -2.54,
+        -8.89
+       ],
+       "angle": 90.0,
+       "length": 2.54,
+       "alternates": []
+      }
+     ],
+     "pin_names_hidden": false,
+     "pin_numbers_hidden": false
+    },
+    "base": {
+     "pin_count": 10,
+     "unique_pin_numbers": 10,
+     "duplicate_pin_numbers": [],
+     "units": 1,
+     "unit_names": {},
+     "has_demorgan": false,
+     "power_symbol": false,
+     "extends": null,
+     "pin_types": {
+      "power_in": 2,
+      "input": 3,
+      "output": 2,
+      "passive": 1,
+      "no_connect": 1,
+      "power_out": 1
+     },
+     "hidden_pins": 1,
+     "pins": [
+      {
+       "number": "1",
+       "name": "EN_UVLO",
+       "type": "input",
+       "shape": "line",
+       "unit": 0,
+       "hidden": false,
+       "pos": [
+        -11.43,
+        1.27
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "2",
+       "name": "OVLO",
+       "type": "input",
+       "shape": "line",
+       "unit": 0,
+       "hidden": false,
+       "pos": [
+        -11.43,
+        -1.27
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "3",
+       "name": "PG",
+       "type": "output",
+       "shape": "line",
+       "unit": 0,
+       "hidden": false,
+       "pos": [
+        11.43,
+        -1.27
+       ],
+       "angle": 180.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "4",
+       "name": "PGTH",
+       "type": "input",
+       "shape": "line",
+       "unit": 0,
+       "hidden": false,
+       "pos": [
+        11.43,
+        1.27
+       ],
+       "angle": 180.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "5",
+       "name": "IN",
+       "type": "power_in",
+       "shape": "line",
+       "unit": 0,
+       "hidden": false,
+       "pos": [
+        -11.43,
+        3.81
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "8",
+       "name": "GND",
+       "type": "power_in",
+       "shape": "line",
+       "unit": 0,
+       "hidden": false,
+       "pos": [
+        0.0,
+        -8.89
+       ],
+       "angle": 90.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "9",
+       "name": "IMON",
+       "type": "output",
+       "shape": "line",
+       "unit": 0,
+       "hidden": false,
+       "pos": [
+        11.43,
+        -3.81
+       ],
+       "angle": 180.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "6",
+       "name": "OUT",
+       "type": "power_out",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        11.43,
+        3.81
+       ],
+       "angle": 180.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "7",
+       "name": "dVdt",
+       "type": "passive",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -11.43,
+        -3.81
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "10",
+       "name": "NC",
+       "type": "no_connect",
+       "shape": "line",
+       "unit": 1,
+       "hidden": true,
+       "pos": [
+        -2.54,
+        -8.89
+       ],
+       "angle": 90.0,
+       "length": 2.54,
+       "alternates": []
+      }
+     ],
+     "pin_names_hidden": false,
+     "pin_numbers_hidden": false
+    }
+   },
+   "renders": {
+    "head": {
+     "svg": "items/symbol__Custom_Power_Management__LM73100RPWR/head.svg",
+     "png": "items/symbol__Custom_Power_Management__LM73100RPWR/head.png",
+     "layers": {}
+    },
+    "base": {
+     "svg": "items/symbol__Custom_Power_Management__LM73100RPWR/base.svg",
+     "png": "items/symbol__Custom_Power_Management__LM73100RPWR/base.png",
+     "layers": {}
+    }
+   },
+   "diff_png": "items/symbol__Custom_Power_Management__LM73100RPWR/diff.png",
+   "glb": {
+    "head": null,
+    "base": null
+   },
+   "text_diff": "items/symbol__Custom_Power_Management__LM73100RPWR/diff.patch",
+   "source": {
+    "head": "items/symbol__Custom_Power_Management__LM73100RPWR/head.kicad_sym",
+    "base": "items/symbol__Custom_Power_Management__LM73100RPWR/base.kicad_sym"
+   },
+   "warnings": [],
+   "view": {
+    "viewbox": [
+     -13.0,
+     -12.6492,
+     13.0,
+     10.46
+    ],
+    "px_per_mm": 61.5385,
+    "units": "mm",
+    "y_axis": "down",
+    "unit_offsets": {
+     "1": 0.0
+    }
+   },
+   "diff_stats": {
+    "added_px": 0,
+    "removed_px": 0,
+    "changed_px": 0
+   },
+   "footprint_ref": "Custom_Package_DFN_QFN:RPW0010A-MFG"
+  },
+  {
+   "id": "symbol:Custom_Power_Management:TPS22918DBV",
+   "slug": "symbol__Custom_Power_Management__TPS22918DBV",
+   "kind": "symbol",
+   "library": "Custom_Power_Management",
+   "name": "TPS22918DBV",
+   "status": "added",
+   "path": "lib_sch/Custom_Power_Management.kicad_sym",
+   "line_range": {
+    "head": [
+     289,
+     505
+    ],
+    "base": null
+   },
+   "properties": {
+    "head": {
+     "Reference": "U",
+     "Value": "TPS22918DBV",
+     "Footprint": "Package_TO_SOT_SMD:SOT-23-6",
+     "Datasheet": "https://www.ti.com/lit/ds/symlink/tps22918.pdf",
+     "Description": "1V to 5.5V, 2A, 52m\u03a9 Load Switch with Configurable Rise Time and Quick Output Discharge, SOT23-6",
+     "LCSC": "C131941",
+     "ki_keywords": "high-side power distribution switch",
+     "ki_fp_filters": "SOT?23*"
+    },
+    "base": null
+   },
+   "datasheet": {
+    "url": "https://www.ti.com/lit/ds/symlink/tps22918.pdf",
+    "local": null,
+    "file": null
+   },
+   "model3d": [],
+   "stats": {
+    "head": {
+     "pin_count": 6,
+     "unique_pin_numbers": 6,
+     "duplicate_pin_numbers": [],
+     "units": 1,
+     "unit_names": {},
+     "has_demorgan": false,
+     "power_symbol": false,
+     "extends": null,
+     "pin_types": {
+      "power_in": 2,
+      "input": 1,
+      "output": 1,
+      "open_collector": 1,
+      "power_out": 1
+     },
+     "hidden_pins": 0,
+     "pins": [
+      {
+       "number": "1",
+       "name": "VIN",
+       "type": "power_in",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -10.16,
+        2.54
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "2",
+       "name": "GND",
+       "type": "power_in",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        0.0,
+        -7.62
+       ],
+       "angle": 90.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "3",
+       "name": "ON",
+       "type": "input",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -10.16,
+        -2.54
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "4",
+       "name": "CT",
+       "type": "output",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -10.16,
+        0.0
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "5",
+       "name": "QOD",
+       "type": "open_collector",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        10.16,
+        -2.54
+       ],
+       "angle": 180.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "6",
+       "name": "VOUT",
+       "type": "power_out",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        10.16,
+        2.54
+       ],
+       "angle": 180.0,
+       "length": 2.54,
+       "alternates": []
+      }
+     ],
+     "pin_names_hidden": false,
+     "pin_numbers_hidden": false
+    },
+    "base": null
+   },
+   "renders": {
+    "head": {
+     "svg": "items/symbol__Custom_Power_Management__TPS22918DBV/head.svg",
+     "png": "items/symbol__Custom_Power_Management__TPS22918DBV/head.png",
+     "layers": {}
+    },
+    "base": null
+   },
+   "diff_png": null,
+   "glb": {
+    "head": null,
+    "base": null
+   },
+   "text_diff": "items/symbol__Custom_Power_Management__TPS22918DBV/diff.patch",
+   "source": {
+    "head": "items/symbol__Custom_Power_Management__TPS22918DBV/head.kicad_sym",
+    "base": null
+   },
+   "warnings": [],
+   "view": {
+    "viewbox": [
+     -11.73,
+     -8.636,
+     11.73,
+     9.19
+    ],
+    "px_per_mm": 68.2012,
+    "units": "mm",
+    "y_axis": "down",
+    "unit_offsets": {
+     "1": 0.0
+    }
+   },
+   "footprint_ref": "Package_TO_SOT_SMD:SOT-23-6"
+  },
+  {
+   "id": "symbol:Custom_RF_Amplifier:AD8314",
+   "slug": "symbol__Custom_RF_Amplifier__AD8314",
+   "kind": "symbol",
+   "library": "Custom_RF_Amplifier",
+   "name": "AD8314",
+   "status": "modified",
+   "path": "lib_sch/Custom_RF_Amplifier.kicad_sym",
+   "line_range": {
+    "head": [
+     5,
+     244
+    ],
+    "base": [
+     5,
+     230
+    ]
+   },
+   "properties": {
+    "head": {
+     "Reference": "U",
+     "Value": "AD8314",
+     "Footprint": "",
+     "Datasheet": "",
+     "Description": ""
+    },
+    "base": {
+     "Reference": "U",
+     "Value": "AD8314",
+     "Footprint": "",
+     "Datasheet": "",
+     "Description": ""
+    }
+   },
+   "datasheet": {
+    "url": null,
+    "local": null,
+    "file": null
+   },
+   "model3d": [],
+   "stats": {
+    "head": {
+     "pin_count": 9,
+     "unique_pin_numbers": 9,
+     "duplicate_pin_numbers": [],
+     "units": 1,
+     "unit_names": {},
+     "has_demorgan": false,
+     "power_symbol": false,
+     "extends": null,
+     "pin_types": {
+      "input": 4,
+      "power_in": 3,
+      "output": 2
+     },
+     "hidden_pins": 1,
+     "pins": [
+      {
+       "number": "1",
+       "name": "RFIN",
+       "type": "input",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -10.16,
+        -1.27
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "2",
+       "name": "ENBL",
+       "type": "input",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -10.16,
+        -8.89
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "3",
+       "name": "VSET",
+       "type": "input",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -10.16,
+        -11.43
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "4",
+       "name": "FLTR",
+       "type": "input",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        10.16,
+        -11.43
+       ],
+       "angle": 180.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "5",
+       "name": "COMM",
+       "type": "power_in",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        0.0,
+        -15.24
+       ],
+       "angle": 90.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "6",
+       "name": "V_UP",
+       "type": "output",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        10.16,
+        -3.81
+       ],
+       "angle": 180.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "7",
+       "name": "V_DN",
+       "type": "output",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        10.16,
+        -1.27
+       ],
+       "angle": 180.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "8",
+       "name": "VPOS",
+       "type": "power_in",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        0.0,
+        2.54
+       ],
+       "angle": 270.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "9",
+       "name": "GND",
+       "type": "power_in",
+       "shape": "line",
+       "unit": 1,
+       "hidden": true,
+       "pos": [
+        0.0,
+        -15.24
+       ],
+       "angle": 90.0,
+       "length": 2.54,
+       "alternates": []
+      }
+     ],
+     "pin_names_hidden": false,
+     "pin_numbers_hidden": false
+    },
+    "base": {
+     "pin_count": 9,
+     "unique_pin_numbers": 9,
+     "duplicate_pin_numbers": [],
+     "units": 1,
+     "unit_names": {},
+     "has_demorgan": false,
+     "power_symbol": false,
+     "extends": null,
+     "pin_types": {
+      "input": 4,
+      "power_in": 3,
+      "output": 2
+     },
+     "hidden_pins": 1,
+     "pins": [
+      {
+       "number": "1",
+       "name": "RFIN",
+       "type": "input",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -10.16,
+        -1.27
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "2",
+       "name": "ENBL",
+       "type": "input",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -10.16,
+        -8.89
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "3",
+       "name": "VSET",
+       "type": "input",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -10.16,
+        -11.43
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "4",
+       "name": "FLTR",
+       "type": "input",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        10.16,
+        -11.43
+       ],
+       "angle": 180.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "5",
+       "name": "COMM",
+       "type": "power_in",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        0.0,
+        -15.24
+       ],
+       "angle": 90.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "6",
+       "name": "V_UP",
+       "type": "output",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        10.16,
+        -3.81
+       ],
+       "angle": 180.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "7",
+       "name": "V_DN",
+       "type": "output",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        10.16,
+        -1.27
+       ],
+       "angle": 180.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "8",
+       "name": "VPOS",
+       "type": "power_in",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        0.0,
+        2.54
+       ],
+       "angle": 270.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "9",
+       "name": "GND",
+       "type": "power_in",
+       "shape": "line",
+       "unit": 1,
+       "hidden": true,
+       "pos": [
+        0.0,
+        -15.24
+       ],
+       "angle": 90.0,
+       "length": 2.54,
+       "alternates": []
+      }
+     ],
+     "pin_names_hidden": false,
+     "pin_numbers_hidden": false
+    }
+   },
+   "renders": {
+    "head": {
+     "svg": "items/symbol__Custom_RF_Amplifier__AD8314/head.svg",
+     "png": "items/symbol__Custom_RF_Amplifier__AD8314/head.png",
+     "layers": {}
+    },
+    "base": {
+     "svg": "items/symbol__Custom_RF_Amplifier__AD8314/base.svg",
+     "png": "items/symbol__Custom_RF_Amplifier__AD8314/base.png",
+     "layers": {}
+    }
+   },
+   "diff_png": "items/symbol__Custom_RF_Amplifier__AD8314/diff.png",
+   "glb": {
+    "head": null,
+    "base": null
+   },
+   "text_diff": "items/symbol__Custom_RF_Amplifier__AD8314/diff.patch",
+   "source": {
+    "head": "items/symbol__Custom_RF_Amplifier__AD8314/head.kicad_sym",
+    "base": "items/symbol__Custom_RF_Amplifier__AD8314/base.kicad_sym"
+   },
+   "warnings": [],
+   "view": {
+    "viewbox": [
+     -11.73,
+     -4.11,
+     11.73,
+     16.81
+    ],
+    "px_per_mm": 68.2012,
+    "units": "mm",
+    "y_axis": "down",
+    "unit_offsets": {
+     "1": 0.0
+    }
+   },
+   "diff_stats": {
+    "added_px": 0,
+    "removed_px": 0,
+    "changed_px": 0
+   }
+  },
+  {
+   "id": "symbol:Custom_RF_Amplifier:BLB01",
+   "slug": "symbol__Custom_RF_Amplifier__BLB01",
+   "kind": "symbol",
+   "library": "Custom_RF_Amplifier",
+   "name": "BLB01",
+   "status": "modified",
+   "path": "lib_sch/Custom_RF_Amplifier.kicad_sym",
+   "line_range": {
+    "head": [
+     245,
+     490
+    ],
+    "base": [
+     231,
+     458
+    ]
+   },
+   "properties": {
+    "head": {
+     "Reference": "U",
+     "Value": "BLB01",
+     "Footprint": "Package_DFN_QFN:DFN-8-1EP_2x2mm_P0.5mm_EP0.9x1.5mm",
+     "Datasheet": "${KICAD_LIBS_DIR}/datasheets/BLB01-V6.6.pdf",
+     "Description": "Berex BLB01 500-1500MHz High Linearity LNA. Gain=22.5dB NF=0.43dB"
+    },
+    "base": {
+     "Reference": "U",
+     "Value": "BLB01",
+     "Footprint": "Package_DFN_QFN:DFN-8-1EP_2x2mm_P0.5mm_EP0.9x1.5mm",
+     "Datasheet": "${KICAD_LIBS_DIR}/datasheets/BLB01-V6.6.pdf",
+     "Description": "Berex BLB01 500-1500MHz High Linearity LNA. Gain=22.5dB NF=0.43dB"
+    }
+   },
+   "datasheet": {
+    "url": null,
+    "local": "datasheets/BLB01-V6.6.pdf",
+    "file": "items/symbol__Custom_RF_Amplifier__BLB01/datasheet.pdf"
+   },
+   "model3d": [],
+   "stats": {
+    "head": {
+     "pin_count": 9,
+     "unique_pin_numbers": 9,
+     "duplicate_pin_numbers": [],
+     "units": 1,
+     "unit_names": {},
+     "has_demorgan": false,
+     "power_symbol": false,
+     "extends": null,
+     "pin_types": {
+      "input": 1,
+      "no_connect": 5,
+      "power_in": 2,
+      "output": 1
+     },
+     "hidden_pins": 5,
+     "pins": [
+      {
+       "number": "1",
+       "name": "Vcc",
+       "type": "power_in",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        0.0,
+        7.62
+       ],
+       "angle": 270.0,
+       "length": 3.81,
+       "alternates": []
+      },
+      {
+       "number": "2",
+       "name": "",
+       "type": "input",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -5.08,
+        0.0
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "3",
+       "name": "",
+       "type": "no_connect",
+       "shape": "line",
+       "unit": 1,
+       "hidden": true,
+       "pos": [
+        -2.54,
+        3.81
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "4",
+       "name": "",
+       "type": "no_connect",
+       "shape": "line",
+       "unit": 1,
+       "hidden": true,
+       "pos": [
+        -2.54,
+        2.54
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "5",
+       "name": "",
+       "type": "no_connect",
+       "shape": "line",
+       "unit": 1,
+       "hidden": true,
+       "pos": [
+        -2.54,
+        1.27
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "6",
+       "name": "",
+       "type": "no_connect",
+       "shape": "line",
+       "unit": 1,
+       "hidden": true,
+       "pos": [
+        -2.54,
+        -1.27
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "7",
+       "name": "",
+       "type": "output",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        10.16,
+        0.0
+       ],
+       "angle": 180.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "8",
+       "name": "",
+       "type": "no_connect",
+       "shape": "line",
+       "unit": 1,
+       "hidden": true,
+       "pos": [
+        -2.54,
+        -2.54
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "9",
+       "name": "G",
+       "type": "power_in",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        0.0,
+        -7.62
+       ],
+       "angle": 90.0,
+       "length": 3.81,
+       "alternates": []
+      }
+     ],
+     "pin_names_hidden": false,
+     "pin_numbers_hidden": false
+    },
+    "base": {
+     "pin_count": 9,
+     "unique_pin_numbers": 9,
+     "duplicate_pin_numbers": [],
+     "units": 1,
+     "unit_names": {},
+     "has_demorgan": false,
+     "power_symbol": false,
+     "extends": null,
+     "pin_types": {
+      "input": 1,
+      "no_connect": 5,
+      "power_in": 2,
+      "output": 1
+     },
+     "hidden_pins": 5,
+     "pins": [
+      {
+       "number": "1",
+       "name": "Vcc",
+       "type": "power_in",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        0.0,
+        7.62
+       ],
+       "angle": 270.0,
+       "length": 3.81,
+       "alternates": []
+      },
+      {
+       "number": "2",
+       "name": "",
+       "type": "input",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -5.08,
+        0.0
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "3",
+       "name": "",
+       "type": "no_connect",
+       "shape": "line",
+       "unit": 1,
+       "hidden": true,
+       "pos": [
+        -2.54,
+        3.81
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "4",
+       "name": "",
+       "type": "no_connect",
+       "shape": "line",
+       "unit": 1,
+       "hidden": true,
+       "pos": [
+        -2.54,
+        2.54
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "5",
+       "name": "",
+       "type": "no_connect",
+       "shape": "line",
+       "unit": 1,
+       "hidden": true,
+       "pos": [
+        -2.54,
+        1.27
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "6",
+       "name": "",
+       "type": "no_connect",
+       "shape": "line",
+       "unit": 1,
+       "hidden": true,
+       "pos": [
+        -2.54,
+        -1.27
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "7",
+       "name": "",
+       "type": "output",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        10.16,
+        0.0
+       ],
+       "angle": 180.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "8",
+       "name": "",
+       "type": "no_connect",
+       "shape": "line",
+       "unit": 1,
+       "hidden": true,
+       "pos": [
+        -2.54,
+        -2.54
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "9",
+       "name": "G",
+       "type": "power_in",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        0.0,
+        -7.62
+       ],
+       "angle": 90.0,
+       "length": 3.81,
+       "alternates": []
+      }
+     ],
+     "pin_names_hidden": false,
+     "pin_numbers_hidden": false
+    }
+   },
+   "renders": {
+    "head": {
+     "svg": "items/symbol__Custom_RF_Amplifier__BLB01/head.svg",
+     "png": "items/symbol__Custom_RF_Amplifier__BLB01/head.png",
+     "layers": {}
+    },
+    "base": {
+     "svg": "items/symbol__Custom_RF_Amplifier__BLB01/base.svg",
+     "png": "items/symbol__Custom_RF_Amplifier__BLB01/base.png",
+     "layers": {}
+    }
+   },
+   "diff_png": "items/symbol__Custom_RF_Amplifier__BLB01/diff.png",
+   "glb": {
+    "head": null,
+    "base": null
+   },
+   "text_diff": "items/symbol__Custom_RF_Amplifier__BLB01/diff.patch",
+   "source": {
+    "head": "items/symbol__Custom_RF_Amplifier__BLB01/head.kicad_sym",
+    "base": "items/symbol__Custom_RF_Amplifier__BLB01/base.kicad_sym"
+   },
+   "warnings": [],
+   "view": {
+    "viewbox": [
+     -6.65,
+     -14.224,
+     11.73,
+     9.19
+    ],
+    "px_per_mm": 68.3352,
+    "units": "mm",
+    "y_axis": "down",
+    "unit_offsets": {
+     "1": 0.0
+    }
+   },
+   "diff_stats": {
+    "added_px": 0,
+    "removed_px": 0,
+    "changed_px": 0
+   },
+   "footprint_ref": "Package_DFN_QFN:DFN-8-1EP_2x2mm_P0.5mm_EP0.9x1.5mm"
+  },
+  {
+   "id": "symbol:Custom_RF_Amplifier:PA-SOCKET-MSOP-8-0.65_AD8313",
+   "slug": "symbol__Custom_RF_Amplifier__PA-SOCKET-MSOP-8-0.65_AD8313",
+   "kind": "symbol",
+   "library": "Custom_RF_Amplifier",
+   "name": "PA-SOCKET-MSOP-8-0.65_AD8313",
+   "status": "added",
+   "path": "lib_sch/Custom_RF_Amplifier.kicad_sym",
+   "line_range": {
+    "head": [
+     491,
+     734
+    ],
+    "base": null
+   },
+   "properties": {
+    "head": {
+     "Reference": "U",
+     "Value": "AD8313 in PA-SOCKET-MSOP-8-0.65",
+     "Footprint": "Custom_Connector:PA-SOCKET-MSOP-8-0.65",
+     "Datasheet": "https://www.analog.com/media/en/technical-documentation/data-sheets/AD8313.pdf",
+     "Description": "AD8313 log detector (MSOP-8) in a Proto Advantage PA-SOCKET-MSOP-8-0.65 test socket; pinout per AD8313 datasheet",
+     "ki_keywords": "AD8313 log detector RF power socket test MSOP-8 Proto Advantage",
+     "ki_fp_filters": "PA?SOCKET?MSOP?8*"
+    },
+    "base": null
+   },
+   "datasheet": {
+    "url": "https://www.analog.com/media/en/technical-documentation/data-sheets/AD8313.pdf",
+    "local": null,
+    "file": null
+   },
+   "model3d": [],
+   "stats": {
+    "head": {
+     "pin_count": 8,
+     "unique_pin_numbers": 8,
+     "duplicate_pin_numbers": [],
+     "units": 1,
+     "unit_names": {},
+     "has_demorgan": false,
+     "power_symbol": false,
+     "extends": null,
+     "pin_types": {
+      "power_in": 3,
+      "input": 4,
+      "output": 1
+     },
+     "hidden_pins": 0,
+     "pins": [
+      {
+       "number": "1",
+       "name": "VPOS",
+       "type": "power_in",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -2.54,
+        12.7
+       ],
+       "angle": 270.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "2",
+       "name": "INHI",
+       "type": "input",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -12.7,
+        2.54
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "3",
+       "name": "INLO",
+       "type": "input",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -12.7,
+        0.0
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "4",
+       "name": "VPOS",
+       "type": "power_in",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        2.54,
+        12.7
+       ],
+       "angle": 270.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "5",
+       "name": "PWDN",
+       "type": "input",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        -12.7,
+        -5.08
+       ],
+       "angle": 0.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "6",
+       "name": "COMM",
+       "type": "power_in",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        0.0,
+        -12.7
+       ],
+       "angle": 90.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "7",
+       "name": "VSET",
+       "type": "input",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        12.7,
+        -2.54
+       ],
+       "angle": 180.0,
+       "length": 2.54,
+       "alternates": []
+      },
+      {
+       "number": "8",
+       "name": "VOUT",
+       "type": "output",
+       "shape": "line",
+       "unit": 1,
+       "hidden": false,
+       "pos": [
+        12.7,
+        2.54
+       ],
+       "angle": 180.0,
+       "length": 2.54,
+       "alternates": []
+      }
+     ],
+     "pin_names_hidden": false,
+     "pin_numbers_hidden": false
+    },
+    "base": null
+   },
+   "renders": {
+    "head": {
+     "svg": "items/symbol__Custom_RF_Amplifier__PA-SOCKET-MSOP-8-0.65_AD8313/head.svg",
+     "png": "items/symbol__Custom_RF_Amplifier__PA-SOCKET-MSOP-8-0.65_AD8313/head.png",
+     "layers": {}
+    },
+    "base": null
+   },
+   "diff_png": null,
+   "glb": {
+    "head": null,
+    "base": null
+   },
+   "text_diff": "items/symbol__Custom_RF_Amplifier__PA-SOCKET-MSOP-8-0.65_AD8313/diff.patch",
+   "source": {
+    "head": "items/symbol__Custom_RF_Amplifier__PA-SOCKET-MSOP-8-0.65_AD8313/head.kicad_sym",
+    "base": null
+   },
+   "warnings": [],
+   "view": {
+    "viewbox": [
+     -15.1105,
+     -17.0965,
+     31.3205,
+     17.0965
+    ],
+    "px_per_mm": 34.4597,
+    "units": "mm",
+    "y_axis": "down",
+    "unit_offsets": {
+     "1": 0.0
+    }
+   },
+   "footprint_ref": "Custom_Connector:PA-SOCKET-MSOP-8-0.65"
+  }
+ ]
+}
