@@ -1,32 +1,18 @@
 {
  "schema": 1,
  "generator": "deterministic checks + KLC",
- "generated_at": "2026-09-30T23:03:12+00:00",
- "summary_markdown": "Reviewed **9** item(s): 0 fail, 8 warn, 1 pass.",
+ "generated_at": "2026-10-01T00:53:02+00:00",
+ "summary_markdown": "Reviewed **9** item(s): 0 fail, 7 warn, 2 pass.",
  "items": {
   "footprint:Custom_Connector:PA-SOCKET-MSOP-8-0.65": {
    "verdict": "warn",
-   "summary": "Deterministic checks: 0 error(s), 3 warning(s), 0 info. Cross-checked against `symbol:Custom_RF_Amplifier:PA-SOCKET-MSOP-8-0.65_AD8313`.",
+   "summary": "Deterministic checks: 0 error(s), 1 warning(s), 0 info. Cross-checked against `symbol:Custom_RF_Amplifier:PA-SOCKET-MSOP-8-0.65_AD8313`.",
    "datasheet_used": "https://www.proto-advantage.com/store/datasheets/PA-SOCKET-MSOP-8-0.65.pdf",
    "findings": [
     {
      "severity": "warning",
      "category": "klc",
-     "message": "KLC F5.2: Some fabrication layer lines have a width outside allowed range of [0.1mm - 0.15mm]; - Line (-2.45,-1.125) -> (-2.45,-0.825) on layer 'F.Fab' has width '0.05'; - Line (-2.45,-1.125) -> (-1.5,-1.125) on layer 'F.Fab' has width '0.05'; - Line (-1.5,-1.125) -> (-1.5,-0.825) on layer 'F.Fab' has width '0.05'; - Line (-2.45,-0.825) -> (-1.5,-0.825) on layer 'F.Fab' has width '0.05'; - Line (-2.45,-0.475) -> (-2.45,-0.175) on layer 'F.Fab' has width '0.05'; - Line (-2.45,-0.475) -> (-1.5,-0.475) on layer 'F.Fab' has width '0.05'; - Line (-1.5,-0.475) -> (-1.5,-0.175) on layer 'F.Fab' has width '0.05'; - Line (-2.45,-0.175) -> (-1.5,-0.175) on layer 'F.Fab' has width '0.05'; - Line (-2.45,0.175) -> (-2.45,0.475) on layer 'F.Fab' has width '0.05'; - Line (-2.45,0.175) -> (-1.5,0.175) on layer 'F.Fab' has width '0.05'; - Line (-1.5,0.175) -> (-1.5,0.475) on layer 'F.Fab' has width '0.05'; - Line (-2.45,0.475) -> (-1.5,0.475) on layer 'F.Fab' has width '0.05'; - Line (-2.45,0.825) -> (-2.45,1.125) on layer 'F.Fab' has width '0.05'; - Line (-2.45,0.825) -> (-1.5,0.825) on layer 'F.Fab' has width '0.05'; - Line (-1.5,0.825) -> (-1.5,1.125) on layer 'F.Fab' has width '0.05'; - Line (-2.45,1.125) -> (-1.5,1.125) on layer 'F.Fab' has width '0.05'; - Line (1.5,-1.125) -> (1.5,-0.825) on layer 'F.Fab' has width '0.05'; - Line (1.5,-1.125) -> (2.45,-1.125) on layer 'F.Fab' has width '0.05'; - Line (2.45,-1.125) -> (2.45,-0.825) on layer 'F.Fab' has width '0.05'; - Line (1.5,-0.825) -> (2.45,-0.825) on layer 'F.Fab' has width '0.05'; - Line (1.5,-0.475) -> (1.5,-0.175) on layer 'F.Fab' has width '0.05'; - Line (1.5,-0.475) -> (2.45,-0.475) on layer 'F.Fab' has width '0.05'; - Line (2.45,-0.475) -> (2.45,-0.175) on layer 'F.Fab' has width '0.05'; - Line (1.5,-0.175) -> (2.45,-0.175) on layer 'F.Fab' has width '0.05'; - Line (1.5,0.175) -> (1.5,0.475) on layer 'F.Fab' has width '0.05'; - Line (1.5,0.175) -> (2.45,0.175) on layer 'F.Fab' has width '0.05'; - Line (2.45,0.175) -> (2.45,0.475) on layer 'F.Fab' has width '0.05'; - Line (1.5,0.475) -> (2.45,0.475) on layer 'F.Fab' has width '0.05'; - Line (1.5,0.825) -> (1.5,1.125) on layer 'F.Fab' has width '0.05'; - Line (1.5,0.825) -> (2.45,0.825) on layer 'F.Fab' has width '0.05'; - Line (2.45,0.825) -> (2.45,1.125) on layer 'F.Fab' has width '0.05'; - Line (1.5,1.125) -> (2.45,1.125) on layer 'F.Fab' has width '0.05' ([F5.2](https://klc.kicad.org/footprint/f5/f5.2/))",
-     "line": null,
-     "path": "lib_fp/Custom_Connector.pretty/PA-SOCKET-MSOP-8-0.65.kicad_mod"
-    },
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "KLC F7.2: Pad '1' not located at origin; - Set origin to location of Pad '1' ([F7.2](https://klc.kicad.org/footprint/f7/f7.2/))",
-     "line": null,
-     "path": "lib_fp/Custom_Connector.pretty/PA-SOCKET-MSOP-8-0.65.kicad_mod"
-    },
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "KLC F9.1: The 'datasheet' field should not be set for a footprint: (have 'https://www.proto-advantage.com/store/datasheets/PA-SOCKET-MSOP-8-0.65.pdf'); The 'description' field should not be set for a footprint: (have 'Proto Advantage PA-SOCKET-MSOP-8-0.65 MSOP-8 test socket, THT') ([F9.1](https://klc.kicad.org/footprint/f9/f9.1/))",
+     "message": "KLC F5.3: Courtyard lines are not on 0.01mm grid; - Line (-1.6,-4.275) -> (-1.6,6.225) on layer 'F.CrtYd'; - Line (-1.6,-4.275) -> (17.9,-4.275) on layer 'F.CrtYd'; - Line (17.9,-4.275) -> (17.9,6.225) on layer 'F.CrtYd'; - Line (-1.6,6.225) -> (17.9,6.225) on layer 'F.CrtYd' ([F5.3](https://klc.kicad.org/footprint/f5/f5.3/))",
      "line": null,
      "path": "lib_fp/Custom_Connector.pretty/PA-SOCKET-MSOP-8-0.65.kicad_mod"
     }
@@ -70,7 +56,7 @@
     {
      "name": "KiCad KLC checker (kicad-library-utils)",
      "result": "fail",
-     "detail": "3 violation(s)"
+     "detail": "1 violation(s)"
     },
     {
      "name": "Symbol pins match footprint pads (footprint:Custom_Connector:PA-SOCKET-MSOP-8-0.65)",
@@ -81,44 +67,9 @@
   },
   "footprint:Custom_Module:RP2040-Zero_Castellated": {
    "verdict": "warn",
-   "summary": "Deterministic checks: 0 error(s), 6 warning(s), 1 info. Cross-checked against `symbol:Custom_MCU:RP2040-Zero`.",
+   "summary": "Deterministic checks: 0 error(s), 1 warning(s), 1 info. Cross-checked against `symbol:Custom_MCU:RP2040-Zero`.",
    "datasheet_used": "https://www.waveshare.com/wiki/RP2040-Zero",
    "findings": [
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "KLC F5.2: Value Label Errors; - Value text should match footprint name:; - Value text is 'RP2040-Zero', expected: 'RP2040-Zero_Castellated' ([F5.2](https://klc.kicad.org/footprint/f5/f5.2/))",
-     "line": null,
-     "path": "lib_fp/Custom_Module.pretty/RP2040-Zero_Castellated.kicad_mod"
-    },
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "KLC F6.1: SMD footprint type not set; - For SMD footprints, footprint type must be set to 'SMD'; - There are 23 soldered SMD pads ([F6.1](https://klc.kicad.org/footprint/f6/f6.1/))",
-     "line": null,
-     "path": "lib_fp/Custom_Module.pretty/RP2040-Zero_Castellated.kicad_mod"
-    },
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "KLC F7.1: Through hole footprint type is set, but no THT pads found ([F7.1](https://klc.kicad.org/footprint/f7/f7.1/))",
-     "line": null,
-     "path": "lib_fp/Custom_Module.pretty/RP2040-Zero_Castellated.kicad_mod"
-    },
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "KLC F7.2: Pad '1' not located at origin; - Set origin to location of Pad '1' ([F7.2](https://klc.kicad.org/footprint/f7/f7.2/))",
-     "line": null,
-     "path": "lib_fp/Custom_Module.pretty/RP2040-Zero_Castellated.kicad_mod"
-    },
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "KLC F9.1: Value label 'RP2040-Zero' does not match filename 'RP2040-Zero_Castellated'; The 'datasheet' field should not be set for a footprint: (have 'https://www.waveshare.com/wiki/RP2040-Zero'); The 'description' field should not be set for a footprint: (have 'Waveshare RP2040-Zero module, outer castellated pins') ([F9.1](https://klc.kicad.org/footprint/f9/f9.1/))",
-     "line": null,
-     "path": "lib_fp/Custom_Module.pretty/RP2040-Zero_Castellated.kicad_mod"
-    },
     {
      "severity": "warning",
      "category": "klc",
@@ -129,7 +80,7 @@
     {
      "severity": "info",
      "category": "klc",
-     "message": "KLC F7.3: Only pad 1 should be rectangular ([F7.3](https://klc.kicad.org/footprint/f7/f7.3/))",
+     "message": "KLC F6.2: Footprint anchor does not match calculated center of Pads or F.Fab; - calculated center for Pads [0.0,0.375mm]; - calculated center for F.Fab [0.0,-0.61mm] ([F6.2](https://klc.kicad.org/footprint/f6/f6.2/))",
      "line": null,
      "path": "lib_fp/Custom_Module.pretty/RP2040-Zero_Castellated.kicad_mod"
     }
@@ -173,7 +124,7 @@
     {
      "name": "KiCad KLC checker (kicad-library-utils)",
      "result": "fail",
-     "detail": "7 violation(s)"
+     "detail": "2 violation(s)"
     },
     {
      "name": "Symbol pins match footprint pads (footprint:Custom_Module:RP2040-Zero_Castellated)",
@@ -277,184 +228,10 @@
    ]
   },
   "symbol:Custom_MCU:RP2040-Zero": {
-   "verdict": "warn",
-   "summary": "Deterministic checks: 0 error(s), 22 warning(s), 1 info. Cross-checked against `footprint:Custom_Module:RP2040-Zero_Castellated`.",
+   "verdict": "pass",
+   "summary": "Deterministic checks: 0 error(s), 0 warning(s), 1 info. Cross-checked against `footprint:Custom_Module:RP2040-Zero_Castellated`.",
    "datasheet_used": "https://www.waveshare.com/wiki/RP2040-Zero",
    "findings": [
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "Pin 4 (GP29/ADC3) at (12.7, -11.43) is on 50 mil but not 100 mil grid.",
-     "line": 4545,
-     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
-     "path": "lib_sch/Custom_MCU.kicad_sym"
-    },
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "Pin 5 (GP28/ADC2) at (12.7, -8.89) is on 50 mil but not 100 mil grid.",
-     "line": 4563,
-     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
-     "path": "lib_sch/Custom_MCU.kicad_sym"
-    },
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "Pin 6 (GP27/ADC1) at (12.7, -6.35) is on 50 mil but not 100 mil grid.",
-     "line": 4581,
-     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
-     "path": "lib_sch/Custom_MCU.kicad_sym"
-    },
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "Pin 7 (GP26/ADC0) at (12.7, -3.81) is on 50 mil but not 100 mil grid.",
-     "line": 4599,
-     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
-     "path": "lib_sch/Custom_MCU.kicad_sym"
-    },
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "Pin 8 (GP15) at (12.7, -1.27) is on 50 mil but not 100 mil grid.",
-     "line": 4617,
-     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
-     "path": "lib_sch/Custom_MCU.kicad_sym"
-    },
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "Pin 9 (GP14) at (12.7, 1.27) is on 50 mil but not 100 mil grid.",
-     "line": 4635,
-     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
-     "path": "lib_sch/Custom_MCU.kicad_sym"
-    },
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "Pin 10 (GP13) at (12.7, 3.81) is on 50 mil but not 100 mil grid.",
-     "line": 4653,
-     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
-     "path": "lib_sch/Custom_MCU.kicad_sym"
-    },
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "Pin 11 (GP12) at (12.7, 6.35) is on 50 mil but not 100 mil grid.",
-     "line": 4671,
-     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
-     "path": "lib_sch/Custom_MCU.kicad_sym"
-    },
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "Pin 12 (GP11) at (12.7, 8.89) is on 50 mil but not 100 mil grid.",
-     "line": 4689,
-     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
-     "path": "lib_sch/Custom_MCU.kicad_sym"
-    },
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "Pin 13 (GP10) at (12.7, 11.43) is on 50 mil but not 100 mil grid.",
-     "line": 4707,
-     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
-     "path": "lib_sch/Custom_MCU.kicad_sym"
-    },
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "Pin 14 (GP9) at (-12.7, -11.43) is on 50 mil but not 100 mil grid.",
-     "line": 4725,
-     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
-     "path": "lib_sch/Custom_MCU.kicad_sym"
-    },
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "Pin 15 (GP8) at (-12.7, -8.89) is on 50 mil but not 100 mil grid.",
-     "line": 4743,
-     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
-     "path": "lib_sch/Custom_MCU.kicad_sym"
-    },
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "Pin 16 (GP7) at (-12.7, -6.35) is on 50 mil but not 100 mil grid.",
-     "line": 4761,
-     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
-     "path": "lib_sch/Custom_MCU.kicad_sym"
-    },
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "Pin 17 (GP6) at (-12.7, -3.81) is on 50 mil but not 100 mil grid.",
-     "line": 4779,
-     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
-     "path": "lib_sch/Custom_MCU.kicad_sym"
-    },
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "Pin 18 (GP5) at (-12.7, -1.27) is on 50 mil but not 100 mil grid.",
-     "line": 4797,
-     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
-     "path": "lib_sch/Custom_MCU.kicad_sym"
-    },
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "Pin 19 (GP4) at (-12.7, 1.27) is on 50 mil but not 100 mil grid.",
-     "line": 4815,
-     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
-     "path": "lib_sch/Custom_MCU.kicad_sym"
-    },
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "Pin 20 (GP3) at (-12.7, 3.81) is on 50 mil but not 100 mil grid.",
-     "line": 4833,
-     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
-     "path": "lib_sch/Custom_MCU.kicad_sym"
-    },
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "Pin 21 (GP2) at (-12.7, 6.35) is on 50 mil but not 100 mil grid.",
-     "line": 4851,
-     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
-     "path": "lib_sch/Custom_MCU.kicad_sym"
-    },
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "Pin 22 (GP1) at (-12.7, 8.89) is on 50 mil but not 100 mil grid.",
-     "line": 4869,
-     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
-     "path": "lib_sch/Custom_MCU.kicad_sym"
-    },
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "Pin 23 (GP0) at (-12.7, 11.43) is on 50 mil but not 100 mil grid.",
-     "line": 4887,
-     "suggestion": "KLC S4.1 requires a 100 mil grid for pin connection points.",
-     "path": "lib_sch/Custom_MCU.kicad_sym"
-    },
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "KLC S4.1: Pins not located on 100mil (=2.54mm) grid:; - Pin GP29/ADC3 (4) @ (500,-450); - Pin GP28/ADC2 (5) @ (500,-350); - Pin GP27/ADC1 (6) @ (500,-250); - Pin GP26/ADC0 (7) @ (500,-150); - Pin GP15 (8) @ (500,-50); - Pin GP14 (9) @ (500,50); - Pin GP13 (10) @ (500,150); - Pin GP12 (11) @ (500,250); - Pin GP11 (12) @ (500,350); - Pin GP10 (13) @ (500,450); - Pin GP9 (14) @ (-500,-450); - Pin GP8 (15) @ (-500,-350); - Pin GP7 (16) @ (-500,-250); - Pin GP6 (17) @ (-500,-150); - Pin GP5 (18) @ (-500,-50); - Pin GP4 (19) @ (-500,50); - Pin GP3 (20) @ (-500,150); - Pin GP2 (21) @ (-500,250); - Pin GP1 (22) @ (-500,350); - Pin GP0 (23) @ (-500,450) ([S4.1](https://klc.kicad.org/symbol/s4/s4.1/))",
-     "line": null,
-     "path": "lib_sch/Custom_MCU.kicad_sym"
-    },
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "KLC S4.2: Power output pins should be placed at right of symbol; - Pin 3V3 (3) @ (100,800) ([S4.2](https://klc.kicad.org/symbol/s4/s4.2/))",
-     "line": null,
-     "path": "lib_sch/Custom_MCU.kicad_sym"
-    },
     {
      "severity": "info",
      "category": "klc",
@@ -481,13 +258,13 @@
     },
     {
      "name": "Pins on 100 mil grid",
-     "result": "fail",
-     "detail": "4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23"
+     "result": "pass",
+     "detail": ""
     },
     {
      "name": "KiCad KLC checker (kicad-library-utils)",
      "result": "fail",
-     "detail": "3 violation(s)"
+     "detail": "1 violation(s)"
     },
     {
      "name": "Symbol pins match footprint pads (footprint:Custom_Module:RP2040-Zero_Castellated)",
