@@ -4,8 +4,8 @@
  "pr": 13,
  "base_sha": "3031fc418c3550032a902a2e72447fd7287416de",
  "base_ref_sha": "3031fc418c3550032a902a2e72447fd7287416de",
- "head_sha": "3ab8b27d19f15cdb133ab4581f24487b0cbe4be2",
- "generated_at": "2026-10-01T03:37:17+00:00",
+ "head_sha": "afd9b6fd73c342cf51921b7d4948715ec98e3e4f",
+ "generated_at": "2026-10-01T19:33:04+00:00",
  "kicad_version": "10.0",
  "generator": "kipr library render (built-in SVG renderer)",
  "changed_3d_files": [
@@ -430,13 +430,13 @@
      ],
      "courtyard_bbox": [
       -1.625,
-      -4.3,
+      -4.425,
       17.925,
-      6.25
+      6.325
      ],
      "courtyard_size": [
       19.55,
-      10.55
+      10.75
      ],
      "layers": [
       "B.Mask",
@@ -3887,7 +3887,7 @@
    "properties": {
     "head": {
      "Reference": "U",
-     "Value": "AD8313 in PA-SOCKET-MSOP-8-0.65",
+     "Value": "PA-SOCKET-MSOP-8-0.65_AD8313",
      "Footprint": "Custom_Connector:PA-SOCKET-MSOP-8-0.65",
      "Datasheet": "https://www.analog.com/media/en/technical-documentation/data-sheets/AD8313.pdf",
      "Description": "AD8313 log detector (MSOP-8) in a Proto Advantage PA-SOCKET-MSOP-8-0.65 test socket; pinout per AD8313 datasheet",
@@ -4066,12 +4066,12 @@
    "warnings": [],
    "view": {
     "viewbox": [
-     -15.1105,
-     -17.0965,
-     31.3205,
-     17.0965
+     -14.92,
+     -16.906,
+     27.32,
+     16.906
     ],
-    "px_per_mm": 34.4597,
+    "px_per_mm": 37.8788,
     "units": "mm",
     "y_axis": "down",
     "unit_offsets": {

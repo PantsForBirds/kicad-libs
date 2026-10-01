@@ -1,22 +1,14 @@
 {
  "schema": 1,
  "generator": "deterministic checks + KLC",
- "generated_at": "2026-10-01T03:37:56+00:00",
- "summary_markdown": "Reviewed **6** item(s): 0 fail, 4 warn, 2 pass. 3 symbols re-encoded by KiCad, no changes (not reviewed).",
+ "generated_at": "2026-10-01T19:33:52+00:00",
+ "summary_markdown": "Reviewed **6** item(s): 0 fail, 2 warn, 4 pass. 3 symbols re-encoded by KiCad, no changes (not reviewed).",
  "items": {
   "footprint:Custom_Connector:PA-SOCKET-MSOP-8-0.65": {
-   "verdict": "warn",
-   "summary": "Deterministic checks: 0 error(s), 1 warning(s), 0 info. Cross-checked against `symbol:Custom_RF_Amplifier:PA-SOCKET-MSOP-8-0.65_AD8313`.",
+   "verdict": "pass",
+   "summary": "Deterministic checks: 0 error(s), 0 warning(s), 0 info. Cross-checked against `symbol:Custom_RF_Amplifier:PA-SOCKET-MSOP-8-0.65_AD8313`.",
    "datasheet_used": "https://www.proto-advantage.com/store/datasheets/PA-SOCKET-MSOP-8-0.65.pdf",
-   "findings": [
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "KLC F5.3: Courtyard lines are not on 0.01mm grid; - Line (-1.6,-4.275) -> (-1.6,6.225) on layer 'F.CrtYd'; - Line (-1.6,-4.275) -> (17.9,-4.275) on layer 'F.CrtYd'; - Line (17.9,-4.275) -> (17.9,6.225) on layer 'F.CrtYd'; - Line (-1.6,6.225) -> (17.9,6.225) on layer 'F.CrtYd' ([F5.3](https://klc.kicad.org/footprint/f5/f5.3/))",
-     "line": null,
-     "path": "lib_fp/Custom_Connector.pretty/PA-SOCKET-MSOP-8-0.65.kicad_mod"
-    }
-   ],
+   "findings": [],
    "checks": [
     {
      "name": "Datasheet reference present",
@@ -55,8 +47,8 @@
     },
     {
      "name": "KiCad KLC checker (kicad-library-utils)",
-     "result": "fail",
-     "detail": "1 violation(s)"
+     "result": "pass",
+     "detail": "0 violation(s)"
     },
     {
      "name": "Symbol pins match footprint pads (footprint:Custom_Connector:PA-SOCKET-MSOP-8-0.65)",
@@ -335,17 +327,10 @@
    }
   },
   "symbol:Custom_RF_Amplifier:PA-SOCKET-MSOP-8-0.65_AD8313": {
-   "verdict": "warn",
-   "summary": "Deterministic checks: 0 error(s), 1 warning(s), 1 info. Cross-checked against `footprint:Custom_Connector:PA-SOCKET-MSOP-8-0.65`.",
+   "verdict": "pass",
+   "summary": "Deterministic checks: 0 error(s), 0 warning(s), 1 info. Cross-checked against `footprint:Custom_Connector:PA-SOCKET-MSOP-8-0.65`.",
    "datasheet_used": "https://www.analog.com/media/en/technical-documentation/data-sheets/AD8313.pdf",
    "findings": [
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "KLC S6.2: Value AD8313 in PA-SOCKET-MSOP-8-0.65 does not match component name. ([S6.2](https://klc.kicad.org/symbol/s6/s6.2/))",
-     "line": null,
-     "path": "lib_sch/Custom_RF_Amplifier.kicad_sym"
-    },
     {
      "severity": "info",
      "category": "klc",
@@ -378,7 +363,7 @@
     {
      "name": "KiCad KLC checker (kicad-library-utils)",
      "result": "fail",
-     "detail": "2 violation(s)"
+     "detail": "1 violation(s)"
     },
     {
      "name": "Symbol pins match footprint pads (footprint:Custom_Connector:PA-SOCKET-MSOP-8-0.65)",

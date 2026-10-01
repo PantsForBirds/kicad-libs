@@ -18,7 +18,7 @@
 +				(justify left)
 +			)
 +		)
-+		(property "Value" "AD8313 in PA-SOCKET-MSOP-8-0.65"
++		(property "Value" "PA-SOCKET-MSOP-8-0.65_AD8313"
 +			(at -10.16 -13.97 0)
 +			(show_name no)
 +			(do_not_autoplace no)
