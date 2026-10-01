@@ -1,7 +1,7 @@
 {
  "schema": 1,
  "generator": "deterministic checks + KLC",
- "generated_at": "2026-10-01T02:32:06+00:00",
+ "generated_at": "2026-10-01T03:37:56+00:00",
  "summary_markdown": "Reviewed **6** item(s): 0 fail, 4 warn, 2 pass. 3 symbols re-encoded by KiCad, no changes (not reviewed).",
  "items": {
   "footprint:Custom_Connector:PA-SOCKET-MSOP-8-0.65": {
