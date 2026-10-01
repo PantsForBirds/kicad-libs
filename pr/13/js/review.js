@@ -7,6 +7,12 @@ export function reviewFor(review, item) {
   return review?.items?.[item.id] || null;
 }
 
+/** "KLC not checked" badge when the official KLC checker ran but could not check the item. */
+export function klcBadge(r) {
+  if (r?.klc?.status !== 'error') return null;
+  return el('span', { class: 'badge klc-error', title: String(r.klc.reason || 'the KLC checker failed') }, 'KLC not checked');
+}
+
 export function findingCounts(r) {
   const c = { error: 0, warning: 0, info: 0 };
   for (const f of r?.findings || []) if (f && f.severity in c) c[f.severity]++;
@@ -27,6 +33,8 @@ export function renderReview(item, manifest, review, container) {
   }
   const vb = badge('verdict', typeof r.verdict === 'string' ? r.verdict : null);
   if (vb) head.append(vb);
+  const kb = klcBadge(r);
+  if (kb) head.append(kb);
   container.append(markdown(r.summary));
 
   if (r.datasheet_used) {

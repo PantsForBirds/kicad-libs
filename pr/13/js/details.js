@@ -19,7 +19,7 @@ function kvDiffTable(item, base, head, { keys = null, linkify = false } = {}) {
   for (const k of allKeys) {
     const b = cellText(base?.[k]);
     const h = cellText(head?.[k]);
-    const changed = item.status === 'modified' && b !== h;
+    const changed = (item.status === 'modified' || item.status === 're-encoded') && b !== h;
     const cell = (v) => {
       const url = linkify && /^https?:\/\//i.test(v) ? safeUrl(v) : null;
       return el('td', { class: 'val' }, url ? el('a', { href: url }, v) : v || el('span', { class: 'muted' }, '—'));
@@ -124,7 +124,33 @@ function scalarStats(s) {
   return out;
 }
 
+/** Re-encode verdict (render step, kipr.library.render.reencode): why a part is only re-encoded, or
+ * for a modified part in a file re-saved by another KiCad, what changed beyond the format upgrade. */
+export function reencodeCard(item) {
+  const r = item.reencode;
+  if (!r || typeof r !== 'object') return null;
+  const basis = r.method === 'reference-upgrade'
+    ? `KiCad's own upgrade of the base${r.kicad_cli_version ? ` (kicad-cli ${r.kicad_cli_version})` : ''}`
+    : 'the base, after the documented format normalisations';
+  if (item.status === 're-encoded') {
+    return el('section', { class: 'card reencoded', id: 're-encode' }, el('h3', {}, 'Re-encoded by KiCad, no changes'),
+      el('p', {}, String(r.explanation || 're-saved by a newer KiCad; no content change')),
+      el('p', { class: 'muted small' }, `Identical to ${basis}${r.method === 'semantic+render' ? ', and the base and head renders are pixel identical' : ''}. `
+        + 'Not counted as a change and not checked. The raw text diff is below.'),
+      r.note ? el('p', { class: 'muted small' }, String(r.note)) : null);
+  }
+  const diffs = Array.isArray(r.differences) ? r.differences.filter((d) => typeof d === 'string') : [];
+  if (item.status !== 'modified' || !diffs.length || r.base_format === r.head_format) return null;
+  return el('section', { class: 'card', id: 're-encode' },
+    el('h3', {}, `Changed beyond the file format upgrade ${r.base_format || '?'} → ${r.head_format || '?'} (${diffs.length})`),
+    el('p', { class: 'muted small' }, `Compared with ${basis}.`),
+    el('ul', { class: 'reenc-diffs' }, diffs.slice(0, 60).map((d) => el('li', {}, el('code', {}, d)))),
+    r.note ? el('p', { class: 'muted small' }, String(r.note)) : null);
+}
+
 export function renderDetails(item, manifest, container) {
+  const rc = reencodeCard(item);
+  if (rc) container.append(rc);
   const headSha = manifest.head_sha;
   const baseSha = manifest.base_sha;
   const lr = item.line_range || {};

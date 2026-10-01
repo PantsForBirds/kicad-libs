@@ -3,11 +3,12 @@ import { el, clear, append, fetchJson, githubUrl, shortSha, markdown, badge } fr
 import { createView2D } from './view2d.js';
 import { createPanel3D, has3d } from './panel3d.js';
 import { renderDetails } from './details.js';
-import { renderReview, reviewFor, findingCounts, renderFindings, sortFindings, generatorOf } from './review.js';
+import { renderReview, reviewFor, findingCounts, klcBadge, renderFindings, sortFindings, generatorOf } from './review.js';
 
 const $ = (sel) => document.querySelector(sel);
 const KIND_LABEL = { footprint: 'Footprints', symbol: 'Symbols' };
-const STATUS_ORDER = { added: 0, modified: 1, deleted: 2 };
+const STATUS_ORDER = { added: 0, modified: 1, deleted: 2, 're-encoded': 3 };
+const REENCODED = 're-encoded';   // only re-saved by a newer KiCad: shown collapsed, not counted
 
 const state = { manifest: null, review: null, items: [], filter: '', current: null, cleanups: [], tab: '2d' };
 
@@ -90,24 +91,38 @@ function renderList() {
     groups.get(it.kind).push(it);
   }
   if (!groups.size) list.append(el('p', { class: 'muted pad' }, state.items.length ? 'No items match.' : 'The manifest has no items.'));
-  for (const [kind, items] of groups) {
-    list.append(el('h2', { class: 'group' }, `${KIND_LABEL[kind] || kind} `, el('span', { class: 'muted' }, `(${items.length})`)));
-    const ul = el('ul');
-    for (const it of items) {
-      const r = reviewFor(state.review, it);
-      const c = findingCounts(r);
-      ul.append(el('li', {}, el('a', {
-        href: `#${it.slug}`, class: `item-link${state.current?.slug === it.slug ? ' active' : ''}`, dataset: { slug: it.slug },
-        'aria-current': state.current?.slug === it.slug ? 'page' : null,
-      },
-      el('span', { class: 'item-name', title: it.name }, it.name),
-      el('span', { class: 'item-meta' },
-        el('span', { class: 'lib', title: it.library }, it.library),
-        badge('status', it.status),
-        r ? badge('verdict', r.verdict, `${c.error} errors, ${c.warning} warnings`) : null))));
+  for (const [kind, all] of groups) {
+    const items = all.filter((i) => i.status !== REENCODED);
+    const reenc = all.filter((i) => i.status === REENCODED);
+    list.append(el('h2', { class: 'group' }, `${KIND_LABEL[kind] || kind} `,
+      el('span', { class: 'muted' }, items.length ? `(${items.length})` : '(none changed)')));
+    if (items.length) list.append(itemList(items));
+    if (reenc.length) {
+      // collapsed unless the current item is one of them (or the filter asks for them)
+      const open = reenc.some((i) => i.slug === state.current?.slug) || /re-?enc/i.test(state.filter);
+      list.append(el('details', { class: 'reenc-group', open: open || null },
+        el('summary', {}, `${reenc.length} re-encoded by KiCad, no changes`), itemList(reenc)));
     }
-    list.append(ul);
   }
+}
+
+function itemList(items) {
+  const ul = el('ul');
+  for (const it of items) {
+    const r = reviewFor(state.review, it);
+    const c = findingCounts(r);
+    ul.append(el('li', {}, el('a', {
+      href: `#${it.slug}`, class: `item-link${state.current?.slug === it.slug ? ' active' : ''}`, dataset: { slug: it.slug },
+      'aria-current': state.current?.slug === it.slug ? 'page' : null,
+    },
+    el('span', { class: 'item-name', title: it.name }, it.name),
+    el('span', { class: 'item-meta' },
+      el('span', { class: 'lib', title: it.library }, it.library),
+      badge('status', it.status),
+      r ? badge('verdict', r.verdict, `${c.error} errors, ${c.warning} warnings`) : null,
+      klcBadge(r)))));
+  }
+  return ul;
 }
 
 // --- routing ------------------------------------------------------------------------------------------
@@ -142,10 +157,24 @@ function renderOverview(unknownSlug) {
   const main = clear($('#main'));
   document.title = `Component review${state.manifest.pr ? ` · #${state.manifest.pr}` : ''}`;
   if (unknownSlug) main.append(el('div', { class: 'notice' }, `No item "${unknownSlug}" in this report; showing the overview.`));
+  const changed = state.items.filter((i) => i.status !== REENCODED);
+  const reenc = state.items.filter((i) => i.status === REENCODED);
   const counts = {};
-  for (const it of state.items) counts[it.status] = (counts[it.status] || 0) + 1;
+  for (const it of changed) counts[it.status] = (counts[it.status] || 0) + 1;
   main.append(el('h1', {}, 'Overview'),
-    el('p', {}, `${state.items.length} items: `, Object.entries(counts).map(([s, n]) => [badge('status', s), ` ${n}  `])));
+    el('p', {}, `${changed.length} items: `, Object.entries(counts).map(([s, n]) => [badge('status', s), ` ${n}  `])));
+  const notes = (Array.isArray(state.manifest.reencoded_files) ? state.manifest.reencoded_files : [])
+    .map((f) => f && typeof f.note === 'string' ? f.note : null).filter(Boolean);
+  if (reenc.length || notes.length) {
+    const kinds = {};
+    for (const it of reenc) kinds[it.kind] = (kinds[it.kind] || 0) + 1;
+    const what = Object.entries(kinds).map(([k, n]) => `${n} ${k}${n !== 1 ? 's' : ''}`).join(' and ');
+    main.append(el('section', { class: 'card', id: 're-encoded' },
+      el('details', {}, el('summary', {}, el('h3', {}, reenc.length ? `♻ ${what} re-encoded by KiCad, no changes` : 'Library files re-saved by a newer KiCad')),
+        notes.length ? el('ul', {}, notes.map((n) => el('li', {}, n))) : null,
+        el('ul', {}, reenc.map((it) => el('li', {}, el('a', { href: `#${it.slug}` }, `${it.library}:${it.name}`), ' ',
+          el('span', { class: 'muted' }, String(it.reencode?.explanation || 're-saved by a newer KiCad; no content change'))))))));
+  }
   if (state.review?.summary_markdown) {
     main.append(el('section', { class: 'card' }, el('h3', {}, 'Summary'), markdown(state.review.summary_markdown)));
   }
@@ -154,14 +183,14 @@ function renderOverview(unknownSlug) {
     main.append(el('section', { class: 'card', id: 'pr-findings' }, el('h3', {}, `PR-level findings (${prf.length})`),
       renderFindings(prf, state.manifest, null)));
   }
-  const rows = state.items.map((it) => {
+  const rows = changed.map((it) => {
     const r = reviewFor(state.review, it);
     const c = findingCounts(r);
     return el('tr', {},
       el('td', {}, el('a', { href: `#${it.slug}` }, it.name)),
       el('td', {}, it.library), el('td', {}, it.kind),
       el('td', {}, badge('status', it.status)),
-      el('td', {}, r ? badge('verdict', r.verdict) : el('span', { class: 'muted' }, '—')),
+      el('td', {}, r ? [badge('verdict', r.verdict), ' ', klcBadge(r)] : el('span', { class: 'muted' }, '—')),
       el('td', { class: 'num' }, r ? String(c.error) : ''), el('td', { class: 'num' }, r ? String(c.warning) : ''),
       el('td', { class: 'num' }, it.warnings?.length ? String(it.warnings.length) : ''));
   });
@@ -183,6 +212,7 @@ function renderItem(item) {
     el('span', { class: 'muted' }, `${item.library} · ${item.kind}`),
     badge('status', item.status),
     r ? badge('verdict', r.verdict) : null,
+    klcBadge(r),
     el('button', { class: 'btn small', title: 'Copy a link to this item', onclick: (e) => copyLink(e.currentTarget) }, 'Copy link'));
 
   // view tabs
