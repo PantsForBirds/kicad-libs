@@ -25,9 +25,12 @@ concurrency:
 
 jobs:
   review:
-    uses: CoolNamesAllTaken/kipr/.github/workflows/library-review.yml@b9735ae92d85daa194931a4d15976f064f37f45f
+    uses: CoolNamesAllTaken/kipr/.github/workflows/library-review.yml@d59a08ba65be0e6eb80199cbb9550603354b775e
     with:
-      kipr-ref: b9735ae92d85daa194931a4d15976f064f37f45f
+      kipr-ref: d59a08ba65be0e6eb80199cbb9550603354b775e
       kicad-image: ${{ vars.CR_KICAD_IMAGE || 'kicad/kicad:10.0' }}
       fetch-stock-models: ${{ vars.CR_FETCH_STOCK_MODELS != 'false' }}
       klc: ${{ vars.CR_KLC != 'false' }}
+      # F7.2 "Pad '1' not located at origin": our footprint origins are at the part centroid
+      # (pick-and-place), THT parts included. Keep the same value in both component-review files.
+      klc-ignore: F7.2
