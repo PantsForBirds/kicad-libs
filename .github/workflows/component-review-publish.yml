@@ -22,9 +22,9 @@ jobs:
       pull-requests: write   # sticky comment + inline review
       checks: write          # "Component review" check run
       actions: read          # download the artifacts of the triggering run
-    uses: CoolNamesAllTaken/kipr/.github/workflows/library-review-publish.yml@d59a08ba65be0e6eb80199cbb9550603354b775e
+    uses: CoolNamesAllTaken/kipr/.github/workflows/library-review-publish.yml@476e5354c61f0cf7460d3600cc0bed9975c5397b
     with:
-      kipr-ref: d59a08ba65be0e6eb80199cbb9550603354b775e
+      kipr-ref: 476e5354c61f0cf7460d3600cc0bed9975c5397b
       klc: ${{ vars.CR_KLC != 'false' }}
       # F7.2 "Pad '1' not located at origin": our footprint origins are at the part centroid
       # (pick-and-place), THT parts included. Keep the same value in both component-review files.
