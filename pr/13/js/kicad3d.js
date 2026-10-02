@@ -51,10 +51,26 @@ export function applyMatrix(m, [x, y, z]) {
 }
 
 /**
- * Outline of a pad in its own frame (PCB orientation, before rotation), as a list of rings
- * [[x,y],...]. Returns {outer: ring, extra: [rings]} (extra = custom-pad primitives).
+ * KiCad's pad shape offset ((drill ... (offset x y)) in the .kicad_mod), pad-local mm: the copper is drawn at
+ * at+offset, the hole stays at `at`. SMD pads carry it too. Older geom.json files only had it as drill.offset.
+ */
+export function padOffset(pad) {
+  const o = pad.offset ?? pad.drill?.offset;
+  return Array.isArray(o) ? [+o[0] || 0, +o[1] || 0] : [0, 0];
+}
+
+/**
+ * Outline of a pad in its own frame (PCB orientation, before rotation, shape offset applied), as a list of
+ * rings [[x,y],...]. Returns {outer: ring, extra: [rings]} (extra = custom-pad primitives).
  */
 export function padOutline(pad, segments = 8) {
+  const [ox, oy] = padOffset(pad);
+  const { outer, extra } = padOutlineAt0(pad, segments);
+  const shift = (ring) => ring.map(([x, y]) => [x + ox, y + oy]);
+  return { outer: shift(outer), extra: extra.map(shift) };
+}
+
+function padOutlineAt0(pad, segments) {
   const [w, h] = pad.size || [0, 0];
   const shape = pad.shape || 'rect';
   const ring = [];
@@ -96,14 +112,19 @@ export function padToPcb(pad, [px, py]) {
   return [x + px * Math.cos(a) + py * Math.sin(a), y - px * Math.sin(a) + py * Math.cos(a)];
 }
 
-/** Drill as {w, h, offset:[x,y]} in pad-local coords, or null. Accepts the Addendum-2 object or a bare number. */
+/** Drill as {w, h, oval} (centred on the pad position), or null. Accepts the Addendum-2 object or a bare number. */
 export function padDrill(pad) {
   const d = pad.drill;
   if (d === null || d === undefined || d === 0) return null;
-  if (typeof d === 'number') return { w: d, h: d, offset: [0, 0] };
+  if (typeof d === 'number') return { w: d, h: d };
   const [w, h] = Array.isArray(d.size) ? d.size : [d.size, d.size];
   if (!w) return null;
-  return { w, h: h || w, offset: d.offset || [0, 0], oval: d.shape === 'oval' || (h && h !== w) };
+  return { w, h: h || w, oval: d.shape === 'oval' || (h && h !== w) };
+}
+
+/** PCB-frame centre of a pad's hole: KiCad keeps the hole on the pad position (`at`); only the copper moves. */
+export function padHoleCenter(pad) {
+  return [pad.at?.[0] || 0, pad.at?.[1] || 0];
 }
 
 export function padCopperSides(pad) {

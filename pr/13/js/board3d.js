@@ -5,13 +5,13 @@
 //   - copper pads (+ plated barrels) as real geometry from geom.json.
 // Every object is tagged with userData.group in {board, pads, silk, fab}.
 import {
-  BOARD_THICKNESS, COPPER_THICKNESS, toBoard, padOutline, padToPcb, padDrill, padCopperSides,
+  BOARD_THICKNESS, COPPER_THICKNESS, toBoard, padOutline, padToPcb, padDrill, padHoleCenter, padCopperSides,
 } from './kicad3d.js';
 import { imageSrc } from './util.js';
 
 export const PALETTE = {
   mask: '#1d5b34', copperUnderMask: '#2f7d45', exposedCopper: '#d6b25a', fr4Edge: '#bfb07a',
-  silk: '#f4f4ee', fab: '#a9adb5', courtyard: '#ff4fd8', pad: 0xd9b458,
+  silk: '#f4f4ee', fab: '#a9adb5', courtyard: '#ff4fd8', pad: 0xe9b934,
 };
 const DECAL_Z = 0.045; // above pads (0.035) so decals are not hidden by copper
 const MAX_TEXTURE_PX = 4096;
@@ -67,7 +67,7 @@ function drillRing(pad, segs = 24) {
     // stadium: two half circles joined by straight sides along the long axis
     const cx = Math.cos(a) >= 0 ? hx : -hx;
     const cy = Math.sin(a) >= 0 ? hy : -hy;
-    local.push([d.offset[0] + cx + r * Math.cos(a), d.offset[1] + cy + r * Math.sin(a)]);
+    local.push([cx + r * Math.cos(a), cy + r * Math.sin(a)]);
   }
   return local.map((q) => toBoard(...padToPcb(pad, q)));
 }
@@ -179,8 +179,11 @@ export async function buildBoard(THREE, { geom, layers, maxAnisotropy = 1 }) {
   plane(faces.fabBottom, -BOARD_THICKNESS - DECAL_Z - 0.005, 'fab', { transparent: true, bottom: true });
 
   // --- copper pads and plated barrels
-  const padMat = new THREE.MeshStandardMaterial({ color: PALETTE.pad, metalness: 0.85, roughness: 0.35 });
-  const barrelMat = new THREE.MeshStandardMaterial({ color: PALETTE.pad, metalness: 0.85, roughness: 0.4, side: THREE.DoubleSide });
+  // The copper is KiCad's footprint data: when a STEP body touches it (castellated module, pads at the same z),
+  // let the copper win the depth test instead of z-fighting. Rendering only; the geometry stays where KiCad puts it.
+  const copper = { polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -4 };
+  const padMat = new THREE.MeshStandardMaterial({ color: PALETTE.pad, metalness: 0.5, roughness: 0.4, ...copper });
+  const barrelMat = new THREE.MeshStandardMaterial({ color: PALETTE.pad, metalness: 0.5, roughness: 0.45, side: THREE.DoubleSide, ...copper });
   let padCount = 0;
   for (const pad of pads) {
     const sides = padCopperSides(pad);
@@ -210,7 +213,7 @@ export async function buildBoard(THREE, { geom, layers, maxAnisotropy = 1 }) {
     }
     if (hole && pad.type === 'thru_hole') {
       const d = padDrill(pad);
-      const [cx, cy] = toBoard(...padToPcb(pad, d.offset));
+      const [cx, cy] = toBoard(...padHoleCenter(pad));
       const r = Math.min(d.w, d.h) / 2;
       const len = Math.max(d.w, d.h) - 2 * r;
       // round barrel (or stretched for slots) along board z

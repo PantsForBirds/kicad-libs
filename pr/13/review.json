@@ -1,14 +1,22 @@
 {
  "schema": 1,
  "generator": "deterministic checks + KLC",
- "generated_at": "2026-10-01T19:33:52+00:00",
+ "generated_at": "2026-10-02T00:11:25+00:00",
  "summary_markdown": "Reviewed **6** item(s): 0 fail, 2 warn, 4 pass. 3 symbols re-encoded by KiCad, no changes (not reviewed).",
  "items": {
   "footprint:Custom_Connector:PA-SOCKET-MSOP-8-0.65": {
    "verdict": "pass",
-   "summary": "Deterministic checks: 0 error(s), 0 warning(s), 0 info. Cross-checked against `symbol:Custom_RF_Amplifier:PA-SOCKET-MSOP-8-0.65_AD8313`.",
+   "summary": "Deterministic checks: 0 error(s), 0 warning(s), 1 info. Cross-checked against `symbol:Custom_RF_Amplifier:PA-SOCKET-MSOP-8-0.65_AD8313`.",
    "datasheet_used": "https://www.proto-advantage.com/store/datasheets/PA-SOCKET-MSOP-8-0.65.pdf",
-   "findings": [],
+   "findings": [
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "KLC F9.3: 3D model offset is not {'x': 0, 'y': 0, 'z': 0}. Found {'x': 8.15, 'y': -0.96, 'z': 0} ([F9.3](https://klc.kicad.org/footprint/f9/f9.3/))",
+     "line": null,
+     "path": "lib_fp/Custom_Connector.pretty/PA-SOCKET-MSOP-8-0.65.kicad_mod"
+    }
+   ],
    "checks": [
     {
      "name": "Datasheet reference present",
@@ -47,8 +55,8 @@
     },
     {
      "name": "KiCad KLC checker (kicad-library-utils)",
-     "result": "pass",
-     "detail": "0 violation(s)"
+     "result": "fail",
+     "detail": "1 violation(s)"
     },
     {
      "name": "Symbol pins match footprint pads (footprint:Custom_Connector:PA-SOCKET-MSOP-8-0.65)",
@@ -76,7 +84,7 @@
     {
      "severity": "info",
      "category": "klc",
-     "message": "KLC F6.2: Footprint anchor does not match calculated center of Pads or F.Fab; - calculated center for Pads [0.0,0.375mm]; - calculated center for F.Fab [0.0,-0.61mm] ([F6.2](https://klc.kicad.org/footprint/f6/f6.2/))",
+     "message": "KLC F6.2: Footprint anchor does not match calculated center of Pads or F.Fab; - calculated center for Pads [0.0,0.325mm]; - calculated center for F.Fab [0.0,-0.61mm] ([F6.2](https://klc.kicad.org/footprint/f6/f6.2/))",
      "line": null,
      "path": "lib_fp/Custom_Module.pretty/RP2040-Zero_Castellated.kicad_mod"
     }
@@ -283,17 +291,9 @@
   },
   "symbol:Custom_Power_Management:TPS22918DBV": {
    "verdict": "pass",
-   "summary": "Deterministic checks: 0 error(s), 0 warning(s), 1 info. ",
+   "summary": "Deterministic checks: 0 error(s), 0 warning(s), 0 info. ",
    "datasheet_used": "https://www.ti.com/lit/ds/symlink/tps22918.pdf",
-   "findings": [
-    {
-     "severity": "info",
-     "category": "klc",
-     "message": "KLC S6.2: Found a unexpected property with the name LCSC ([S6.2](https://klc.kicad.org/symbol/s6/s6.2/))",
-     "line": null,
-     "path": "lib_sch/Custom_Power_Management.kicad_sym"
-    }
-   ],
+   "findings": [],
    "checks": [
     {
      "name": "Datasheet property filled",
@@ -317,8 +317,8 @@
     },
     {
      "name": "KiCad KLC checker (kicad-library-utils)",
-     "result": "fail",
-     "detail": "1 violation(s)"
+     "result": "pass",
+     "detail": "0 violation(s)"
     }
    ],
    "klc": {

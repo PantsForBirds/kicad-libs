@@ -1,6 +1,6 @@
 --- a/lib_sch/Custom_Power_Management.kicad_sym
 +++ b/lib_sch/Custom_Power_Management.kicad_sym
-@@ -0,0 +289,217 @@
+@@ -0,0 +289,206 @@
 +	(symbol "TPS22918DBV"
 +		(exclude_from_sim no)
 +		(in_bom yes)
@@ -50,17 +50,6 @@
 +			)
 +		)
 +		(property "Description" "1V to 5.5V, 2A, 52mΩ Load Switch with Configurable Rise Time and Quick Output Discharge, SOT23-6"
-+			(at 0 0 0)
-+			(show_name no)
-+			(do_not_autoplace no)
-+			(hide yes)
-+			(effects
-+				(font
-+					(size 1.27 1.27)
-+				)
-+			)
-+		)
-+		(property "LCSC" "C131941"
 +			(at 0 0 0)
 +			(show_name no)
 +			(do_not_autoplace no)
