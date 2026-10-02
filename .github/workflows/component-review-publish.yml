@@ -22,9 +22,9 @@ jobs:
       pull-requests: write   # sticky comment + inline review
       checks: write          # "Component review" check run
       actions: read          # download the artifacts of the triggering run
-    uses: CoolNamesAllTaken/kipr/.github/workflows/library-review-publish.yml@d767b357f042c7ac88aa73f590adc11b6eed7b04
+    uses: CoolNamesAllTaken/kipr/.github/workflows/library-review-publish.yml@b70dbca45303ebc9a9f6f99fa32062f342ad4ed3
     with:
-      kipr-ref: d767b357f042c7ac88aa73f590adc11b6eed7b04
+      kipr-ref: b70dbca45303ebc9a9f6f99fa32062f342ad4ed3
       klc: ${{ vars.CR_KLC != 'false' }}
       pages-url: ${{ vars.CR_PAGES_URL }}
       fail-conclusion: ${{ vars.CR_FAIL_CONCLUSION || 'neutral' }}

@@ -20,6 +20,6 @@ jobs:
     permissions:
       contents: write        # push to gh-pages
       pull-requests: write   # note on the sticky comment
-    uses: CoolNamesAllTaken/kipr/.github/workflows/library-review-cleanup.yml@d767b357f042c7ac88aa73f590adc11b6eed7b04
+    uses: CoolNamesAllTaken/kipr/.github/workflows/library-review-cleanup.yml@b70dbca45303ebc9a9f6f99fa32062f342ad4ed3
     with:
-      kipr-ref: d767b357f042c7ac88aa73f590adc11b6eed7b04
+      kipr-ref: b70dbca45303ebc9a9f6f99fa32062f342ad4ed3
