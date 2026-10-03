@@ -25,9 +25,9 @@ concurrency:
 
 jobs:
   review:
-    uses: CoolNamesAllTaken/kipr/.github/workflows/library-review.yml@b70dbca45303ebc9a9f6f99fa32062f342ad4ed3
+    uses: CoolNamesAllTaken/kipr/.github/workflows/library-review.yml@4ecc3d2b97812f416deea5d3a610fe03a7c703c7
     with:
-      kipr-ref: b70dbca45303ebc9a9f6f99fa32062f342ad4ed3
+      kipr-ref: 4ecc3d2b97812f416deea5d3a610fe03a7c703c7
       kicad-image: ${{ vars.CR_KICAD_IMAGE || 'kicad/kicad:10.0' }}
       fetch-stock-models: ${{ vars.CR_FETCH_STOCK_MODELS != 'false' }}
       klc: ${{ vars.CR_KLC != 'false' }}
