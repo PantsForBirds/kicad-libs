@@ -4,8 +4,9 @@
 //            workers only from 'self') and load js/app.js as a module, exactly as before.
 //   file://  browsers block module scripts, fetch() and file workers there, so load data.js
 //            (manifest + review + diffs, written by kipr library site) and js/bundle.js, the same modules
-//            concatenated into one classic script. The 3D view then starts its STEP worker from a blob:
-//            URL, and occt-import-js needs 'unsafe-eval' in such a worker (index.html allows it for that).
+//            concatenated into one classic script. The 3D view is the prebuilt js/view3d.bundle.js, and its
+//            STEP kernel (occt-import-js) runs on the main thread, where it needs 'unsafe-eval' (index.html
+//            allows it for that).
 (function () {
   'use strict';
   function add(src, module) {
@@ -22,7 +23,7 @@
   }
   var csp = document.createElement('meta');
   csp.httpEquiv = 'Content-Security-Policy';
-  csp.content = "script-src 'self' https://cdn.jsdelivr.net 'wasm-unsafe-eval'; worker-src 'self'";
+  csp.content = "script-src 'self' 'wasm-unsafe-eval'; worker-src 'self'";
   document.head.appendChild(csp);
   add('js/app.js', true);
 }());

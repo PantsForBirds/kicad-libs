@@ -5,7 +5,23 @@
 //   model3d_by_side[side][]  -> STEP copies ("file") + KiCad offset/rotate/scale/hide
 import { el, clear, assetUrl, fetchText, markdown, OFFLINE, fillViewport } from './util.js';
 
-const SERVE_HINT = 'Run `python3 serve.py` in this folder for the 3D view (see README.txt). Either way it needs access to cdn.jsdelivr.net.';
+const SERVE_HINT = 'Run `python3 serve.py` in this folder for the full 3D view (see README.txt).';
+// The 3D view (view3d.js) imports boarddd and three.js from vendor/: an ES module over http(s); from
+// disk (file://, no modules) the prebuilt classic script js/view3d.bundle.js (build_view3d.mjs).
+const VIEW3D_URL = new URL('./view3d.js', import.meta.url).href;
+let view3d = null;
+function load3d() {
+  view3d ??= OFFLINE
+    ? new Promise((resolve, reject) => {
+      const s = el('script', { src: 'js/view3d.bundle.js' });
+      s.onload = () => (window.KIPR_VIEW3D ? resolve(window.KIPR_VIEW3D) : reject(new Error('js/view3d.bundle.js did not load')));
+      s.onerror = () => reject(new Error('could not load js/view3d.bundle.js'));
+      document.head.append(s);
+    })
+    : import(VIEW3D_URL);
+  view3d.catch(() => { view3d = null; });
+  return view3d;
+}
 
 let preferredMode = null;
 const groupPref = new Map();
@@ -121,7 +137,7 @@ export function createPanel3D(item, container) {
     }
   }
 
-  Promise.all([import('./view3d.js'), sideSpec(item, 'head'), sideSpec(item, 'base')])
+  Promise.all([load3d(), sideSpec(item, 'head'), sideSpec(item, 'base')])
     .then(async ([m, head, base]) => {
       for (const [side, spec] of [['head', head], ['base', base]]) {
         if (spec?.missing.length) onStatus({ side, text: '', errors: spec.missing });
@@ -141,7 +157,6 @@ export function createPanel3D(item, container) {
     .catch((err) => {
       clear(stage).append(el('div', { class: 'empty' },
         '3D view unavailable: ', String(err?.message || err),
-        el('br'), 'The viewer loads three.js and occt-import-js from cdn.jsdelivr.net; check network access.',
         OFFLINE ? markdown(SERVE_HINT) : null));
       stage.dataset.ready = 'error';
     });
