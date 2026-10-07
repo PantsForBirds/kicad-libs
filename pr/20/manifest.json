@@ -4,8 +4,8 @@
  "pr": 20,
  "base_sha": "34ddb5a641304d9408241705b068c56dea90e712",
  "base_ref_sha": "34ddb5a641304d9408241705b068c56dea90e712",
- "head_sha": "1d79c7fe501003e14a4c217d8c85be8bf48a7b79",
- "generated_at": "2026-10-07T01:18:12+00:00",
+ "head_sha": "e9a45a538301c6ed91abda7b0e57429e312cd019",
+ "generated_at": "2026-10-07T01:25:34+00:00",
  "kicad_version": "10.0",
  "generator": "kipr library render (built-in SVG renderer)",
  "changed_3d_files": [
@@ -31,7 +31,7 @@
    "line_range": {
     "head": [
      1,
-     125
+     124
     ],
     "base": null
    },
@@ -39,8 +39,8 @@
     "head": {
      "Reference": "REF**",
      "Value": "MasachTech_MS110-10",
-     "Datasheet": "https://www.masach.com/media/catalog/product/file/MS110-10.pdf",
-     "Description": "Masach Tech MS110-10 two-piece drawn-seamless EMI shield: frame MS110-10F 11x11x2.8mm, cover MS110-10C 11.6x11.6mm. Land per Masach drawing: 10.7x10.7mm centreline, R1.35, 1.5mm wide; keep-in 9.2x9.2mm. https://www.masach.com/media/catalog/product/file/MS110-10.pdf",
+     "Datasheet": "",
+     "Description": "",
      "Footprint": "Custom_RF_Shielding:MasachTech_MS110-10",
      "descr": "Masach Tech MS110-10 two-piece drawn-seamless EMI shield: frame MS110-10F 11x11x2.8mm, cover MS110-10C 11.6x11.6mm. Land per Masach drawing: 10.7x10.7mm centreline, R1.35, 1.5mm wide; keep-in 9.2x9.2mm. https://www.masach.com/media/catalog/product/file/MS110-10.pdf",
      "tags": "RF shield can frame cover EMI Masach"
@@ -160,13 +160,14 @@
       "F.Paste",
       "F.Mask",
       "F.Cu",
+      "F.SilkS",
       "F.Fab",
       "F.CrtYd"
      ],
      "has_courtyard": true,
      "has_fab": true,
-     "has_silk": false,
-     "reference_on_silk": false,
+     "has_silk": true,
+     "reference_on_silk": true,
      "reference_on_fab": true,
      "attr": [
       "smd"
@@ -190,7 +191,7 @@
       {
        "text": "REF**",
        "layer": "F.SilkS",
-       "hidden": true
+       "hidden": false
       },
       {
        "text": "MasachTech_MS110-10",
@@ -198,12 +199,12 @@
        "hidden": false
       },
       {
-       "text": "https://www.masach.com/media/catalog/product/file/MS110-10.pdf",
+       "text": "",
        "layer": "F.Fab",
        "hidden": true
       },
       {
-       "text": "Masach Tech MS110-10 two-piece drawn-seamless EMI shield: frame MS110-10F 11x11x2.8mm, cover MS110-10C 11.6x11.6mm. Land per Masach drawing: 10.7x10.7mm centreline, R1.35, 1.5mm wide; keep-in 9.2x9.2mm. https://www.masach.com/media/catalog/product/file/MS110-10.pdf",
+       "text": "",
        "layer": "F.Fab",
        "hidden": true
       },
@@ -224,6 +225,7 @@
       "F.Paste": "items/footprint__Custom_RF_Shielding__MasachTech_MS110-10/head_F.Paste.svg",
       "F.Mask": "items/footprint__Custom_RF_Shielding__MasachTech_MS110-10/head_F.Mask.svg",
       "F.Cu": "items/footprint__Custom_RF_Shielding__MasachTech_MS110-10/head_F.Cu.svg",
+      "F.SilkS": "items/footprint__Custom_RF_Shielding__MasachTech_MS110-10/head_F.SilkS.svg",
       "F.Fab": "items/footprint__Custom_RF_Shielding__MasachTech_MS110-10/head_F.Fab.svg",
       "F.CrtYd": "items/footprint__Custom_RF_Shielding__MasachTech_MS110-10/head_F.CrtYd.svg"
      }
@@ -244,7 +246,7 @@
    "view": {
     "viewbox": [
      -10.5,
-     -7.375,
+     -8.8,
      10.5,
      8.8
     ],
@@ -326,7 +328,7 @@
    "line_range": {
     "head": [
      1,
-     141
+     140
     ],
     "base": null
    },
@@ -334,8 +336,8 @@
     "head": {
      "Reference": "REF**",
      "Value": "MasachTech_MS156-10",
-     "Datasheet": "https://www.masach.com/media/catalog/product/file/MS156-10.pdf",
-     "Description": "Masach Tech MS156-10 two-piece drawn-seamless EMI shield: frame MS156-10F 15.6x10.6x3mm, cover MS156-10C 16x11mm. Land per Masach drawing: 15.3x10.3mm centreline, R0.95, 1.5mm wide; keep-in 13.8x8.8mm. https://www.masach.com/media/catalog/product/file/MS156-10.pdf",
+     "Datasheet": "",
+     "Description": "",
      "Footprint": "Custom_RF_Shielding:MasachTech_MS156-10",
      "descr": "Masach Tech MS156-10 two-piece drawn-seamless EMI shield: frame MS156-10F 15.6x10.6x3mm, cover MS156-10C 16x11mm. Land per Masach drawing: 15.3x10.3mm centreline, R0.95, 1.5mm wide; keep-in 13.8x8.8mm. https://www.masach.com/media/catalog/product/file/MS156-10.pdf",
      "tags": "RF shield can frame cover EMI Masach"
@@ -517,13 +519,14 @@
       "F.Paste",
       "F.Mask",
       "F.Cu",
+      "F.SilkS",
       "F.Fab",
       "F.CrtYd"
      ],
      "has_courtyard": true,
      "has_fab": true,
-     "has_silk": false,
-     "reference_on_silk": false,
+     "has_silk": true,
+     "reference_on_silk": true,
      "reference_on_fab": true,
      "attr": [
       "smd"
@@ -547,7 +550,7 @@
       {
        "text": "REF**",
        "layer": "F.SilkS",
-       "hidden": true
+       "hidden": false
       },
       {
        "text": "MasachTech_MS156-10",
@@ -555,12 +558,12 @@
        "hidden": false
       },
       {
-       "text": "https://www.masach.com/media/catalog/product/file/MS156-10.pdf",
+       "text": "",
        "layer": "F.Fab",
        "hidden": true
       },
       {
-       "text": "Masach Tech MS156-10 two-piece drawn-seamless EMI shield: frame MS156-10F 15.6x10.6x3mm, cover MS156-10C 16x11mm. Land per Masach drawing: 15.3x10.3mm centreline, R0.95, 1.5mm wide; keep-in 13.8x8.8mm. https://www.masach.com/media/catalog/product/file/MS156-10.pdf",
+       "text": "",
        "layer": "F.Fab",
        "hidden": true
       },
@@ -583,6 +586,7 @@
       "F.Paste": "items/footprint__Custom_RF_Shielding__MasachTech_MS156-10/head_F.Paste.svg",
       "F.Mask": "items/footprint__Custom_RF_Shielding__MasachTech_MS156-10/head_F.Mask.svg",
       "F.Cu": "items/footprint__Custom_RF_Shielding__MasachTech_MS156-10/head_F.Cu.svg",
+      "F.SilkS": "items/footprint__Custom_RF_Shielding__MasachTech_MS156-10/head_F.SilkS.svg",
       "F.Fab": "items/footprint__Custom_RF_Shielding__MasachTech_MS156-10/head_F.Fab.svg",
       "F.CrtYd": "items/footprint__Custom_RF_Shielding__MasachTech_MS156-10/head_F.CrtYd.svg"
      }
@@ -603,7 +607,7 @@
    "view": {
     "viewbox": [
      -10.5,
-     -7.175,
+     -8.6,
      10.5,
      8.6
     ],
@@ -685,7 +689,7 @@
    "line_range": {
     "head": [
      1,
-     141
+     140
     ],
     "base": null
    },
@@ -693,8 +697,8 @@
     "head": {
      "Reference": "REF**",
      "Value": "MasachTech_MS233-10",
-     "Datasheet": "https://www.masach.com/media/catalog/product/file/MS233-10.pdf",
-     "Description": "Masach Tech MS233-10 two-piece drawn-seamless EMI shield: frame MS233-10F 23.3x17.5x3.3mm, cover MS233-10C 23.7x17.9mm. Land per Masach drawing: 23x17.2mm centreline, R1.75, 1.5mm wide; keep-in 21.5x15.7mm. https://www.masach.com/media/catalog/product/file/MS233-10.pdf",
+     "Datasheet": "",
+     "Description": "",
      "Footprint": "Custom_RF_Shielding:MasachTech_MS233-10",
      "descr": "Masach Tech MS233-10 two-piece drawn-seamless EMI shield: frame MS233-10F 23.3x17.5x3.3mm, cover MS233-10C 23.7x17.9mm. Land per Masach drawing: 23x17.2mm centreline, R1.75, 1.5mm wide; keep-in 21.5x15.7mm. https://www.masach.com/media/catalog/product/file/MS233-10.pdf",
      "tags": "RF shield can frame cover EMI Masach"
@@ -876,13 +880,14 @@
       "F.Paste",
       "F.Mask",
       "F.Cu",
+      "F.SilkS",
       "F.Fab",
       "F.CrtYd"
      ],
      "has_courtyard": true,
      "has_fab": true,
-     "has_silk": false,
-     "reference_on_silk": false,
+     "has_silk": true,
+     "reference_on_silk": true,
      "reference_on_fab": true,
      "attr": [
       "smd"
@@ -906,7 +911,7 @@
       {
        "text": "REF**",
        "layer": "F.SilkS",
-       "hidden": true
+       "hidden": false
       },
       {
        "text": "MasachTech_MS233-10",
@@ -914,12 +919,12 @@
        "hidden": false
       },
       {
-       "text": "https://www.masach.com/media/catalog/product/file/MS233-10.pdf",
+       "text": "",
        "layer": "F.Fab",
        "hidden": true
       },
       {
-       "text": "Masach Tech MS233-10 two-piece drawn-seamless EMI shield: frame MS233-10F 23.3x17.5x3.3mm, cover MS233-10C 23.7x17.9mm. Land per Masach drawing: 23x17.2mm centreline, R1.75, 1.5mm wide; keep-in 21.5x15.7mm. https://www.masach.com/media/catalog/product/file/MS233-10.pdf",
+       "text": "",
        "layer": "F.Fab",
        "hidden": true
       },
@@ -942,6 +947,7 @@
       "F.Paste": "items/footprint__Custom_RF_Shielding__MasachTech_MS233-10/head_F.Paste.svg",
       "F.Mask": "items/footprint__Custom_RF_Shielding__MasachTech_MS233-10/head_F.Mask.svg",
       "F.Cu": "items/footprint__Custom_RF_Shielding__MasachTech_MS233-10/head_F.Cu.svg",
+      "F.SilkS": "items/footprint__Custom_RF_Shielding__MasachTech_MS233-10/head_F.SilkS.svg",
       "F.Fab": "items/footprint__Custom_RF_Shielding__MasachTech_MS233-10/head_F.Fab.svg",
       "F.CrtYd": "items/footprint__Custom_RF_Shielding__MasachTech_MS233-10/head_F.CrtYd.svg"
      }
@@ -962,7 +968,7 @@
    "view": {
     "viewbox": [
      -13.525,
-     -10.625,
+     -12.05,
      13.525,
      12.05
     ],
