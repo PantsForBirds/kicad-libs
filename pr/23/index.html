@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Report data comes from a pull request: no inline script; scripts only from self (three.js, boarddd and
+       occt-import-js are vendored in vendor/). 'unsafe-eval' is only for the file:// mode, where occt-import-js
+       (it uses new Function) runs on the main thread; over http(s) js/boot.js adds a second policy without it. -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'unsafe-eval'; worker-src 'self'; connect-src 'self'; img-src 'self' data: blob:; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Component review</title>
+  <link rel="stylesheet" href="viewer.css">
+  <link rel="icon" href="data:,">
+  <script src="js/boot.js" defer></script>
+</head>
+<body>
+  <header id="header"><span class="title">Component review</span></header>
+  <div id="layout">
+    <aside id="sidebar"></aside>
+    <main id="main"><p class="muted pad">Loading…</p></main>
+  </div>
+  <noscript>This viewer needs JavaScript.</noscript>
+</body>
+</html>
