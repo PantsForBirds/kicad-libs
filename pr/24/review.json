@@ -1,0 +1,130 @@
+{
+ "schema": 1,
+ "generator": "deterministic checks + KLC",
+ "generated_at": "2026-10-07T20:55:06+00:00",
+ "summary_markdown": "Reviewed **1** item(s): 1 fail, 0 warn, 0 pass.",
+ "items": {
+  "footprint:Custom_Battery:LiPo_706292": {
+   "verdict": "fail",
+   "summary": "Deterministic checks: 1 error(s), 6 warning(s), 3 info. ",
+   "datasheet_used": null,
+   "findings": [
+    {
+     "severity": "error",
+     "category": "klc",
+     "message": "Footprint has no courtyard (F.CrtYd).",
+     "line": 1,
+     "suggestion": "Add a courtyard 0.25 mm around body and pads (KLC F5.3).",
+     "path": "lib_fp/Custom_Battery.pretty/LiPo_706292.kicad_mod"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "No fabrication-layer outline (F.Fab) graphics.",
+     "line": 1,
+     "suggestion": "Draw the component body outline on F.Fab with a pin-1 chamfer/marker (KLC F5.2).",
+     "path": "lib_fp/Custom_Battery.pretty/LiPo_706292.kicad_mod"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "No datasheet URL in `descr` and the `Datasheet` property is empty.",
+     "line": 32,
+     "suggestion": "Put the manufacturer datasheet URL in `descr` (and/or the Datasheet property).",
+     "path": "lib_fp/Custom_Battery.pretty/LiPo_706292.kicad_mod"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC F5.1: Reference label errors:; - Reference label has a thickness of 0.1mm (expected: 0.15mm). ([F5.1](https://klc.kicad.org/footprint/f5/f5.1/))",
+     "line": null,
+     "path": "lib_fp/Custom_Battery.pretty/LiPo_706292.kicad_mod"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC F5.3: No courtyard found!; - Add courtyard around footprint ([F5.3](https://klc.kicad.org/footprint/f5/f5.3/))",
+     "line": null,
+     "path": "lib_fp/Custom_Battery.pretty/LiPo_706292.kicad_mod"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC F9.1: Description field does not contain a URL - add the URL to the datasheet ([F9.1](https://klc.kicad.org/footprint/f9/f9.1/))",
+     "line": null,
+     "path": "lib_fp/Custom_Battery.pretty/LiPo_706292.kicad_mod"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC F9.3: 3D model offset is not {'x': 0, 'y': 0, 'z': 0}. Found {'x': 0, 'y': 0, 'z': 4}; 3D model rotation is not {'x': 0, 'y': 0, 'z': 0}. Found {'x': 90, 'y': 0, 'z': 0}; 3D model file path 'LiPo 706292' contains invalid characters as per KLC G1.1 ([F9.3](https://klc.kicad.org/footprint/f9/f9.3/))",
+     "line": null,
+     "path": "lib_fp/Custom_Battery.pretty/LiPo_706292.kicad_mod"
+    },
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "KLC F9.3: 3D model name is different from footprint name (found 'LiPo 706292', expected 'LiPo_706292') ([F9.3](https://klc.kicad.org/footprint/f9/f9.3/))",
+     "line": null,
+     "path": "lib_fp/Custom_Battery.pretty/LiPo_706292.kicad_mod"
+    },
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "Render: 3d (head): no courtyard; PCB sized from footprint extents",
+     "line": null,
+     "path": "lib_fp/Custom_Battery.pretty/LiPo_706292.kicad_mod"
+    },
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "Render: 3d (head): model LiPo 706292.step: opacity 0.77 not applied",
+     "line": null,
+     "path": "lib_fp/Custom_Battery.pretty/LiPo_706292.kicad_mod"
+    }
+   ],
+   "checks": [
+    {
+     "name": "Datasheet reference present",
+     "result": "fail",
+     "detail": "no URL in descr and Datasheet property empty"
+    },
+    {
+     "name": "Fab outline present",
+     "result": "fail",
+     "detail": "0 fab segments"
+    },
+    {
+     "name": "${REFERENCE} text on F.Fab",
+     "result": "pass",
+     "detail": ""
+    },
+    {
+     "name": "Courtyard present",
+     "result": "fail",
+     "detail": "0 courtyard segments"
+    },
+    {
+     "name": "Silkscreen does not overlap pads",
+     "result": "pass",
+     "detail": ""
+    },
+    {
+     "name": "3D model present",
+     "result": "pass",
+     "detail": ""
+    },
+    {
+     "name": "KiCad KLC checker (kicad-library-utils)",
+     "result": "fail",
+     "detail": "5 violation(s)"
+    }
+   ],
+   "klc": {
+    "status": "ok",
+    "attempts": 1
+   }
+  }
+ },
+ "pr_findings": []
+}
