@@ -1,0 +1,16 @@
+{
+ "schema": 1,
+ "repo": "PantsForBirds/kicad-libs",
+ "pr": 21,
+ "base_sha": "5fbd304a4c23a26fb5342c3414803c43ffb60905",
+ "base_ref_sha": "5fbd304a4c23a26fb5342c3414803c43ffb60905",
+ "head_sha": "949a25b30edcae40a78e11958c296e8867c5d16a",
+ "generated_at": "2026-10-07T01:42:52+00:00",
+ "kicad_version": "10.0",
+ "generator": "kipr library render (built-in SVG renderer)",
+ "changed_3d_files": [],
+ "unreferenced_changed_3d_files": [],
+ "reencoded_files": [],
+ "fonts": null,
+ "items": []
+}
