@@ -1,12 +1,12 @@
 {
  "schema": 1,
  "generator": "deterministic checks + KLC",
- "generated_at": "2026-10-07T20:55:06+00:00",
+ "generated_at": "2026-10-07T21:00:39+00:00",
  "summary_markdown": "Reviewed **1** item(s): 1 fail, 0 warn, 0 pass.",
  "items": {
   "footprint:Custom_Battery:LiPo_706292": {
    "verdict": "fail",
-   "summary": "Deterministic checks: 1 error(s), 6 warning(s), 3 info. ",
+   "summary": "Deterministic checks: 1 error(s), 5 warning(s), 3 info. ",
    "datasheet_used": null,
    "findings": [
     {
@@ -20,17 +20,8 @@
     {
      "severity": "warning",
      "category": "klc",
-     "message": "No fabrication-layer outline (F.Fab) graphics.",
-     "line": 1,
-     "suggestion": "Draw the component body outline on F.Fab with a pin-1 chamfer/marker (KLC F5.2).",
-     "path": "lib_fp/Custom_Battery.pretty/LiPo_706292.kicad_mod"
-    },
-    {
-     "severity": "warning",
-     "category": "klc",
-     "message": "No datasheet URL in `descr` and the `Datasheet` property is empty.",
-     "line": 32,
-     "suggestion": "Put the manufacturer datasheet URL in `descr` (and/or the Datasheet property).",
+     "message": "KLC G1.10: No files should be embedded in symbols; - Found file \"706292-6700mAh 3.7V电池规格书.pdf\" of type \"datasheet\" ([G1.10](https://klc.kicad.org/general/g1/g1.10/))",
+     "line": null,
      "path": "lib_fp/Custom_Battery.pretty/LiPo_706292.kicad_mod"
     },
     {
@@ -50,7 +41,7 @@
     {
      "severity": "warning",
      "category": "klc",
-     "message": "KLC F9.1: Description field does not contain a URL - add the URL to the datasheet ([F9.1](https://klc.kicad.org/footprint/f9/f9.1/))",
+     "message": "KLC F9.1: Description field does not contain a URL - add the URL to the datasheet; The 'datasheet' field should not be set for a footprint: (have 'kicad-embed://706292-6700mAh 3.7V电池规格书.pdf') ([F9.1](https://klc.kicad.org/footprint/f9/f9.1/))",
      "line": null,
      "path": "lib_fp/Custom_Battery.pretty/LiPo_706292.kicad_mod"
     },
@@ -86,13 +77,13 @@
    "checks": [
     {
      "name": "Datasheet reference present",
-     "result": "fail",
-     "detail": "no URL in descr and Datasheet property empty"
+     "result": "pass",
+     "detail": "URL found in descr/Datasheet"
     },
     {
      "name": "Fab outline present",
-     "result": "fail",
-     "detail": "0 fab segments"
+     "result": "pass",
+     "detail": "4 fab segments"
     },
     {
      "name": "${REFERENCE} text on F.Fab",
@@ -117,7 +108,7 @@
     {
      "name": "KiCad KLC checker (kicad-library-utils)",
      "result": "fail",
-     "detail": "5 violation(s)"
+     "detail": "6 violation(s)"
     }
    ],
    "klc": {

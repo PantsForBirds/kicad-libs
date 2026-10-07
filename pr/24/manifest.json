@@ -4,8 +4,8 @@
  "pr": 24,
  "base_sha": "a3c91bac238b045da10d4cfad5077226c94b254b",
  "base_ref_sha": "a3c91bac238b045da10d4cfad5077226c94b254b",
- "head_sha": "f2f1185b4afdf0bf1a5ee9b970443cc8fff1dea9",
- "generated_at": "2026-10-07T20:54:32+00:00",
+ "head_sha": "cef994b89808a40d67adee4536e3a34e7180b03f",
+ "generated_at": "2026-10-07T21:00:01+00:00",
  "kicad_version": "10.0",
  "generator": "kipr library render (built-in SVG renderer)",
  "changed_3d_files": [
@@ -26,7 +26,7 @@
    "line_range": {
     "head": [
      1,
-     96
+     13689
     ],
     "base": null
    },
@@ -34,7 +34,7 @@
     "head": {
      "Reference": "REF**",
      "Value": "LiPo_706292",
-     "Datasheet": "",
+     "Datasheet": "kicad-embed://706292-6700mAh 3.7V\u7535\u6c60\u89c4\u683c\u4e66.pdf",
      "Description": "",
      "Footprint": "Custom_Battery:LiPo_706292",
      "descr": "Protected Semi-Solid LiPo cell, 7x62x92mm",
@@ -87,8 +87,7 @@
      "courtyard_size": null,
      "layers": [
       "F.SilkS",
-      "F.Fab",
-      "Cmts.User"
+      "F.Fab"
      ],
      "has_courtyard": false,
      "has_fab": true,
@@ -97,7 +96,8 @@
      "reference_on_fab": true,
      "attr": [
       "exclude_from_pos_files",
-      "exclude_from_bom"
+      "exclude_from_bom",
+      "allow_missing_courtyard"
      ],
      "pin1": {
       "pad1_exists": false
@@ -118,7 +118,7 @@
        "hidden": false
       },
       {
-       "text": "",
+       "text": "kicad-embed://706292-6700mAh 3.7V\u7535\u6c60\u89c4\u683c\u4e66.pdf",
        "layer": "F.Fab",
        "hidden": true
       },
@@ -142,8 +142,7 @@
      "png": "items/footprint__Custom_Battery__LiPo_706292/head.png",
      "layers": {
       "F.SilkS": "items/footprint__Custom_Battery__LiPo_706292/head_F.SilkS.svg",
-      "F.Fab": "items/footprint__Custom_Battery__LiPo_706292/head_F.Fab.svg",
-      "Cmts.User": "items/footprint__Custom_Battery__LiPo_706292/head_Cmts.User.svg"
+      "F.Fab": "items/footprint__Custom_Battery__LiPo_706292/head_F.Fab.svg"
      }
     },
     "base": null
