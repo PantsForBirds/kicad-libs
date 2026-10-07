@@ -1,0 +1,1037 @@
+{
+ "schema": 1,
+ "repo": "PantsForBirds/kicad-libs",
+ "pr": 20,
+ "base_sha": "34ddb5a641304d9408241705b068c56dea90e712",
+ "base_ref_sha": "34ddb5a641304d9408241705b068c56dea90e712",
+ "head_sha": "1d79c7fe501003e14a4c217d8c85be8bf48a7b79",
+ "generated_at": "2026-10-07T01:18:12+00:00",
+ "kicad_version": "10.0",
+ "generator": "kipr library render (built-in SVG renderer)",
+ "changed_3d_files": [
+  "lib_3d/Custom_RF_Shielding/MasachTech_MS110-10C.step",
+  "lib_3d/Custom_RF_Shielding/MasachTech_MS110-10F.step",
+  "lib_3d/Custom_RF_Shielding/MasachTech_MS156-10C.step",
+  "lib_3d/Custom_RF_Shielding/MasachTech_MS156-10F.step",
+  "lib_3d/Custom_RF_Shielding/MasachTech_MS233-10C.step",
+  "lib_3d/Custom_RF_Shielding/MasachTech_MS233-10F.step"
+ ],
+ "unreferenced_changed_3d_files": [],
+ "reencoded_files": [],
+ "fonts": null,
+ "items": [
+  {
+   "id": "footprint:Custom_RF_Shielding:MasachTech_MS110-10",
+   "slug": "footprint__Custom_RF_Shielding__MasachTech_MS110-10",
+   "kind": "footprint",
+   "library": "Custom_RF_Shielding",
+   "name": "MasachTech_MS110-10",
+   "status": "added",
+   "path": "lib_fp/Custom_RF_Shielding.pretty/MasachTech_MS110-10.kicad_mod",
+   "line_range": {
+    "head": [
+     1,
+     125
+    ],
+    "base": null
+   },
+   "properties": {
+    "head": {
+     "Reference": "REF**",
+     "Value": "MasachTech_MS110-10",
+     "Datasheet": "https://www.masach.com/media/catalog/product/file/MS110-10.pdf",
+     "Description": "Masach Tech MS110-10 two-piece drawn-seamless EMI shield: frame MS110-10F 11x11x2.8mm, cover MS110-10C 11.6x11.6mm. Land per Masach drawing: 10.7x10.7mm centreline, R1.35, 1.5mm wide; keep-in 9.2x9.2mm. https://www.masach.com/media/catalog/product/file/MS110-10.pdf",
+     "Footprint": "Custom_RF_Shielding:MasachTech_MS110-10",
+     "descr": "Masach Tech MS110-10 two-piece drawn-seamless EMI shield: frame MS110-10F 11x11x2.8mm, cover MS110-10C 11.6x11.6mm. Land per Masach drawing: 10.7x10.7mm centreline, R1.35, 1.5mm wide; keep-in 9.2x9.2mm. https://www.masach.com/media/catalog/product/file/MS110-10.pdf",
+     "tags": "RF shield can frame cover EMI Masach"
+    },
+    "base": null
+   },
+   "datasheet": {
+    "url": "https://www.masach.com/media/catalog/product/file/MS110-10.pdf",
+    "local": null,
+    "file": null
+   },
+   "model3d": [
+    {
+     "path_raw": "${KICAD_LIBS_DIR}/lib_3d/Custom_RF_Shielding/MasachTech_MS110-10F.step",
+     "resolved": "lib_3d/Custom_RF_Shielding/MasachTech_MS110-10F.step",
+     "exists": true,
+     "changed": true,
+     "offset": [
+      0.0,
+      0.0,
+      2.8
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "rotate": [
+      -90.0,
+      0.0,
+      -90.0
+     ],
+     "hide": false,
+     "file": "items/footprint__Custom_RF_Shielding__MasachTech_MS110-10/model_1.step",
+     "side": "head"
+    },
+    {
+     "path_raw": "${KICAD_LIBS_DIR}/lib_3d/Custom_RF_Shielding/MasachTech_MS110-10C.step",
+     "resolved": "lib_3d/Custom_RF_Shielding/MasachTech_MS110-10C.step",
+     "exists": true,
+     "changed": true,
+     "offset": [
+      0.0,
+      0.0,
+      2.8
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "rotate": [
+      -90.0,
+      0.0,
+      -90.0
+     ],
+     "hide": false,
+     "file": "items/footprint__Custom_RF_Shielding__MasachTech_MS110-10/model_2.step",
+     "side": "head"
+    }
+   ],
+   "stats": {
+    "head": {
+     "pad_count": 1,
+     "smd_count": 1,
+     "tht_count": 0,
+     "npth_count": 0,
+     "unique_pad_numbers": [
+      "1"
+     ],
+     "pad_number_count": 1,
+     "pads": [
+      {
+       "number": "1",
+       "type": "smd",
+       "shape": "custom",
+       "size": [
+        0.6,
+        0.6
+       ],
+       "at": [
+        -2.675,
+        -5.35,
+        0.0
+       ],
+       "pos": [
+        -2.675,
+        -5.35
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Mask",
+        "F.Paste"
+       ],
+       "roundrect_rratio": null
+      }
+     ],
+     "pad_extent": [
+      -6.1,
+      -6.1,
+      6.1,
+      6.1
+     ],
+     "courtyard_bbox": [
+      -6.375,
+      -6.375,
+      6.375,
+      6.375
+     ],
+     "courtyard_size": [
+      12.75,
+      12.75
+     ],
+     "layers": [
+      "F.Paste",
+      "F.Mask",
+      "F.Cu",
+      "F.Fab",
+      "F.CrtYd"
+     ],
+     "has_courtyard": true,
+     "has_fab": true,
+     "has_silk": false,
+     "reference_on_silk": false,
+     "reference_on_fab": true,
+     "attr": [
+      "smd"
+     ],
+     "pin1": {
+      "pad1_exists": true,
+      "pad1_pos": [
+       -2.675,
+       -5.35
+      ],
+      "pad1_shape_distinct": false,
+      "silk_marker_near_pad1": false,
+      "fab_marker_near_pad1": true
+     },
+     "models": [
+      "${KICAD_LIBS_DIR}/lib_3d/Custom_RF_Shielding/MasachTech_MS110-10F.step",
+      "${KICAD_LIBS_DIR}/lib_3d/Custom_RF_Shielding/MasachTech_MS110-10C.step"
+     ],
+     "zones": 0,
+     "texts": [
+      {
+       "text": "REF**",
+       "layer": "F.SilkS",
+       "hidden": true
+      },
+      {
+       "text": "MasachTech_MS110-10",
+       "layer": "F.Fab",
+       "hidden": false
+      },
+      {
+       "text": "https://www.masach.com/media/catalog/product/file/MS110-10.pdf",
+       "layer": "F.Fab",
+       "hidden": true
+      },
+      {
+       "text": "Masach Tech MS110-10 two-piece drawn-seamless EMI shield: frame MS110-10F 11x11x2.8mm, cover MS110-10C 11.6x11.6mm. Land per Masach drawing: 10.7x10.7mm centreline, R1.35, 1.5mm wide; keep-in 9.2x9.2mm. https://www.masach.com/media/catalog/product/file/MS110-10.pdf",
+       "layer": "F.Fab",
+       "hidden": true
+      },
+      {
+       "text": "${REFERENCE}",
+       "layer": "F.Fab",
+       "hidden": false
+      }
+     ]
+    },
+    "base": null
+   },
+   "renders": {
+    "head": {
+     "svg": "items/footprint__Custom_RF_Shielding__MasachTech_MS110-10/head.svg",
+     "png": "items/footprint__Custom_RF_Shielding__MasachTech_MS110-10/head.png",
+     "layers": {
+      "F.Paste": "items/footprint__Custom_RF_Shielding__MasachTech_MS110-10/head_F.Paste.svg",
+      "F.Mask": "items/footprint__Custom_RF_Shielding__MasachTech_MS110-10/head_F.Mask.svg",
+      "F.Cu": "items/footprint__Custom_RF_Shielding__MasachTech_MS110-10/head_F.Cu.svg",
+      "F.Fab": "items/footprint__Custom_RF_Shielding__MasachTech_MS110-10/head_F.Fab.svg",
+      "F.CrtYd": "items/footprint__Custom_RF_Shielding__MasachTech_MS110-10/head_F.CrtYd.svg"
+     }
+    },
+    "base": null
+   },
+   "diff_png": null,
+   "glb": {
+    "head": "items/footprint__Custom_RF_Shielding__MasachTech_MS110-10/head.glb",
+    "base": null
+   },
+   "text_diff": "items/footprint__Custom_RF_Shielding__MasachTech_MS110-10/diff.patch",
+   "source": {
+    "head": "items/footprint__Custom_RF_Shielding__MasachTech_MS110-10/head.kicad_mod",
+    "base": null
+   },
+   "warnings": [],
+   "view": {
+    "viewbox": [
+     -10.5,
+     -7.375,
+     10.5,
+     8.8
+    ],
+    "px_per_mm": 76.1905,
+    "units": "mm",
+    "y_axis": "down"
+   },
+   "geom": {
+    "head": "items/footprint__Custom_RF_Shielding__MasachTech_MS110-10/head_geom.json",
+    "base": null
+   },
+   "related_symbols": [],
+   "model3d_by_side": {
+    "head": [
+     {
+      "path_raw": "${KICAD_LIBS_DIR}/lib_3d/Custom_RF_Shielding/MasachTech_MS110-10F.step",
+      "resolved": "lib_3d/Custom_RF_Shielding/MasachTech_MS110-10F.step",
+      "exists": true,
+      "changed": true,
+      "offset": [
+       0.0,
+       0.0,
+       2.8
+      ],
+      "scale": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "rotate": [
+       -90.0,
+       0.0,
+       -90.0
+      ],
+      "hide": false,
+      "file": "items/footprint__Custom_RF_Shielding__MasachTech_MS110-10/model_1.step",
+      "side": "head"
+     },
+     {
+      "path_raw": "${KICAD_LIBS_DIR}/lib_3d/Custom_RF_Shielding/MasachTech_MS110-10C.step",
+      "resolved": "lib_3d/Custom_RF_Shielding/MasachTech_MS110-10C.step",
+      "exists": true,
+      "changed": true,
+      "offset": [
+       0.0,
+       0.0,
+       2.8
+      ],
+      "scale": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "rotate": [
+       -90.0,
+       0.0,
+       -90.0
+      ],
+      "hide": false,
+      "file": "items/footprint__Custom_RF_Shielding__MasachTech_MS110-10/model_2.step",
+      "side": "head"
+     }
+    ],
+    "base": null
+   },
+   "preview_3d": {
+    "head": "items/footprint__Custom_RF_Shielding__MasachTech_MS110-10/head_3d.png",
+    "base": null
+   }
+  },
+  {
+   "id": "footprint:Custom_RF_Shielding:MasachTech_MS156-10",
+   "slug": "footprint__Custom_RF_Shielding__MasachTech_MS156-10",
+   "kind": "footprint",
+   "library": "Custom_RF_Shielding",
+   "name": "MasachTech_MS156-10",
+   "status": "added",
+   "path": "lib_fp/Custom_RF_Shielding.pretty/MasachTech_MS156-10.kicad_mod",
+   "line_range": {
+    "head": [
+     1,
+     141
+    ],
+    "base": null
+   },
+   "properties": {
+    "head": {
+     "Reference": "REF**",
+     "Value": "MasachTech_MS156-10",
+     "Datasheet": "https://www.masach.com/media/catalog/product/file/MS156-10.pdf",
+     "Description": "Masach Tech MS156-10 two-piece drawn-seamless EMI shield: frame MS156-10F 15.6x10.6x3mm, cover MS156-10C 16x11mm. Land per Masach drawing: 15.3x10.3mm centreline, R0.95, 1.5mm wide; keep-in 13.8x8.8mm. https://www.masach.com/media/catalog/product/file/MS156-10.pdf",
+     "Footprint": "Custom_RF_Shielding:MasachTech_MS156-10",
+     "descr": "Masach Tech MS156-10 two-piece drawn-seamless EMI shield: frame MS156-10F 15.6x10.6x3mm, cover MS156-10C 16x11mm. Land per Masach drawing: 15.3x10.3mm centreline, R0.95, 1.5mm wide; keep-in 13.8x8.8mm. https://www.masach.com/media/catalog/product/file/MS156-10.pdf",
+     "tags": "RF shield can frame cover EMI Masach"
+    },
+    "base": null
+   },
+   "datasheet": {
+    "url": "https://www.masach.com/media/catalog/product/file/MS156-10.pdf",
+    "local": null,
+    "file": null
+   },
+   "model3d": [
+    {
+     "path_raw": "${KICAD_LIBS_DIR}/lib_3d/Custom_RF_Shielding/MasachTech_MS156-10F.step",
+     "resolved": "lib_3d/Custom_RF_Shielding/MasachTech_MS156-10F.step",
+     "exists": true,
+     "changed": true,
+     "offset": [
+      0.0,
+      0.0,
+      3.0
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "rotate": [
+      -90.0,
+      0.0,
+      -90.0
+     ],
+     "hide": false,
+     "file": "items/footprint__Custom_RF_Shielding__MasachTech_MS156-10/model_1.step",
+     "side": "head"
+    },
+    {
+     "path_raw": "${KICAD_LIBS_DIR}/lib_3d/Custom_RF_Shielding/MasachTech_MS156-10C.step",
+     "resolved": "lib_3d/Custom_RF_Shielding/MasachTech_MS156-10C.step",
+     "exists": true,
+     "changed": true,
+     "offset": [
+      0.0,
+      0.0,
+      3.0
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "rotate": [
+      -90.0,
+      0.0,
+      -90.0
+     ],
+     "hide": false,
+     "file": "items/footprint__Custom_RF_Shielding__MasachTech_MS156-10/model_2.step",
+     "side": "head"
+    }
+   ],
+   "stats": {
+    "head": {
+     "pad_count": 3,
+     "smd_count": 1,
+     "tht_count": 2,
+     "npth_count": 0,
+     "unique_pad_numbers": [
+      "1"
+     ],
+     "pad_number_count": 1,
+     "pads": [
+      {
+       "number": "1",
+       "type": "smd",
+       "shape": "custom",
+       "size": [
+        0.6,
+        0.6
+       ],
+       "at": [
+        0.0,
+        -5.15,
+        0.0
+       ],
+       "pos": [
+        0.0,
+        -5.15
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Mask",
+        "F.Paste"
+       ],
+       "roundrect_rratio": null
+      },
+      {
+       "number": "1",
+       "type": "thru_hole",
+       "shape": "oval",
+       "size": [
+        2.3,
+        1.5
+       ],
+       "at": [
+        -6.25,
+        -5.15,
+        0.0
+       ],
+       "pos": [
+        -6.25,
+        -5.15
+       ],
+       "angle": 0.0,
+       "drill": [
+        1.6,
+        0.8
+       ],
+       "layers": [
+        "F.Cu",
+        "B.Cu",
+        "F.Mask",
+        "B.Mask"
+       ],
+       "roundrect_rratio": null
+      },
+      {
+       "number": "1",
+       "type": "thru_hole",
+       "shape": "oval",
+       "size": [
+        2.3,
+        1.5
+       ],
+       "at": [
+        6.15,
+        5.15,
+        0.0
+       ],
+       "pos": [
+        6.15,
+        5.15
+       ],
+       "angle": 0.0,
+       "drill": [
+        1.6,
+        0.8
+       ],
+       "layers": [
+        "F.Cu",
+        "B.Cu",
+        "F.Mask",
+        "B.Mask"
+       ],
+       "roundrect_rratio": null
+      }
+     ],
+     "pad_extent": [
+      -8.4,
+      -5.9,
+      8.4,
+      5.9
+     ],
+     "courtyard_bbox": [
+      -8.675,
+      -6.175,
+      8.675,
+      6.175
+     ],
+     "courtyard_size": [
+      17.35,
+      12.35
+     ],
+     "layers": [
+      "B.Mask",
+      "B.Cu",
+      "F.Paste",
+      "F.Mask",
+      "F.Cu",
+      "F.Fab",
+      "F.CrtYd"
+     ],
+     "has_courtyard": true,
+     "has_fab": true,
+     "has_silk": false,
+     "reference_on_silk": false,
+     "reference_on_fab": true,
+     "attr": [
+      "smd"
+     ],
+     "pin1": {
+      "pad1_exists": true,
+      "pad1_pos": [
+       0.0,
+       -5.15
+      ],
+      "pad1_shape_distinct": true,
+      "silk_marker_near_pad1": false,
+      "fab_marker_near_pad1": false
+     },
+     "models": [
+      "${KICAD_LIBS_DIR}/lib_3d/Custom_RF_Shielding/MasachTech_MS156-10F.step",
+      "${KICAD_LIBS_DIR}/lib_3d/Custom_RF_Shielding/MasachTech_MS156-10C.step"
+     ],
+     "zones": 0,
+     "texts": [
+      {
+       "text": "REF**",
+       "layer": "F.SilkS",
+       "hidden": true
+      },
+      {
+       "text": "MasachTech_MS156-10",
+       "layer": "F.Fab",
+       "hidden": false
+      },
+      {
+       "text": "https://www.masach.com/media/catalog/product/file/MS156-10.pdf",
+       "layer": "F.Fab",
+       "hidden": true
+      },
+      {
+       "text": "Masach Tech MS156-10 two-piece drawn-seamless EMI shield: frame MS156-10F 15.6x10.6x3mm, cover MS156-10C 16x11mm. Land per Masach drawing: 15.3x10.3mm centreline, R0.95, 1.5mm wide; keep-in 13.8x8.8mm. https://www.masach.com/media/catalog/product/file/MS156-10.pdf",
+       "layer": "F.Fab",
+       "hidden": true
+      },
+      {
+       "text": "${REFERENCE}",
+       "layer": "F.Fab",
+       "hidden": false
+      }
+     ]
+    },
+    "base": null
+   },
+   "renders": {
+    "head": {
+     "svg": "items/footprint__Custom_RF_Shielding__MasachTech_MS156-10/head.svg",
+     "png": "items/footprint__Custom_RF_Shielding__MasachTech_MS156-10/head.png",
+     "layers": {
+      "B.Mask": "items/footprint__Custom_RF_Shielding__MasachTech_MS156-10/head_B.Mask.svg",
+      "B.Cu": "items/footprint__Custom_RF_Shielding__MasachTech_MS156-10/head_B.Cu.svg",
+      "F.Paste": "items/footprint__Custom_RF_Shielding__MasachTech_MS156-10/head_F.Paste.svg",
+      "F.Mask": "items/footprint__Custom_RF_Shielding__MasachTech_MS156-10/head_F.Mask.svg",
+      "F.Cu": "items/footprint__Custom_RF_Shielding__MasachTech_MS156-10/head_F.Cu.svg",
+      "F.Fab": "items/footprint__Custom_RF_Shielding__MasachTech_MS156-10/head_F.Fab.svg",
+      "F.CrtYd": "items/footprint__Custom_RF_Shielding__MasachTech_MS156-10/head_F.CrtYd.svg"
+     }
+    },
+    "base": null
+   },
+   "diff_png": null,
+   "glb": {
+    "head": "items/footprint__Custom_RF_Shielding__MasachTech_MS156-10/head.glb",
+    "base": null
+   },
+   "text_diff": "items/footprint__Custom_RF_Shielding__MasachTech_MS156-10/diff.patch",
+   "source": {
+    "head": "items/footprint__Custom_RF_Shielding__MasachTech_MS156-10/head.kicad_mod",
+    "base": null
+   },
+   "warnings": [],
+   "view": {
+    "viewbox": [
+     -10.5,
+     -7.175,
+     10.5,
+     8.6
+    ],
+    "px_per_mm": 76.1905,
+    "units": "mm",
+    "y_axis": "down"
+   },
+   "geom": {
+    "head": "items/footprint__Custom_RF_Shielding__MasachTech_MS156-10/head_geom.json",
+    "base": null
+   },
+   "related_symbols": [],
+   "model3d_by_side": {
+    "head": [
+     {
+      "path_raw": "${KICAD_LIBS_DIR}/lib_3d/Custom_RF_Shielding/MasachTech_MS156-10F.step",
+      "resolved": "lib_3d/Custom_RF_Shielding/MasachTech_MS156-10F.step",
+      "exists": true,
+      "changed": true,
+      "offset": [
+       0.0,
+       0.0,
+       3.0
+      ],
+      "scale": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "rotate": [
+       -90.0,
+       0.0,
+       -90.0
+      ],
+      "hide": false,
+      "file": "items/footprint__Custom_RF_Shielding__MasachTech_MS156-10/model_1.step",
+      "side": "head"
+     },
+     {
+      "path_raw": "${KICAD_LIBS_DIR}/lib_3d/Custom_RF_Shielding/MasachTech_MS156-10C.step",
+      "resolved": "lib_3d/Custom_RF_Shielding/MasachTech_MS156-10C.step",
+      "exists": true,
+      "changed": true,
+      "offset": [
+       0.0,
+       0.0,
+       3.0
+      ],
+      "scale": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "rotate": [
+       -90.0,
+       0.0,
+       -90.0
+      ],
+      "hide": false,
+      "file": "items/footprint__Custom_RF_Shielding__MasachTech_MS156-10/model_2.step",
+      "side": "head"
+     }
+    ],
+    "base": null
+   },
+   "preview_3d": {
+    "head": "items/footprint__Custom_RF_Shielding__MasachTech_MS156-10/head_3d.png",
+    "base": null
+   }
+  },
+  {
+   "id": "footprint:Custom_RF_Shielding:MasachTech_MS233-10",
+   "slug": "footprint__Custom_RF_Shielding__MasachTech_MS233-10",
+   "kind": "footprint",
+   "library": "Custom_RF_Shielding",
+   "name": "MasachTech_MS233-10",
+   "status": "added",
+   "path": "lib_fp/Custom_RF_Shielding.pretty/MasachTech_MS233-10.kicad_mod",
+   "line_range": {
+    "head": [
+     1,
+     141
+    ],
+    "base": null
+   },
+   "properties": {
+    "head": {
+     "Reference": "REF**",
+     "Value": "MasachTech_MS233-10",
+     "Datasheet": "https://www.masach.com/media/catalog/product/file/MS233-10.pdf",
+     "Description": "Masach Tech MS233-10 two-piece drawn-seamless EMI shield: frame MS233-10F 23.3x17.5x3.3mm, cover MS233-10C 23.7x17.9mm. Land per Masach drawing: 23x17.2mm centreline, R1.75, 1.5mm wide; keep-in 21.5x15.7mm. https://www.masach.com/media/catalog/product/file/MS233-10.pdf",
+     "Footprint": "Custom_RF_Shielding:MasachTech_MS233-10",
+     "descr": "Masach Tech MS233-10 two-piece drawn-seamless EMI shield: frame MS233-10F 23.3x17.5x3.3mm, cover MS233-10C 23.7x17.9mm. Land per Masach drawing: 23x17.2mm centreline, R1.75, 1.5mm wide; keep-in 21.5x15.7mm. https://www.masach.com/media/catalog/product/file/MS233-10.pdf",
+     "tags": "RF shield can frame cover EMI Masach"
+    },
+    "base": null
+   },
+   "datasheet": {
+    "url": "https://www.masach.com/media/catalog/product/file/MS233-10.pdf",
+    "local": null,
+    "file": null
+   },
+   "model3d": [
+    {
+     "path_raw": "${KICAD_LIBS_DIR}/lib_3d/Custom_RF_Shielding/MasachTech_MS233-10F.step",
+     "resolved": "lib_3d/Custom_RF_Shielding/MasachTech_MS233-10F.step",
+     "exists": true,
+     "changed": true,
+     "offset": [
+      0.0,
+      0.0,
+      3.3
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "rotate": [
+      -90.0,
+      0.0,
+      -90.0
+     ],
+     "hide": false,
+     "file": "items/footprint__Custom_RF_Shielding__MasachTech_MS233-10/model_1.step",
+     "side": "head"
+    },
+    {
+     "path_raw": "${KICAD_LIBS_DIR}/lib_3d/Custom_RF_Shielding/MasachTech_MS233-10C.step",
+     "resolved": "lib_3d/Custom_RF_Shielding/MasachTech_MS233-10C.step",
+     "exists": true,
+     "changed": true,
+     "offset": [
+      0.0,
+      0.0,
+      3.3
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "rotate": [
+      -90.0,
+      0.0,
+      -90.0
+     ],
+     "hide": false,
+     "file": "items/footprint__Custom_RF_Shielding__MasachTech_MS233-10/model_2.step",
+     "side": "head"
+    }
+   ],
+   "stats": {
+    "head": {
+     "pad_count": 3,
+     "smd_count": 1,
+     "tht_count": 2,
+     "npth_count": 0,
+     "unique_pad_numbers": [
+      "1"
+     ],
+     "pad_number_count": 1,
+     "pads": [
+      {
+       "number": "1",
+       "type": "smd",
+       "shape": "custom",
+       "size": [
+        0.6,
+        0.6
+       ],
+       "at": [
+        -5.75,
+        -8.6,
+        0.0
+       ],
+       "pos": [
+        -5.75,
+        -8.6
+       ],
+       "angle": 0.0,
+       "drill": null,
+       "layers": [
+        "F.Cu",
+        "F.Mask",
+        "F.Paste"
+       ],
+       "roundrect_rratio": null
+      },
+      {
+       "number": "1",
+       "type": "thru_hole",
+       "shape": "oval",
+       "size": [
+        1.5,
+        2.3
+       ],
+       "at": [
+        -11.5,
+        -1.5,
+        0.0
+       ],
+       "pos": [
+        -11.5,
+        -1.5
+       ],
+       "angle": 0.0,
+       "drill": [
+        0.8,
+        1.6
+       ],
+       "layers": [
+        "F.Cu",
+        "B.Cu",
+        "F.Mask",
+        "B.Mask"
+       ],
+       "roundrect_rratio": null
+      },
+      {
+       "number": "1",
+       "type": "thru_hole",
+       "shape": "oval",
+       "size": [
+        1.5,
+        2.3
+       ],
+       "at": [
+        11.5,
+        1.5,
+        0.0
+       ],
+       "pos": [
+        11.5,
+        1.5
+       ],
+       "angle": 0.0,
+       "drill": [
+        0.8,
+        1.6
+       ],
+       "layers": [
+        "F.Cu",
+        "B.Cu",
+        "F.Mask",
+        "B.Mask"
+       ],
+       "roundrect_rratio": null
+      }
+     ],
+     "pad_extent": [
+      -12.25,
+      -9.35,
+      12.25,
+      9.35
+     ],
+     "courtyard_bbox": [
+      -12.525,
+      -9.625,
+      12.525,
+      9.625
+     ],
+     "courtyard_size": [
+      25.05,
+      19.25
+     ],
+     "layers": [
+      "B.Mask",
+      "B.Cu",
+      "F.Paste",
+      "F.Mask",
+      "F.Cu",
+      "F.Fab",
+      "F.CrtYd"
+     ],
+     "has_courtyard": true,
+     "has_fab": true,
+     "has_silk": false,
+     "reference_on_silk": false,
+     "reference_on_fab": true,
+     "attr": [
+      "smd"
+     ],
+     "pin1": {
+      "pad1_exists": true,
+      "pad1_pos": [
+       -5.75,
+       -8.6
+      ],
+      "pad1_shape_distinct": true,
+      "silk_marker_near_pad1": false,
+      "fab_marker_near_pad1": false
+     },
+     "models": [
+      "${KICAD_LIBS_DIR}/lib_3d/Custom_RF_Shielding/MasachTech_MS233-10F.step",
+      "${KICAD_LIBS_DIR}/lib_3d/Custom_RF_Shielding/MasachTech_MS233-10C.step"
+     ],
+     "zones": 0,
+     "texts": [
+      {
+       "text": "REF**",
+       "layer": "F.SilkS",
+       "hidden": true
+      },
+      {
+       "text": "MasachTech_MS233-10",
+       "layer": "F.Fab",
+       "hidden": false
+      },
+      {
+       "text": "https://www.masach.com/media/catalog/product/file/MS233-10.pdf",
+       "layer": "F.Fab",
+       "hidden": true
+      },
+      {
+       "text": "Masach Tech MS233-10 two-piece drawn-seamless EMI shield: frame MS233-10F 23.3x17.5x3.3mm, cover MS233-10C 23.7x17.9mm. Land per Masach drawing: 23x17.2mm centreline, R1.75, 1.5mm wide; keep-in 21.5x15.7mm. https://www.masach.com/media/catalog/product/file/MS233-10.pdf",
+       "layer": "F.Fab",
+       "hidden": true
+      },
+      {
+       "text": "${REFERENCE}",
+       "layer": "F.Fab",
+       "hidden": false
+      }
+     ]
+    },
+    "base": null
+   },
+   "renders": {
+    "head": {
+     "svg": "items/footprint__Custom_RF_Shielding__MasachTech_MS233-10/head.svg",
+     "png": "items/footprint__Custom_RF_Shielding__MasachTech_MS233-10/head.png",
+     "layers": {
+      "B.Mask": "items/footprint__Custom_RF_Shielding__MasachTech_MS233-10/head_B.Mask.svg",
+      "B.Cu": "items/footprint__Custom_RF_Shielding__MasachTech_MS233-10/head_B.Cu.svg",
+      "F.Paste": "items/footprint__Custom_RF_Shielding__MasachTech_MS233-10/head_F.Paste.svg",
+      "F.Mask": "items/footprint__Custom_RF_Shielding__MasachTech_MS233-10/head_F.Mask.svg",
+      "F.Cu": "items/footprint__Custom_RF_Shielding__MasachTech_MS233-10/head_F.Cu.svg",
+      "F.Fab": "items/footprint__Custom_RF_Shielding__MasachTech_MS233-10/head_F.Fab.svg",
+      "F.CrtYd": "items/footprint__Custom_RF_Shielding__MasachTech_MS233-10/head_F.CrtYd.svg"
+     }
+    },
+    "base": null
+   },
+   "diff_png": null,
+   "glb": {
+    "head": "items/footprint__Custom_RF_Shielding__MasachTech_MS233-10/head.glb",
+    "base": null
+   },
+   "text_diff": "items/footprint__Custom_RF_Shielding__MasachTech_MS233-10/diff.patch",
+   "source": {
+    "head": "items/footprint__Custom_RF_Shielding__MasachTech_MS233-10/head.kicad_mod",
+    "base": null
+   },
+   "warnings": [],
+   "view": {
+    "viewbox": [
+     -13.525,
+     -10.625,
+     13.525,
+     12.05
+    ],
+    "px_per_mm": 59.1497,
+    "units": "mm",
+    "y_axis": "down"
+   },
+   "geom": {
+    "head": "items/footprint__Custom_RF_Shielding__MasachTech_MS233-10/head_geom.json",
+    "base": null
+   },
+   "related_symbols": [],
+   "model3d_by_side": {
+    "head": [
+     {
+      "path_raw": "${KICAD_LIBS_DIR}/lib_3d/Custom_RF_Shielding/MasachTech_MS233-10F.step",
+      "resolved": "lib_3d/Custom_RF_Shielding/MasachTech_MS233-10F.step",
+      "exists": true,
+      "changed": true,
+      "offset": [
+       0.0,
+       0.0,
+       3.3
+      ],
+      "scale": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "rotate": [
+       -90.0,
+       0.0,
+       -90.0
+      ],
+      "hide": false,
+      "file": "items/footprint__Custom_RF_Shielding__MasachTech_MS233-10/model_1.step",
+      "side": "head"
+     },
+     {
+      "path_raw": "${KICAD_LIBS_DIR}/lib_3d/Custom_RF_Shielding/MasachTech_MS233-10C.step",
+      "resolved": "lib_3d/Custom_RF_Shielding/MasachTech_MS233-10C.step",
+      "exists": true,
+      "changed": true,
+      "offset": [
+       0.0,
+       0.0,
+       3.3
+      ],
+      "scale": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "rotate": [
+       -90.0,
+       0.0,
+       -90.0
+      ],
+      "hide": false,
+      "file": "items/footprint__Custom_RF_Shielding__MasachTech_MS233-10/model_2.step",
+      "side": "head"
+     }
+    ],
+    "base": null
+   },
+   "preview_3d": {
+    "head": "items/footprint__Custom_RF_Shielding__MasachTech_MS233-10/head_3d.png",
+    "base": null
+   }
+  }
+ ]
+}

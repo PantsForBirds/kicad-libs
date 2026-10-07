@@ -1,0 +1,287 @@
+{
+ "schema": 1,
+ "generator": "deterministic checks + KLC",
+ "generated_at": "2026-10-07T01:18:49+00:00",
+ "summary_markdown": "Reviewed **3** item(s): 0 fail, 3 warn, 0 pass.",
+ "items": {
+  "footprint:Custom_RF_Shielding:MasachTech_MS110-10": {
+   "verdict": "warn",
+   "summary": "Deterministic checks: 0 error(s), 3 warning(s), 2 info. ",
+   "datasheet_used": "https://www.masach.com/media/catalog/product/file/MS110-10.pdf",
+   "findings": [
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC F5.1: Reference label errors:; - Reference label is hidden (must be set to visible) ([F5.1](https://klc.kicad.org/footprint/f5/f5.1/))",
+     "line": null,
+     "path": "lib_fp/Custom_RF_Shielding.pretty/MasachTech_MS110-10.kicad_mod"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC F5.2: Some fabrication layer lines have a width outside allowed range of [0.1mm - 0.15mm]; - Line (4.1,-5.8) -> (4.54,-5.7421) on layer 'F.Fab' has width '0.05'; - Line (4.54,-5.7421) -> (4.95,-5.5722) on layer 'F.Fab' has width '0.05'; - Line (4.95,-5.5722) -> (5.3021,-5.3021) on layer 'F.Fab' has width '0.05'; - Line (5.3021,-5.3021) -> (5.5722,-4.95) on layer 'F.Fab' has width '0.05'; - Line (5.5722,-4.95) -> (5.7421,-4.54) on layer 'F.Fab' has width '0.05'; - Line (5.7421,-4.54) -> (5.8,-4.1) on layer 'F.Fab' has width '0.05'; - Line (5.8,-4.1) -> (5.8,4.1) on layer 'F.Fab' has width '0.05'; - Line (5.8,4.1) -> (5.7421,4.54) on layer 'F.Fab' has width '0.05'; - Line (5.7421,4.54) -> (5.5722,4.95) on layer 'F.Fab' has width '0.05'; - Line (5.5722,4.95) -> (5.3021,5.3021) on layer 'F.Fab' has width '0.05'; - Line (5.3021,5.3021) -> (4.95,5.5722) on layer 'F.Fab' has width '0.05'; - Line (4.95,5.5722) -> (4.54,5.7421) on layer 'F.Fab' has width '0.05'; - Line (4.54,5.7421) -> (4.1,5.8) on layer 'F.Fab' has width '0.05'; - Line (4.1,5.8) -> (-4.1,5.8) on layer 'F.Fab' has width '0.05'; - Line (-4.1,5.8) -> (-4.54,5.7421) on layer 'F.Fab' has width '0.05'; - Line (-4.54,5.7421) -> (-4.95,5.5722) on layer 'F.Fab' has width '0.05'; - Line (-4.95,5.5722) -> (-5.3021,5.3021) on layer 'F.Fab' has width '0.05'; - Line (-5.3021,5.3021) -> (-5.5722,4.95) on layer 'F.Fab' has width '0.05'; - Line (-5.5722,4.95) -> (-5.7421,4.54) on layer 'F.Fab' has width '0.05'; - Line (-5.7421,4.54) -> (-5.8,4.1) on layer 'F.Fab' has width '0.05'; - Line (-5.8,4.1) -> (-5.8,-4.1) on layer 'F.Fab' has width '0.05'; - Line (-5.8,-4.1) -> (-5.7421,-4.54) on layer 'F.Fab' has width '0.05'; - Line (-5.7421,-4.54) -> (-5.5722,-4.95) on layer 'F.Fab' has width '0.05'; - Line (-5.5722,-4.95) -> (-5.3021,-5.3021) on layer 'F.Fab' has width '0.05'; - Line (-5.3021,-5.3021) -> (-4.95,-5.5722) on layer 'F.Fab' has width '0.05'; - Line (-4.95,-5.5722) -> (-4.54,-5.7421) on layer 'F.Fab' has width '0.05'; - Line (-4.54,-5.7421) -> (-4.1,-5.8) on layer 'F.Fab' has width '0.05'; - Line (-4.1,-5.8) -> (4.1,-5.8) on layer 'F.Fab' has width '0.05' ([F5.2](https://klc.kicad.org/footprint/f5/f5.2/))",
+     "line": null,
+     "path": "lib_fp/Custom_RF_Shielding.pretty/MasachTech_MS110-10.kicad_mod"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC F9.1: The 'datasheet' field should not be set for a footprint: (have 'https://www.masach.com/media/catalog/product/file/MS110-10.pdf'); The 'description' field should not be set for a footprint: (have 'Masach Tech MS110-10 two-piece drawn-seamless EMI shield: frame MS110-10F 11x11x2.8mm, cover MS110-10C 11.6x11.6mm. Land per Masach drawing: 10.7x10.7mm centreline, R1.35, 1.5mm wide; keep-in 9.2x9.2mm. https://www.masach.com/media/catalog/product/file/MS110-10.pdf') ([F9.1](https://klc.kicad.org/footprint/f9/f9.1/))",
+     "line": null,
+     "path": "lib_fp/Custom_RF_Shielding.pretty/MasachTech_MS110-10.kicad_mod"
+    },
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "KLC F9.3: 3D model offset is not {'x': 0, 'y': 0, 'z': 0}. Found {'x': 0, 'y': 0, 'z': 2.8}; 3D model rotation is not {'x': 0, 'y': 0, 'z': 0}. Found {'x': -90, 'y': 0, 'z': -90}; 3D model offset is not {'x': 0, 'y': 0, 'z': 0}. Found {'x': 0, 'y': 0, 'z': 2.8}; 3D model rotation is not {'x': 0, 'y': 0, 'z': 0}. Found {'x': -90, 'y': 0, 'z': -90} ([F9.3](https://klc.kicad.org/footprint/f9/f9.3/))",
+     "line": null,
+     "path": "lib_fp/Custom_RF_Shielding.pretty/MasachTech_MS110-10.kicad_mod"
+    },
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "KLC F9.3: More than one 3D model file path provided within the 3D model settings of the footprint; 3D model name is different from footprint name (found 'MasachTech_MS110-10F', expected 'MasachTech_MS110-10'), but this might be intentional!; 3D model name is different from footprint name (found 'MasachTech_MS110-10C', expected 'MasachTech_MS110-10'), but this might be intentional! ([F9.3](https://klc.kicad.org/footprint/f9/f9.3/))",
+     "line": null,
+     "path": "lib_fp/Custom_RF_Shielding.pretty/MasachTech_MS110-10.kicad_mod"
+    }
+   ],
+   "checks": [
+    {
+     "name": "Datasheet reference present",
+     "result": "pass",
+     "detail": "URL found in descr/Datasheet"
+    },
+    {
+     "name": "Fab outline present",
+     "result": "pass",
+     "detail": "56 fab segments"
+    },
+    {
+     "name": "${REFERENCE} text on F.Fab",
+     "result": "pass",
+     "detail": ""
+    },
+    {
+     "name": "Courtyard present",
+     "result": "pass",
+     "detail": "8 courtyard segments"
+    },
+    {
+     "name": "Courtyard clearance >= 0.25 mm",
+     "result": "pass",
+     "detail": "min margin 0.550 mm (pads and fab vs courtyard, bounding boxes)"
+    },
+    {
+     "name": "Silkscreen does not overlap pads",
+     "result": "pass",
+     "detail": ""
+    },
+    {
+     "name": "3D model present",
+     "result": "pass",
+     "detail": ""
+    },
+    {
+     "name": "KiCad KLC checker (kicad-library-utils)",
+     "result": "fail",
+     "detail": "5 violation(s)"
+    }
+   ],
+   "klc": {
+    "status": "ok",
+    "attempts": 1
+   }
+  },
+  "footprint:Custom_RF_Shielding:MasachTech_MS156-10": {
+   "verdict": "warn",
+   "summary": "Deterministic checks: 0 error(s), 3 warning(s), 3 info. ",
+   "datasheet_used": "https://www.masach.com/media/catalog/product/file/MS156-10.pdf",
+   "findings": [
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC F5.1: Reference label errors:; - Reference label is hidden (must be set to visible) ([F5.1](https://klc.kicad.org/footprint/f5/f5.1/))",
+     "line": null,
+     "path": "lib_fp/Custom_RF_Shielding.pretty/MasachTech_MS156-10.kicad_mod"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC F5.2: Some fabrication layer lines have a width outside allowed range of [0.1mm - 0.15mm]; - Line (6.7,-5.5) -> (7.0365,-5.4557) on layer 'F.Fab' has width '0.05'; - Line (7.0365,-5.4557) -> (7.35,-5.3258) on layer 'F.Fab' has width '0.05'; - Line (7.35,-5.3258) -> (7.6192,-5.1192) on layer 'F.Fab' has width '0.05'; - Line (7.6192,-5.1192) -> (7.8258,-4.85) on layer 'F.Fab' has width '0.05'; - Line (7.8258,-4.85) -> (7.9557,-4.5365) on layer 'F.Fab' has width '0.05'; - Line (7.9557,-4.5365) -> (8,-4.2) on layer 'F.Fab' has width '0.05'; - Line (8,-4.2) -> (8,4.2) on layer 'F.Fab' has width '0.05'; - Line (8,4.2) -> (7.9557,4.5365) on layer 'F.Fab' has width '0.05'; - Line (7.9557,4.5365) -> (7.8258,4.85) on layer 'F.Fab' has width '0.05'; - Line (7.8258,4.85) -> (7.6192,5.1192) on layer 'F.Fab' has width '0.05'; - Line (7.6192,5.1192) -> (7.35,5.3258) on layer 'F.Fab' has width '0.05'; - Line (7.35,5.3258) -> (7.0365,5.4557) on layer 'F.Fab' has width '0.05'; - Line (7.0365,5.4557) -> (6.7,5.5) on layer 'F.Fab' has width '0.05'; - Line (6.7,5.5) -> (-6.7,5.5) on layer 'F.Fab' has width '0.05'; - Line (-6.7,5.5) -> (-7.0365,5.4557) on layer 'F.Fab' has width '0.05'; - Line (-7.0365,5.4557) -> (-7.35,5.3258) on layer 'F.Fab' has width '0.05'; - Line (-7.35,5.3258) -> (-7.6192,5.1192) on layer 'F.Fab' has width '0.05'; - Line (-7.6192,5.1192) -> (-7.8258,4.85) on layer 'F.Fab' has width '0.05'; - Line (-7.8258,4.85) -> (-7.9557,4.5365) on layer 'F.Fab' has width '0.05'; - Line (-7.9557,4.5365) -> (-8,4.2) on layer 'F.Fab' has width '0.05'; - Line (-8,4.2) -> (-8,-4.2) on layer 'F.Fab' has width '0.05'; - Line (-8,-4.2) -> (-7.9557,-4.5365) on layer 'F.Fab' has width '0.05'; - Line (-7.9557,-4.5365) -> (-7.8258,-4.85) on layer 'F.Fab' has width '0.05'; - Line (-7.8258,-4.85) -> (-7.6192,-5.1192) on layer 'F.Fab' has width '0.05'; - Line (-7.6192,-5.1192) -> (-7.35,-5.3258) on layer 'F.Fab' has width '0.05'; - Line (-7.35,-5.3258) -> (-7.0365,-5.4557) on layer 'F.Fab' has width '0.05'; - Line (-7.0365,-5.4557) -> (-6.7,-5.5) on layer 'F.Fab' has width '0.05'; - Line (-6.7,-5.5) -> (6.7,-5.5) on layer 'F.Fab' has width '0.05' ([F5.2](https://klc.kicad.org/footprint/f5/f5.2/))",
+     "line": null,
+     "path": "lib_fp/Custom_RF_Shielding.pretty/MasachTech_MS156-10.kicad_mod"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC F9.1: The 'datasheet' field should not be set for a footprint: (have 'https://www.masach.com/media/catalog/product/file/MS156-10.pdf'); The 'description' field should not be set for a footprint: (have 'Masach Tech MS156-10 two-piece drawn-seamless EMI shield: frame MS156-10F 15.6x10.6x3mm, cover MS156-10C 16x11mm. Land per Masach drawing: 15.3x10.3mm centreline, R0.95, 1.5mm wide; keep-in 13.8x8.8mm. https://www.masach.com/media/catalog/product/file/MS156-10.pdf') ([F9.1](https://klc.kicad.org/footprint/f9/f9.1/))",
+     "line": null,
+     "path": "lib_fp/Custom_RF_Shielding.pretty/MasachTech_MS156-10.kicad_mod"
+    },
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "Pad numbers used more than once: 1×3 (fine for split exposed pads / shields; check it is intended).",
+     "line": 1,
+     "path": "lib_fp/Custom_RF_Shielding.pretty/MasachTech_MS156-10.kicad_mod"
+    },
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "KLC F9.3: 3D model offset is not {'x': 0, 'y': 0, 'z': 0}. Found {'x': 0, 'y': 0, 'z': 3.0}; 3D model rotation is not {'x': 0, 'y': 0, 'z': 0}. Found {'x': -90, 'y': 0, 'z': -90}; 3D model offset is not {'x': 0, 'y': 0, 'z': 0}. Found {'x': 0, 'y': 0, 'z': 3.0}; 3D model rotation is not {'x': 0, 'y': 0, 'z': 0}. Found {'x': -90, 'y': 0, 'z': -90} ([F9.3](https://klc.kicad.org/footprint/f9/f9.3/))",
+     "line": null,
+     "path": "lib_fp/Custom_RF_Shielding.pretty/MasachTech_MS156-10.kicad_mod"
+    },
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "KLC F9.3: More than one 3D model file path provided within the 3D model settings of the footprint; 3D model name is different from footprint name (found 'MasachTech_MS156-10F', expected 'MasachTech_MS156-10'), but this might be intentional!; 3D model name is different from footprint name (found 'MasachTech_MS156-10C', expected 'MasachTech_MS156-10'), but this might be intentional! ([F9.3](https://klc.kicad.org/footprint/f9/f9.3/))",
+     "line": null,
+     "path": "lib_fp/Custom_RF_Shielding.pretty/MasachTech_MS156-10.kicad_mod"
+    }
+   ],
+   "checks": [
+    {
+     "name": "Datasheet reference present",
+     "result": "pass",
+     "detail": "URL found in descr/Datasheet"
+    },
+    {
+     "name": "Fab outline present",
+     "result": "pass",
+     "detail": "56 fab segments"
+    },
+    {
+     "name": "${REFERENCE} text on F.Fab",
+     "result": "pass",
+     "detail": ""
+    },
+    {
+     "name": "Courtyard present",
+     "result": "pass",
+     "detail": "8 courtyard segments"
+    },
+    {
+     "name": "Courtyard clearance >= 0.25 mm",
+     "result": "pass",
+     "detail": "min margin 0.250 mm (pads and fab vs courtyard, bounding boxes)"
+    },
+    {
+     "name": "Silkscreen does not overlap pads",
+     "result": "pass",
+     "detail": ""
+    },
+    {
+     "name": "3D model present",
+     "result": "pass",
+     "detail": ""
+    },
+    {
+     "name": "KiCad KLC checker (kicad-library-utils)",
+     "result": "fail",
+     "detail": "5 violation(s)"
+    }
+   ],
+   "klc": {
+    "status": "ok",
+    "attempts": 1
+   }
+  },
+  "footprint:Custom_RF_Shielding:MasachTech_MS233-10": {
+   "verdict": "warn",
+   "summary": "Deterministic checks: 0 error(s), 3 warning(s), 3 info. ",
+   "datasheet_used": "https://www.masach.com/media/catalog/product/file/MS233-10.pdf",
+   "findings": [
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC F5.1: Reference label errors:; - Reference label is hidden (must be set to visible) ([F5.1](https://klc.kicad.org/footprint/f5/f5.1/))",
+     "line": null,
+     "path": "lib_fp/Custom_RF_Shielding.pretty/MasachTech_MS233-10.kicad_mod"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC F5.2: Some fabrication layer lines have a width outside allowed range of [0.1mm - 0.15mm]; - Line (9.75,-8.95) -> (10.2935,-8.8784) on layer 'F.Fab' has width '0.05'; - Line (10.2935,-8.8784) -> (10.8,-8.6687) on layer 'F.Fab' has width '0.05'; - Line (10.8,-8.6687) -> (11.2349,-8.3349) on layer 'F.Fab' has width '0.05'; - Line (11.2349,-8.3349) -> (11.5687,-7.9) on layer 'F.Fab' has width '0.05'; - Line (11.5687,-7.9) -> (11.7784,-7.3935) on layer 'F.Fab' has width '0.05'; - Line (11.7784,-7.3935) -> (11.85,-6.85) on layer 'F.Fab' has width '0.05'; - Line (11.85,-6.85) -> (11.85,6.85) on layer 'F.Fab' has width '0.05'; - Line (11.85,6.85) -> (11.7784,7.3935) on layer 'F.Fab' has width '0.05'; - Line (11.7784,7.3935) -> (11.5687,7.9) on layer 'F.Fab' has width '0.05'; - Line (11.5687,7.9) -> (11.2349,8.3349) on layer 'F.Fab' has width '0.05'; - Line (11.2349,8.3349) -> (10.8,8.6687) on layer 'F.Fab' has width '0.05'; - Line (10.8,8.6687) -> (10.2935,8.8784) on layer 'F.Fab' has width '0.05'; - Line (10.2935,8.8784) -> (9.75,8.95) on layer 'F.Fab' has width '0.05'; - Line (9.75,8.95) -> (-9.75,8.95) on layer 'F.Fab' has width '0.05'; - Line (-9.75,8.95) -> (-10.2935,8.8784) on layer 'F.Fab' has width '0.05'; - Line (-10.2935,8.8784) -> (-10.8,8.6687) on layer 'F.Fab' has width '0.05'; - Line (-10.8,8.6687) -> (-11.2349,8.3349) on layer 'F.Fab' has width '0.05'; - Line (-11.2349,8.3349) -> (-11.5687,7.9) on layer 'F.Fab' has width '0.05'; - Line (-11.5687,7.9) -> (-11.7784,7.3935) on layer 'F.Fab' has width '0.05'; - Line (-11.7784,7.3935) -> (-11.85,6.85) on layer 'F.Fab' has width '0.05'; - Line (-11.85,6.85) -> (-11.85,-6.85) on layer 'F.Fab' has width '0.05'; - Line (-11.85,-6.85) -> (-11.7784,-7.3935) on layer 'F.Fab' has width '0.05'; - Line (-11.7784,-7.3935) -> (-11.5687,-7.9) on layer 'F.Fab' has width '0.05'; - Line (-11.5687,-7.9) -> (-11.2349,-8.3349) on layer 'F.Fab' has width '0.05'; - Line (-11.2349,-8.3349) -> (-10.8,-8.6687) on layer 'F.Fab' has width '0.05'; - Line (-10.8,-8.6687) -> (-10.2935,-8.8784) on layer 'F.Fab' has width '0.05'; - Line (-10.2935,-8.8784) -> (-9.75,-8.95) on layer 'F.Fab' has width '0.05'; - Line (-9.75,-8.95) -> (9.75,-8.95) on layer 'F.Fab' has width '0.05' ([F5.2](https://klc.kicad.org/footprint/f5/f5.2/))",
+     "line": null,
+     "path": "lib_fp/Custom_RF_Shielding.pretty/MasachTech_MS233-10.kicad_mod"
+    },
+    {
+     "severity": "warning",
+     "category": "klc",
+     "message": "KLC F9.1: The 'datasheet' field should not be set for a footprint: (have 'https://www.masach.com/media/catalog/product/file/MS233-10.pdf'); The 'description' field should not be set for a footprint: (have 'Masach Tech MS233-10 two-piece drawn-seamless EMI shield: frame MS233-10F 23.3x17.5x3.3mm, cover MS233-10C 23.7x17.9mm. Land per Masach drawing: 23x17.2mm centreline, R1.75, 1.5mm wide; keep-in 21.5x15.7mm. https://www.masach.com/media/catalog/product/file/MS233-10.pdf') ([F9.1](https://klc.kicad.org/footprint/f9/f9.1/))",
+     "line": null,
+     "path": "lib_fp/Custom_RF_Shielding.pretty/MasachTech_MS233-10.kicad_mod"
+    },
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "Pad numbers used more than once: 1×3 (fine for split exposed pads / shields; check it is intended).",
+     "line": 1,
+     "path": "lib_fp/Custom_RF_Shielding.pretty/MasachTech_MS233-10.kicad_mod"
+    },
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "KLC F9.3: 3D model offset is not {'x': 0, 'y': 0, 'z': 0}. Found {'x': 0, 'y': 0, 'z': 3.3}; 3D model rotation is not {'x': 0, 'y': 0, 'z': 0}. Found {'x': -90, 'y': 0, 'z': -90}; 3D model offset is not {'x': 0, 'y': 0, 'z': 0}. Found {'x': 0, 'y': 0, 'z': 3.3}; 3D model rotation is not {'x': 0, 'y': 0, 'z': 0}. Found {'x': -90, 'y': 0, 'z': -90} ([F9.3](https://klc.kicad.org/footprint/f9/f9.3/))",
+     "line": null,
+     "path": "lib_fp/Custom_RF_Shielding.pretty/MasachTech_MS233-10.kicad_mod"
+    },
+    {
+     "severity": "info",
+     "category": "klc",
+     "message": "KLC F9.3: More than one 3D model file path provided within the 3D model settings of the footprint; 3D model name is different from footprint name (found 'MasachTech_MS233-10F', expected 'MasachTech_MS233-10'), but this might be intentional!; 3D model name is different from footprint name (found 'MasachTech_MS233-10C', expected 'MasachTech_MS233-10'), but this might be intentional! ([F9.3](https://klc.kicad.org/footprint/f9/f9.3/))",
+     "line": null,
+     "path": "lib_fp/Custom_RF_Shielding.pretty/MasachTech_MS233-10.kicad_mod"
+    }
+   ],
+   "checks": [
+    {
+     "name": "Datasheet reference present",
+     "result": "pass",
+     "detail": "URL found in descr/Datasheet"
+    },
+    {
+     "name": "Fab outline present",
+     "result": "pass",
+     "detail": "56 fab segments"
+    },
+    {
+     "name": "${REFERENCE} text on F.Fab",
+     "result": "pass",
+     "detail": ""
+    },
+    {
+     "name": "Courtyard present",
+     "result": "pass",
+     "detail": "8 courtyard segments"
+    },
+    {
+     "name": "Courtyard clearance >= 0.25 mm",
+     "result": "pass",
+     "detail": "min margin 0.250 mm (pads and fab vs courtyard, bounding boxes)"
+    },
+    {
+     "name": "Silkscreen does not overlap pads",
+     "result": "pass",
+     "detail": ""
+    },
+    {
+     "name": "3D model present",
+     "result": "pass",
+     "detail": ""
+    },
+    {
+     "name": "KiCad KLC checker (kicad-library-utils)",
+     "result": "fail",
+     "detail": "5 violation(s)"
+    }
+   ],
+   "klc": {
+    "status": "ok",
+    "attempts": 1
+   }
+  }
+ },
+ "pr_findings": []
+}
