@@ -4,15 +4,13 @@
 // (removed copper red, added green, unchanged dim) in the same frame, so it maps onto the same UVs.
 //
 // Ported from kipr's web/project/pcba3d/gerberboard.js (buildGerberBoards), itself after gentoo's
-// viewer3d.js (paintBoard, renderFace, onSubstrate). All Gerber work is done by our wasm-gerber-renderer
-// fork (CoolNamesAllTaken/wasm-gerber-viewer, packages/wasm-gerber-renderer), which the caller INJECTS
-// as `gerber`: an object holding the fork's functions, e.g.
-//     const gerber = { ...await import('wasm-gerber-renderer/board.js'), ...await import('wasm-gerber-renderer/diff.js'),
-//                      ...await import('wasm-gerber-renderer/drills.js'), ...await import('wasm-gerber-renderer/layers.js'),
-//                      ...await import('wasm-gerber-renderer/outline.js'), ...await import('wasm-gerber-renderer/raster.js') };
+// viewer3d.js (paintBoard, renderFace, onSubstrate). All Gerber work is done by boarddd/gerber unless the caller
+// injects another implementation as `gerber` (an object with the same functions; null = boarddd/gerber).
 // Used: groupBoardLayers, boardOutline, parseExcellon, holesToGerber, renderFaceRaster, faceRasterSize,
-// renderLayerDiff, copyScaled. `renderer` is a GerberRenderer from the fork's createGerberRenderer.
+// renderLayerDiff, copyScaled, withoutEmptyTools. `renderer` is a GerberRenderer from createGerberRenderer;
+// null = one shared renderer made on first use (needs a DOM canvas).
 
+import * as builtin from '../gerber/index.js';
 import { loopBounds, padBounds, rectOutline, outlinesDiffer, BOARD_THICKNESS } from '../geom/index.js';
 import { buildBoard, canvasTexture, outlineGhost } from './solid.js';
 
@@ -22,44 +20,19 @@ const DIFF_BACKGROUND = '#2d333b';     // the board behind the diff: neutral, da
 // Unchanged copper has to read as copper at board scale; changes stay the fork's red and green.
 const DIFF_STYLE = { unchanged: { color: [0.72, 0.64, 0.5], alpha: 0.7 } };
 
-const NEEDS = ['groupBoardLayers', 'boardOutline', 'parseExcellon', 'renderFaceRaster', 'faceRasterSize', 'copyScaled'];
-function check(gerber, extra = []) {
-  const missing = [...NEEDS, ...extra].filter((k) => typeof gerber?.[k] !== 'function');
-  if (missing.length) throw new TypeError(`boarddd/board: the injected wasm-gerber-renderer is missing ${missing.join(', ')} (needs our fork's board/diff/drills/layers/outline/raster modules)`);
+let shared = null;
+/** The shared default renderer: boarddd/gerber's, on its own canvas, drawing buffer kept for copies. */
+export function defaultRenderer() {
+  shared = shared || builtin.createGerberRenderer(document.createElement('canvas'), { contextAttributes: { preserveDrawingBuffer: true } });
+  return shared;
 }
 
-const TOOL_DEF = /^T(\d+)(?:[A-BD-Z][-\d.]*)*C([-\d.]+)/i;
-const TOOL_SELECT = /^T(\d+)\s*$/i;
-
-/**
- * An Excellon file without zero-diameter tools and their hits. KiCad 10 writes `T1C0.000` for vias with no
- * drill (seen in its royalblue54L_feather demo), and the renderer's wasm rejects the whole file ("Drill
- * tool diameter must be positive"), which would cost the board its faces. Other text passes unchanged.
- * TODO: drop this copy once our wasm-gerber-renderer fork's PR #4 (CoolNamesAllTaken/wasm-gerber-viewer,
- * a canonical dropEmptyTools/withoutEmptyTools in drills.js) is merged and vendor/ is re-synced; use the
- * injected `gerber.withoutEmptyTools` when present.
- */
-export function withoutEmptyTools(text) {
-  const lines = String(text).split(/\r?\n/);
-  const empty = new Set();
-  for (const line of lines) {
-    const m = TOOL_DEF.exec(line.trim());
-    if (m && !(Number(m[2]) > 0)) empty.add(Number(m[1]));
-  }
-  if (!empty.size) return text;
-  const out = [];
-  let skipping = false, inBody = false;
-  for (const raw of lines) {
-    const line = raw.trim();
-    if (line === '%' || /^M95\b/i.test(line)) inBody = true;
-    const def = TOOL_DEF.exec(line);
-    if (def && !inBody) { if (empty.has(Number(def[1]))) continue; out.push(raw); continue; }
-    const sel = TOOL_SELECT.exec(line) || (def && inBody ? def : null);
-    if (sel) skipping = empty.has(Number(sel[1]));
-    else if (/^(M30|M00)\b/i.test(line)) skipping = false;
-    if (!skipping) out.push(raw);
-  }
-  return out.join('\n');
+const NEEDS = ['groupBoardLayers', 'boardOutline', 'parseExcellon', 'renderFaceRaster', 'faceRasterSize', 'copyScaled'];
+function check(gerber, extra = []) {
+  gerber = gerber || builtin;
+  const missing = [...NEEDS, ...extra].filter((k) => typeof gerber?.[k] !== 'function');
+  if (missing.length) throw new TypeError(`boarddd/board: the injected gerber implementation is missing ${missing.join(', ')} (pass null for boarddd/gerber)`);
+  return gerber;
 }
 
 /**
@@ -71,8 +44,10 @@ export function withoutEmptyTools(text) {
  * Returns {grouped, outline: {board, cutouts, approximate} | null, holes, drills: [{name, text, plated, holes}], edge}.
  */
 export function readFabFiles(gerber, files, board = {}) {
+  gerber = gerber || builtin;
+  const drop = gerber.withoutEmptyTools || builtin.withoutEmptyTools;
   const list = files.map((f) => {
-    const text = /\.(drl|xln|exc|drd|txt)$/i.test(f.name) || /^M48\b/m.test(f.text.slice(0, 400)) ? (gerber.withoutEmptyTools || withoutEmptyTools)(f.text) : f.text;
+    const text = /\.(drl|xln|exc|drd|txt)$/i.test(f.name) || /^M48\b/m.test(f.text.slice(0, 400)) ? drop(f.text) : f.text;
     return { name: f.name, source: text, content: text, plated: f.plated };
   });
   const grouped = gerber.groupBoardLayers(list);
@@ -106,7 +81,8 @@ export function faceBounds(outlines, pad = 0.5) {
  * painting two at once).
  */
 export async function paintFaces(gerber, renderer, fab, { bounds = null, pxPerMm = FACE_PX_PER_MM, maxTextureSize = MAX_FACE_PX, palette = {} } = {}) {
-  check(gerber);
+  gerber = check(gerber);
+  renderer = renderer || await defaultRenderer();
   bounds = bounds || faceBounds([fab.outline]);
   const size = gerber.faceRasterSize(bounds, { pxPerMm, maxPx: maxTextureSize, maxTextureSize });
   const out = { bounds, size, view: null };
@@ -131,7 +107,8 @@ export async function paintFaces(gerber, renderer, fab, { bounds = null, pxPerMm
  * Returns {top, bottom} canvases.
  */
 export async function paintCopperDiff(gerber, renderer, { base, head }, painted, { maxTextureSize = MAX_FACE_PX } = {}) {
-  check(gerber, ['renderLayerDiff', 'holesToGerber']);
+  gerber = check(gerber, ['renderLayerDiff', 'holesToGerber']);
+  renderer = renderer || await defaultRenderer();
   const pick = (fab, face) => {
     if (!fab) return null;
     const list = [fab.grouped[face]?.copper?.source, fab.edge].filter(Boolean);
@@ -157,7 +134,7 @@ export async function paintCopperDiff(gerber, renderer, { base, head }, painted,
  * Returns buildBoard()'s result plus {fab, painted, textures: {top, bottom}}; dispose() frees the textures.
  */
 export async function buildGerberBoard(gerber, renderer, files, options = {}) {
-  check(gerber);
+  gerber = check(gerber);
   const fab = readFabFiles(gerber, files, options.board || {});
   if (!fab.outline) throw new Error('buildGerberBoard: no board outline (no Edge.Cuts and no board box)');
   const painted = await paintFaces(gerber, renderer, fab, options);
@@ -174,3 +151,5 @@ export async function buildGerberBoard(gerber, renderer, files, options = {}) {
 }
 
 export { outlinesDiffer, outlineGhost };
+/** Kept for 0.1 callers; the implementation is boarddd/gerber's (drills.js). */
+export const withoutEmptyTools = builtin.withoutEmptyTools;

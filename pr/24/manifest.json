@@ -4,8 +4,8 @@
  "pr": 24,
  "base_sha": "a3c91bac238b045da10d4cfad5077226c94b254b",
  "base_ref_sha": "a3c91bac238b045da10d4cfad5077226c94b254b",
- "head_sha": "cef994b89808a40d67adee4536e3a34e7180b03f",
- "generated_at": "2026-10-07T21:00:01+00:00",
+ "head_sha": "e3e77a216e864ef72092c2ab0a6e2702a1496a6e",
+ "generated_at": "2026-10-08T00:30:41+00:00",
  "kicad_version": "10.0",
  "generator": "kipr library render (built-in SVG renderer)",
  "changed_3d_files": [
@@ -16,13 +16,13 @@
  "fonts": null,
  "items": [
   {
-   "id": "footprint:Custom_Battery:LiPo_706292",
-   "slug": "footprint__Custom_Battery__LiPo_706292",
+   "id": "footprint:Custom_Battery:LiPo_706292_4mm_offset",
+   "slug": "footprint__Custom_Battery__LiPo_706292_4mm_offset",
    "kind": "footprint",
    "library": "Custom_Battery",
-   "name": "LiPo_706292",
+   "name": "LiPo_706292_4mm_offset",
    "status": "added",
-   "path": "lib_fp/Custom_Battery.pretty/LiPo_706292.kicad_mod",
+   "path": "lib_fp/Custom_Battery.pretty/LiPo_706292_4mm_offset.kicad_mod",
    "line_range": {
     "head": [
      1,
@@ -33,11 +33,11 @@
    "properties": {
     "head": {
      "Reference": "REF**",
-     "Value": "LiPo_706292",
+     "Value": "LiPo_706292_4mm_offset",
      "Datasheet": "kicad-embed://706292-6700mAh 3.7V\u7535\u6c60\u89c4\u683c\u4e66.pdf",
      "Description": "",
-     "Footprint": "Custom_Battery:LiPo_706292",
-     "descr": "Protected Semi-Solid LiPo cell, 7x62x92mm",
+     "Footprint": "Custom_Battery:LiPo_706292_4mm_offset",
+     "descr": "Protected Semi-Solid LiPo cell, 7x62x92mm, 4mm above the PCB surface",
      "tags": "battery lipo cell"
     },
     "base": null
@@ -69,7 +69,7 @@
       0.0
      ],
      "hide": false,
-     "file": "items/footprint__Custom_Battery__LiPo_706292/model_1.step",
+     "file": "items/footprint__Custom_Battery__LiPo_706292_4mm_offset/model_1.step",
      "side": "head"
     }
    ],
@@ -113,7 +113,7 @@
        "hidden": false
       },
       {
-       "text": "LiPo_706292",
+       "text": "LiPo_706292_4mm_offset",
        "layer": "F.Fab",
        "hidden": false
       },
@@ -138,23 +138,23 @@
    },
    "renders": {
     "head": {
-     "svg": "items/footprint__Custom_Battery__LiPo_706292/head.svg",
-     "png": "items/footprint__Custom_Battery__LiPo_706292/head.png",
+     "svg": "items/footprint__Custom_Battery__LiPo_706292_4mm_offset/head.svg",
+     "png": "items/footprint__Custom_Battery__LiPo_706292_4mm_offset/head.png",
      "layers": {
-      "F.SilkS": "items/footprint__Custom_Battery__LiPo_706292/head_F.SilkS.svg",
-      "F.Fab": "items/footprint__Custom_Battery__LiPo_706292/head_F.Fab.svg"
+      "F.SilkS": "items/footprint__Custom_Battery__LiPo_706292_4mm_offset/head_F.SilkS.svg",
+      "F.Fab": "items/footprint__Custom_Battery__LiPo_706292_4mm_offset/head_F.Fab.svg"
      }
     },
     "base": null
    },
    "diff_png": null,
    "glb": {
-    "head": "items/footprint__Custom_Battery__LiPo_706292/head.glb",
+    "head": "items/footprint__Custom_Battery__LiPo_706292_4mm_offset/head.glb",
     "base": null
    },
-   "text_diff": "items/footprint__Custom_Battery__LiPo_706292/diff.patch",
+   "text_diff": "items/footprint__Custom_Battery__LiPo_706292_4mm_offset/diff.patch",
    "source": {
-    "head": "items/footprint__Custom_Battery__LiPo_706292/head.kicad_mod",
+    "head": "items/footprint__Custom_Battery__LiPo_706292_4mm_offset/head.kicad_mod",
     "base": null
    },
    "warnings": [
@@ -163,17 +163,17 @@
    ],
    "view": {
     "viewbox": [
-     -51.05,
-     -31.05,
-     51.05,
-     31.05
+     -47.05,
+     -32.05,
+     47.05,
+     32.05
     ],
-    "px_per_mm": 15.6709,
+    "px_per_mm": 17.0032,
     "units": "mm",
     "y_axis": "down"
    },
    "geom": {
-    "head": "items/footprint__Custom_Battery__LiPo_706292/head_geom.json",
+    "head": "items/footprint__Custom_Battery__LiPo_706292_4mm_offset/head_geom.json",
     "base": null
    },
    "related_symbols": [],
@@ -200,14 +200,14 @@
        0.0
       ],
       "hide": false,
-      "file": "items/footprint__Custom_Battery__LiPo_706292/model_1.step",
+      "file": "items/footprint__Custom_Battery__LiPo_706292_4mm_offset/model_1.step",
       "side": "head"
      }
     ],
     "base": null
    },
    "preview_3d": {
-    "head": "items/footprint__Custom_Battery__LiPo_706292/head_3d.png",
+    "head": "items/footprint__Custom_Battery__LiPo_706292_4mm_offset/head_3d.png",
     "base": null
    }
   }
